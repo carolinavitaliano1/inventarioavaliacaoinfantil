@@ -34,24 +34,6 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
   const [showShortcuts, setShowShortcuts] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Flat list of visible items for keyboard navigation
-  const visibleItems = useMemo(() => {
-    const items: typeof portageItems = []
-    for (const area of AREAS) {
-      if (!expandedAreas.has(area)) continue
-      const ages = grouped_ref[area] || {}
-      for (const [ageRange, ageItems] of Object.entries(ages)) {
-        const key = `${area}__${ageRange}`
-        if (!expandedAges.has(key)) continue
-        for (const item of (onlyUnanswered ? ageItems.filter(i => !current?.responses[i.id]) : ageItems)) {
-          items.push(item)
-        }
-      }
-    }
-    return items
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expandedAreas, expandedAges, onlyUnanswered, current?.responses])
-
   const grouped = useMemo(() => {
     const r: Record<string, Record<string, typeof portageItems>> = {}
     for (const item of portageItems) {
@@ -61,8 +43,23 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
     }
     return r
   }, [])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const grouped_ref = grouped
+
+  // Flat list of visible items for keyboard navigation
+  const visibleItems = useMemo(() => {
+    const items: typeof portageItems = []
+    for (const area of AREAS) {
+      if (!expandedAreas.has(area)) continue
+      const ages = grouped[area] || {}
+      for (const [ageRange, ageItems] of Object.entries(ages)) {
+        const key = `${area}__${ageRange}`
+        if (!expandedAges.has(key)) continue
+        for (const item of (onlyUnanswered ? ageItems.filter(i => !current?.responses[i.id]) : ageItems)) {
+          items.push(item)
+        }
+      }
+    }
+    return items
+  }, [grouped, expandedAreas, expandedAges, onlyUnanswered, current?.responses])
 
   if (!current) return null
   const { responses } = current
