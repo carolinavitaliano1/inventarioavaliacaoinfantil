@@ -4,6 +4,7 @@ import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { StudentInfo } from '../types'
 import type { View } from '../App'
+import { calcAge } from '../utils/ageCalc'
 
 interface Props { hook: AssessmentHook; setView: (v: View) => void }
 
@@ -11,6 +12,11 @@ export default function PortageHome({ hook, setView }: Props) {
   const { assessments, createAssessment, deleteAssessment, setCurrentId, getAreaStats } = hook
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState<StudentInfo>({ name: '', birthDate: '', diagnosis: '', age: '', date: new Date().toLocaleDateString('pt-BR') })
+
+  const handleBirthDate = (value: string) => {
+    const age = calcAge(value)
+    setForm(f => ({ ...f, birthDate: value, age }))
+  }
 
   const handleCreate = () => {
     if (!form.name.trim()) return
@@ -44,9 +50,7 @@ export default function PortageHome({ hook, setView }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               { label: 'Nome do Aluno *', key: 'name', placeholder: 'Nome completo', type: 'text' },
-              { label: 'Data de Nascimento', key: 'birthDate', placeholder: '', type: 'date' },
               { label: 'Diagnóstico', key: 'diagnosis', placeholder: 'Ex: TEA, Síndrome de Down...', type: 'text' },
-              { label: 'Idade Atual', key: 'age', placeholder: 'Ex: 3 anos e 2 meses', type: 'text' },
               { label: 'Data da Avaliação', key: 'date', placeholder: '', type: 'text' },
             ].map(({ label, key, placeholder, type }) => (
               <div key={key}>
@@ -60,6 +64,16 @@ export default function PortageHome({ hook, setView }: Props) {
                 />
               </div>
             ))}
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1">Data de Nascimento</label>
+              <input type="date" value={form.birthDate} onChange={e => handleBirthDate(e.target.value)}
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1">Idade (calculada automaticamente)</label>
+              <input type="text" value={form.age} readOnly
+                className="w-full border border-gray-100 bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-500 cursor-not-allowed" />
+            </div>
           </div>
           <div className="flex gap-2 mt-4">
             <button onClick={handleCreate} className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition">
