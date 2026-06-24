@@ -1,0 +1,143 @@
+import { useState } from 'react'
+import { ClipboardList, Plus, Eye, BarChart3, BookOpen, Trash2 } from 'lucide-react'
+import { portageItems } from '../hooks/usePortageAssessment'
+import type { AssessmentHook } from '../hooks/usePortageAssessment'
+import type { StudentInfo } from '../types'
+import type { View } from '../App'
+
+interface Props { hook: AssessmentHook; setView: (v: View) => void }
+
+export default function PortageHome({ hook, setView }: Props) {
+  const { assessments, createAssessment, deleteAssessment, setCurrentId, getAreaStats } = hook
+  const [showForm, setShowForm] = useState(false)
+  const [form, setForm] = useState<StudentInfo>({ name: '', birthDate: '', diagnosis: '', age: '', date: new Date().toLocaleDateString('pt-BR') })
+
+  const handleCreate = () => {
+    if (!form.name.trim()) return
+    createAssessment(form)
+    setView('questionnaire')
+  }
+
+  const open = (id: string, v: View) => { setCurrentId(id); setView(v) }
+
+  const answeredCount = (id: string) => {
+    const a = assessments.find(x => x.id === id)
+    return a ? Object.values(a.responses).filter(Boolean).length : 0
+  }
+
+  return (
+    <div className="max-w-3xl mx-auto p-4 py-8">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-2xl mb-4 shadow-lg">
+          <ClipboardList className="w-8 h-8 text-white" />
+        </div>
+        <h1 className="text-3xl font-bold text-gray-900">Escala Portage</h1>
+        <p className="text-gray-500 mt-1">Avaliação do Desenvolvimento Infantil</p>
+        <p className="text-sm text-gray-400 mt-1">{portageItems.length} habilidades · 5 áreas · 0–6 anos</p>
+      </div>
+
+      {/* Form nova avaliação */}
+      {showForm ? (
+        <div className="bg-white rounded-2xl shadow-md border border-purple-100 p-5 mb-6">
+          <h2 className="text-base font-semibold text-purple-700 mb-4">Nova Avaliação</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              { label: 'Nome do Aluno *', key: 'name', placeholder: 'Nome completo', type: 'text' },
+              { label: 'Data de Nascimento', key: 'birthDate', placeholder: '', type: 'date' },
+              { label: 'Diagnóstico', key: 'diagnosis', placeholder: 'Ex: TEA, Síndrome de Down...', type: 'text' },
+              { label: 'Idade Atual', key: 'age', placeholder: 'Ex: 3 anos e 2 meses', type: 'text' },
+              { label: 'Data da Avaliação', key: 'date', placeholder: '', type: 'text' },
+            ].map(({ label, key, placeholder, type }) => (
+              <div key={key}>
+                <label className="block text-xs font-medium text-gray-600 mb-1">{label}</label>
+                <input
+                  type={type}
+                  placeholder={placeholder}
+                  value={form[key as keyof StudentInfo]}
+                  onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+                />
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-2 mt-4">
+            <button onClick={handleCreate} className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition">
+              <Plus className="w-4 h-4" /> Iniciar Avaliação
+            </button>
+            <button onClick={() => setShowForm(false)} className="px-4 py-2 rounded-lg text-sm border border-gray-200 hover:bg-gray-50 transition">Cancelar</button>
+          </div>
+        </div>
+      ) : (
+        <button
+          onClick={() => setShowForm(true)}
+          className="w-full flex items-center justify-center gap-2 bg-purple-600 text-white py-3 rounded-xl text-base font-semibold shadow hover:bg-purple-700 transition mb-6"
+        >
+          <Plus className="w-5 h-5" /> Nova Avaliação
+        </button>
+      )}
+
+      {/* Lista de avaliações */}
+      {assessments.length > 0 && (
+        <div>
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Avaliações Salvas</h2>
+          <div className="space-y-3">
+            {assessments.map(a => {
+              const answered = answeredCount(a.id)
+              const pct = Math.round((answered / portageItems.length) * 100)
+              const stats = getAreaStats(a.id)
+              const nao = Object.values(stats).reduce((s, v) => s + v.nao, 0)
+              const av = Object.values(stats).reduce((s, v) => s + v.av, 0)
+              return (
+                <div key={a.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-semibold text-gray-900">{a.studentInfo.name}</span>
+                        {a.studentInfo.diagnosis && <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{a.studentInfo.diagnosis}</span>}
+                      </div>
+                      <p className="text-xs text-gray-400 mt-0.5">{a.studentInfo.age && `${a.studentInfo.age} · `}{a.studentInfo.date}</p>
+                      <div className="flex items-center gap-2 mt-2 flex-wrap text-xs">
+                        <span className="text-gray-400">{pct}% respondido</span>
+                        {answered > 0 && <>
+                          <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full">Não: {nao}</span>
+                          <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Às vezes: {av}</span>
+                        </>}
+                      </div>
+                      <div className="mt-2 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-purple-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-1.5 shrink-0">
+                      <button onClick={() => open(a.id, 'questionnaire')} className="flex items-center gap-1 text-xs border border-gray-200 rounded-lg px-2.5 py-1.5 hover:bg-gray-50 transition">
+                        <Eye className="w-3.5 h-3.5" /> Questionário
+                      </button>
+                      {answered > 0 && <>
+                        <button onClick={() => open(a.id, 'results')} className="flex items-center gap-1 text-xs border border-gray-200 rounded-lg px-2.5 py-1.5 hover:bg-gray-50 transition">
+                          <BarChart3 className="w-3.5 h-3.5" /> Resultados
+                        </button>
+                        <button onClick={() => open(a.id, 'pei')} className="flex items-center gap-1 text-xs border border-purple-200 text-purple-700 rounded-lg px-2.5 py-1.5 hover:bg-purple-50 transition">
+                          <BookOpen className="w-3.5 h-3.5" /> PEI
+                        </button>
+                      </>}
+                      <button onClick={() => deleteAssessment(a.id)} className="flex items-center gap-1 text-xs text-red-400 rounded-lg px-2.5 py-1.5 hover:bg-red-50 transition">
+                        <Trash2 className="w-3.5 h-3.5" /> Excluir
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {assessments.length === 0 && !showForm && (
+        <div className="text-center py-16 text-gray-300">
+          <ClipboardList className="w-14 h-14 mx-auto mb-3" />
+          <p className="text-sm">Nenhuma avaliação ainda.</p>
+        </div>
+      )}
+    </div>
+  )
+}

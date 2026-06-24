@@ -1,0 +1,4125 @@
+[
+  {
+    "id": "0_001",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "001",
+    "text": "001. Observa uma pessoa que se mova diretamente na linha de visão."
+  },
+  {
+    "id": "0_002",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "002",
+    "text": "002. Ri."
+  },
+  {
+    "id": "0_003",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "003",
+    "text": "003. Sorri (começa a reconhecer o ambiente que a cerca)"
+  },
+  {
+    "id": "0_004",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "004",
+    "text": "004. Sorri em resposta à atenção dada pelo adulto (sorri para as pessoas)"
+  },
+  {
+    "id": "0_005",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "005",
+    "text": "005. Mantém contato visual durante 2 a 3  minutos, quando está  sendo trocada."
+  },
+  {
+    "id": "0_006",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "006",
+    "text": "006. Adormece em horas apropriadas."
+  },
+  {
+    "id": "0_007",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "007",
+    "text": "007. Vocaliza em resposta à atenção."
+  },
+  {
+    "id": "0_008",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "008",
+    "text": "008. Olha para as próprias mãos, sorri e vocaliza com freqüência."
+  },
+  {
+    "id": "0_009",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "009",
+    "text": "009. Sorri em resposta à expressão facial de outras pessoas."
+  },
+  {
+    "id": "0_010",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "010",
+    "text": "010. Segura e examina o objeto oferecido pela mãe por um minuto."
+  },
+  {
+    "id": "0_011",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "011",
+    "text": "011. Sacode ou aperta o objeto colocando na mão, fazendo ruídos não intencionais."
+  },
+  {
+    "id": "0_012",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "012",
+    "text": "012. Brinca sozinha sem vigilância durante 10 minutos."
+  },
+  {
+    "id": "0_013",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "013",
+    "text": "013. Brinca sozinha contente perto do adulto durante 15 a 20 minutos."
+  },
+  {
+    "id": "0_014",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "014",
+    "text": "014.  Responde,  no  circulo  familiar,  através de  sorriso,  vocalizando ou parando de chorar."
+  },
+  {
+    "id": "0_015",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "015",
+    "text": "015. Bate nos óculos, nariz ou cabelos dos adultos."
+  },
+  {
+    "id": "0_016",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "016",
+    "text": "016. Tenta alcançar pessoas que lhe são familiares."
+  },
+  {
+    "id": "0_017",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "017",
+    "text": "017. Vocaliza para chamar a atenção."
+  },
+  {
+    "id": "0_018",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "018",
+    "text": "018. Responde ao próprio nome, olhando ou estendendo os braços para ser levantada."
+  },
+  {
+    "id": "0_019",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "019",
+    "text": "019. Aperta ou chacoalha brinquedo para produzir som, em imitação ao adulto."
+  },
+  {
+    "id": "0_020",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "020",
+    "text": "020. Sorri e vocaliza ao ver sua imagem refletida no espelho."
+  },
+  {
+    "id": "0_021",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "021",
+    "text": "021. Imita brincadeira de “esconde-esconde ... achou”."
+  },
+  {
+    "id": "0_022",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "022",
+    "text": "022.  Tenta  alcançar  e  bater  em  sua  imagem  no  espelho  ou  em  outra criança."
+  },
+  {
+    "id": "0_023",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "023",
+    "text": "023. Bate palmas imitando o adulto."
+  },
+  {
+    "id": "0_024",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "024",
+    "text": "024. Acena dizendo adeus, imitando o adulto."
+  },
+  {
+    "id": "0_025",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "025",
+    "text": "025. Abraça, acaricia, beija pessoas familiares."
+  },
+  {
+    "id": "0_026",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "026",
+    "text": "026. Manipula brinquedos e objetos."
+  },
+  {
+    "id": "0_027",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "027",
+    "text": "027. Oferece brinquedo, objeto ou pedaço da comida ao adulto."
+  },
+  {
+    "id": "0_028",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "028",
+    "text": "028. Oferece brinquedo ou objeto ao adulto e solta."
+  },
+  {
+    "id": "0_029",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "029",
+    "text": "029. Imita movimentos de outras crianças."
+  },
+  {
+    "id": "0_030",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "030",
+    "text": "030. Ajuda o adulto em tarefas simples ( ex. guarda material, ajuda no lanche)."
+  },
+  {
+    "id": "0_031",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "031",
+    "text": "031. Brinca paralelamente com outra criança."
+  },
+  {
+    "id": "0_032",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "032",
+    "text": "032. Participa do jogo, empurrando carro ou rolando bola, durante dois a cinco minutos."
+  },
+  {
+    "id": "0_033",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "033",
+    "text": "033.  Aceita  a  ausência  dos  pais  continuando  a  brincar  podendo  fazer manha ocasionalmente."
+  },
+  {
+    "id": "0_034",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "034",
+    "text": "034. Explora espontaneamente o ambiente"
+  },
+  {
+    "id": "0_035",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "035",
+    "text": "035.  Toma  parte  em  jogos  manipulativos  com  outra  pessoa  (puxa  fio, move trinco)."
+  },
+  {
+    "id": "0_036",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "036",
+    "text": "036. Abraça e carrega boneca ou brinquedo macio."
+  },
+  {
+    "id": "0_037",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "037",
+    "text": "037. Repete ações que provoca risada e atenção."
+  },
+  {
+    "id": "0_038",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "038",
+    "text": "038. Puxa uma outra pessoa para mostrar a ela  alguma ação ou objeto."
+  },
+  {
+    "id": "0_039",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "039",
+    "text": "039. Retira a mão perto de objetos proibidos, quando lembrada."
+  },
+  {
+    "id": "0_040",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "040",
+    "text": "040. Espera a vez  no lanche."
+  },
+  {
+    "id": "0_041",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "041",
+    "text": "041. Brinca com dois a  três companheiros sem interação."
+  },
+  {
+    "id": "0_042",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "042",
+    "text": "042.  Compartilha objetos  ou  alimentos com  outra  criança  quando solicitada."
+  },
+  {
+    "id": "0_043",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE DE 1 A 2 ANOS",
+    "number": "043",
+    "text": "043. Saúda companheiros e adultos familiares quando lembrada."
+  },
+  {
+    "id": "0_044",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "044",
+    "text": "044. Coopera com pedidos dos técnicos algumas vezes."
+  },
+  {
+    "id": "0_045",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "045",
+    "text": "045.  Pode  trazer  ou  levar objetos  dentro  da  sala,  quando  devidamente estimulada."
+  },
+  {
+    "id": "0_046",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "046",
+    "text": "046. Presta atenção a música por 5 a 10 minutos."
+  },
+  {
+    "id": "0_047",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "047",
+    "text": "047. Tenta ajudar o técnico em parte da tarefa (ex. segura a pá do lixo)."
+  },
+  {
+    "id": "0_048",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "048",
+    "text": "048. Entrega um livro ao adulto para que o leia ou compartilhe com ela."
+  },
+  {
+    "id": "0_049",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "049",
+    "text": "049. Brinca de fantasiar-se."
+  },
+  {
+    "id": "0_050",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "050",
+    "text": "050. Faz uma escolha quando lhe pedem."
+  },
+  {
+    "id": "0_051",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "051",
+    "text": "051. Pede ajuda quando está em dificuldades (ex. banheiro ou quando tem sede)."
+  },
+  {
+    "id": "0_052",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "052",
+    "text": "052.  Mostra  compreensão  de  sentimentos  como  amor,  zanga,  tristeza, alegria..."
+  },
+  {
+    "id": "0_053",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "053",
+    "text": "053. Permanece na sala de terapia, banheiro, refeitório..."
+  },
+  {
+    "id": "0_054",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "054",
+    "text": "054. Ao escutar música canta e dança."
+  },
+  {
+    "id": "0_055",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "055",
+    "text": "055. Segue regras imitando ações de outras crianças."
+  },
+  {
+    "id": "0_056",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "056",
+    "text": "056. Saúda adultos que lhe são familiares, sem ser lembrada."
+  },
+  {
+    "id": "0_057",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "057",
+    "text": "057. Segue regras de jogos de grupo  conduzidos pelo adulto."
+  },
+  {
+    "id": "0_058",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "058",
+    "text": "058. Diz por favor, quando lembrada."
+  },
+  {
+    "id": "0_059",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "059",
+    "text": "059. Responde ao telefone dramatizando conversas com pessoas que lhe é familiar."
+  },
+  {
+    "id": "0_060",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "060",
+    "text": "060. Espera a vez num grupo de seis pessoas."
+  },
+  {
+    "id": "0_061",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "061",
+    "text": "061. Coopera com pedidos do adulto a maioria das vezes."
+  },
+  {
+    "id": "0_062",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "062",
+    "text": "062.  Interage  com  outras  crianças,  enquanto  trabalha  na  sua  própria tarefa."
+  },
+  {
+    "id": "0_063",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "063",
+    "text": "063. Pode trazer ou levar objetos ou chamar pessoas em outra sala quando devidamente instruída."
+  },
+  {
+    "id": "0_064",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "064",
+    "text": "064. Repete rimas, danças ou canções para outras pessoas."
+  },
+  {
+    "id": "0_065",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "065",
+    "text": "065. Trabalha sozinha numa tarefa mais de dez minutos."
+  },
+  {
+    "id": "0_066",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "066",
+    "text": "066. Pede ajuda verbal quando está em dificuldade (banheiro, quando está com sede)"
+  },
+  {
+    "id": "0_067",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "067",
+    "text": "067. Pede desculpas, sem ser lembrada a maioria das vezes."
+  },
+  {
+    "id": "0_068",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "068",
+    "text": "068. Brinca com duas ou três crianças durante 20 minutos em atividades cooperativas."
+  },
+  {
+    "id": "0_069",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "069",
+    "text": "069. Apresenta uma conduta socialmente aceitável em público."
+  },
+  {
+    "id": "0_070",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "070",
+    "text": "070. Pede licença para usar objetos pertencentes a outra pessoa."
+  },
+  {
+    "id": "0_071",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "071",
+    "text": "071. Diz por favor, e obrigado, sem precisar ser lembrada."
+  },
+  {
+    "id": "0_072",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "072",
+    "text": "072. Expressa seus sentimentos: zanga, carinho, satisfação."
+  },
+  {
+    "id": "0_073",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "073",
+    "text": "073. Brinca com 4/5 crianças em atividades cooperativas sem supervisão constante."
+  },
+  {
+    "id": "0_074",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "074",
+    "text": "074. Explica regras de jogo ou atividade a outras pessoas."
+  },
+  {
+    "id": "0_075",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "075",
+    "text": "075. Imita papéis de adultos."
+  },
+  {
+    "id": "0_076",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "076",
+    "text": "076. Segue regras de jogo de raciocínio verbal."
+  },
+  {
+    "id": "0_077",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "077",
+    "text": "077. Conforta companheiros de brinquedo quando estão tristes."
+  },
+  {
+    "id": "0_078",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "078",
+    "text": "078. Escolhe seus próprios amigos."
+  },
+  {
+    "id": "0_079",
+    "area": "I – ÁREA SOCIABILIZAÇÃO",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "079",
+    "text": "079.  Representa  partes  de  uma  história,  desempenhando  um  papel  ou utilizando fantoches."
+  },
+  {
+    "id": "1_001",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "001",
+    "text": "001. Responde a voz de outro através  de movimentos  corporais  ou parando de chorar."
+  },
+  {
+    "id": "1_002",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "002",
+    "text": "002. Chora de modo diferente em relação a desconfortos diferentes."
+  },
+  {
+    "id": "1_003",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "003",
+    "text": "003. Sorri"
+  },
+  {
+    "id": "1_004",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "004",
+    "text": "004. Arrulha e sussurra quando contente."
+  },
+  {
+    "id": "1_005",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "005",
+    "text": "005. Repete os próprios sons."
+  },
+  {
+    "id": "1_006",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "006",
+    "text": "006. Ri."
+  },
+  {
+    "id": "1_007",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "007",
+    "text": "007. Mostra reconhecimento de seu meio, por meio de sorriso ou parando de chorar."
+  },
+  {
+    "id": "1_008",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "008",
+    "text": "008. Sorri em resposta à atenção dada pelo adulto."
+  },
+  {
+    "id": "1_009",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "009",
+    "text": "009. Responde ao estar em seu meio, através de sorriso, vocalizando ou parando de chorar."
+  },
+  {
+    "id": "1_010",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "010",
+    "text": "010. Responde ao próprio nome olhando ou estendendo o braço para ser levantada."
+  },
+  {
+    "id": "1_011",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "011",
+    "text": "011. Responde a gestos com gestos."
+  },
+  {
+    "id": "1_012",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "012",
+    "text": "012. Executa instruções simples, quando acompanhadas de gestos."
+  },
+  {
+    "id": "1_013",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "013",
+    "text": "013. Para atividades ao menos momentaneamente, quando lhe dizem não, 75% do tempo."
+  },
+  {
+    "id": "1_014",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "014",
+    "text": "014. Responde a perguntas simples com respostas não verbais."
+  },
+  {
+    "id": "1_015",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "015",
+    "text": "015. Obedece a ordem não verbal."
+  },
+  {
+    "id": "1_016",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "016",
+    "text": "016. Executa gestos simples a pedido."
+  },
+  {
+    "id": "1_017",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "017",
+    "text": "017. Demonstra compreensão de sentimentos, carinho, zanga, alegria..."
+  },
+  {
+    "id": "1_018",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "018",
+    "text": "018.  Compartilha  objetos  ou  alimento  com  outra  criança  quando  lhe pedem."
+  },
+  {
+    "id": "1_019",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "019",
+    "text": "019. Entende “mais”, “quer”"
+  },
+  {
+    "id": "1_020",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "020",
+    "text": "020. Entende “acabou” e “foi embora”"
+  },
+  {
+    "id": "1_021",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "021",
+    "text": "021. É capaz de dar ou mostrar alguma coisa a pedido."
+  },
+  {
+    "id": "1_022",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "022",
+    "text": "022. Aponta para uma parte do corpo."
+  },
+  {
+    "id": "1_023",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "023",
+    "text": "023. Aponta para si mesma quando se pergunta “onde está?”."
+  },
+  {
+    "id": "1_024",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "024",
+    "text": "024. Aponta para uma parte do corpo de outra."
+  },
+  {
+    "id": "1_025",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "025",
+    "text": "025. Segue duas ordens simples relacionadas de uma etapa de gestos."
+  },
+  {
+    "id": "1_026",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "026",
+    "text": "026. Aponta para três partes do corpo em si."
+  },
+  {
+    "id": "1_027",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "027",
+    "text": "027. Aponta doze objetos familiares, quando lhe dão nomes."
+  },
+  {
+    "id": "1_028",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "028",
+    "text": "028. Aponta para três a cinco figuras num livro quando nomeados."
+  },
+  {
+    "id": "1_029",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "029",
+    "text": "029. Combina objetos com gravuras."
+  },
+  {
+    "id": "1_030",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "030",
+    "text": "030. Presta atenção a música por cinco a dez minutos."
+  },
+  {
+    "id": "1_031",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "031",
+    "text": "031. Executa uma série de três ordens relacionadas."
+  },
+  {
+    "id": "1_032",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "032",
+    "text": "032. Aponta para gravuras de objeto comum descrito por seu uso."
+  },
+  {
+    "id": "1_033",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "033",
+    "text": "033. Ergue os dedos para dizer a idade."
+  },
+  {
+    "id": "1_034",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "034",
+    "text": "034. Vira as páginas de um livro, duas a três de uma vez para achar a gravura designada."
+  },
+  {
+    "id": "1_035",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "035",
+    "text": "035. Aponta para grande e pequeno a pedido."
+  },
+  {
+    "id": "1_036",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "036",
+    "text": "036. Coloca objetos: em cima de, embaixo de, dentro a pedido"
+  },
+  {
+    "id": "1_037",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "037",
+    "text": "037. Dá mais de um objeto, quando lhe pedem, usando forma de plural ( cubos)."
+  },
+  {
+    "id": "1_038",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "038",
+    "text": "038. Discrimina o diferente em meio aos iguais."
+  },
+  {
+    "id": "1_039",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "039",
+    "text": "039. Pode trazer ou levar objetos ou chamar pessoas em outra sala quando devidamente instruído."
+  },
+  {
+    "id": "1_040",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "040",
+    "text": "040. Coopera com pedidos dos adultos, 75% do tempo."
+  },
+  {
+    "id": "1_041",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "041",
+    "text": "041. Compreende texturas: duro, mole, macio."
+  },
+  {
+    "id": "1_042",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "042",
+    "text": "042. Presta atenção por cinco minutos, enquanto é lida uma história."
+  },
+  {
+    "id": "1_043",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "043",
+    "text": "043. Executa uma série de duas ordens não relacionadas."
+  },
+  {
+    "id": "1_044",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "044",
+    "text": "044. Aponta para dez partes do corpo, obedecendo a ordem verbal."
+  },
+  {
+    "id": "1_045",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "045",
+    "text": "045. Aponta para menino e menina por ordem verbal."
+  },
+  {
+    "id": "1_046",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "046",
+    "text": "046. Segue regras, imitando ações de outras crianças."
+  },
+  {
+    "id": "1_047",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "047",
+    "text": "047. Executa uma série de três instruções relacionadas."
+  },
+  {
+    "id": "1_048",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "048",
+    "text": "048. É capaz de achar um par de objetos ou gravuras a pedido."
+  },
+  {
+    "id": "1_049",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "049",
+    "text": "049. É capaz de achar: parte de cima, parte de baixo de objetos a pedido."
+  },
+  {
+    "id": "1_050",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "050",
+    "text": "050. É capaz de apontar absurdos numa gravura."
+  },
+  {
+    "id": "1_051",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "051",
+    "text": "051. Combina símbolos (números e letras)"
+  },
+  {
+    "id": "1_052",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "052",
+    "text": "052. Coloca objetos: atrás de, do lado de, próximo de."
+  },
+  {
+    "id": "1_053",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "053",
+    "text": "053. Aponta parte que falta em objetos, representados em gravuras."
+  },
+  {
+    "id": "1_054",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "054",
+    "text": "054. Segue regras de raciocínio verbal."
+  },
+  {
+    "id": "1_055",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "055",
+    "text": "055. Representa partes de uma história, dramatizando com fantoches ou gestos."
+  },
+  {
+    "id": "1_056",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "056",
+    "text": "056. Pode apontar para alguns, muitos, vários."
+  },
+  {
+    "id": "1_057",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "057",
+    "text": "057. É capaz de apontar para maioria, menos de, todos, poucos."
+  },
+  {
+    "id": "1_058",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "058",
+    "text": "058. Aponta objetos pela metade ou inteiros."
+  },
+  {
+    "id": "1_059",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "059",
+    "text": "059. Conhece o nome de dez numerais."
+  },
+  {
+    "id": "1_060",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "060",
+    "text": "060. Balbucia."
+  },
+  {
+    "id": "1_061",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "061",
+    "text": "061. Vocaliza em resposta a atenção."
+  },
+  {
+    "id": "1_062",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "062",
+    "text": "062. Olha para as próprias mãos, sorri e vocaliza com freqüência."
+  },
+  {
+    "id": "1_063",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "063",
+    "text": "063. Sorri e vocaliza ao ver sua imagem refletindo no espelho."
+  },
+  {
+    "id": "1_064",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "064",
+    "text": "064. Chacoalha ou aperta objetos objeto colocados na mão emitindo sons não intencionais."
+  },
+  {
+    "id": "1_065",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "065",
+    "text": "065. Vocaliza para chamar a atenção."
+  },
+  {
+    "id": "1_066",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "066",
+    "text": "066. Repete as mesmas sílabas duas a três vezes."
+  },
+  {
+    "id": "1_067",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "067",
+    "text": "067. Aperta ou chacoalha brinquedos para produzir som, imitando-os."
+  },
+  {
+    "id": "1_068",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "068",
+    "text": "068. Repete sons feitos por outras pessoas."
+  },
+  {
+    "id": "1_069",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "069",
+    "text": "069. Imita padrões de entonação de outras pessoas."
+  },
+  {
+    "id": "1_070",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "070",
+    "text": "070. Combina duas sílabas diferentes em brinquedo vocal."
+  },
+  {
+    "id": "1_071",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "071",
+    "text": "071. Acena dizendo adeus, imitando o adulto."
+  },
+  {
+    "id": "1_072",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "072",
+    "text": "072.  Usa  palavras  isoladas  com  significado  para  designar  objetos  ou pessoas."
+  },
+  {
+    "id": "1_073",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "073",
+    "text": "073. Retira a mão, dizendo não, não quando perto de objetos proibidos, se lembrada."
+  },
+  {
+    "id": "1_074",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "074",
+    "text": "074. Saúda companheiros e adultos familiares, quando lhe pedem."
+  },
+  {
+    "id": "1_075",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "075",
+    "text": "075. Usa “dá”, “mais”, “quer”."
+  },
+  {
+    "id": "1_076",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "076",
+    "text": "076. Diz “acabou”."
+  },
+  {
+    "id": "1_077",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "077",
+    "text": "077. Produz som animal ou usa o mesmo para nomear animal (au-au, mu)."
+  },
+  {
+    "id": "1_078",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "078",
+    "text": "078. Diz cinco palavras diferentes – pode usar a mesma palavra para referir-se a diferentes objetos."
+  },
+  {
+    "id": "1_079",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "079",
+    "text": "079. Responde sim/não a perguntas com respostas afirmativas ou negativas."
+  },
+  {
+    "id": "1_080",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "080",
+    "text": "080. Responde perguntas “o que é isto?” com nome de objeto conhecido pela criança."
+  },
+  {
+    "id": "1_081",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "081",
+    "text": "081. Combina o uso da palavra e gestos para tornar os desejos conhecidos"
+  },
+  {
+    "id": "1_082",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "082",
+    "text": "082. Nomeia três partes do corpo de uma boneca ou outra pessoa."
+  },
+  {
+    "id": "1_083",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "083",
+    "text": "083. Designa quatro brinquedos."
+  },
+  {
+    "id": "1_084",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "084",
+    "text": "084. Pede alimento pelo nome, quando lhe mostram (leite, pão, doce, biscoito)."
+  },
+  {
+    "id": "1_085",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "085",
+    "text": "085. Diz o próprio nome ou apelido quando lhe pedem."
+  },
+  {
+    "id": "1_086",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "086",
+    "text": "086. Usa não quando fala."
+  },
+  {
+    "id": "1_087",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "087",
+    "text": "087. Faz perguntas pela entonação crescente no fim da palavra ou frase."
+  },
+  {
+    "id": "1_088",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "088",
+    "text": "088. Diz o nome de cinco outros membros da família incluindo animais domésticos."
+  },
+  {
+    "id": "1_089",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "089",
+    "text": "089. Nomeia quatro gravuras."
+  },
+  {
+    "id": "1_090",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "090",
+    "text": "090. Responde a pergunta “onde é?”."
+  },
+  {
+    "id": "1_091",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "091",
+    "text": "091. Nomeia objetos que emitem sons."
+  },
+  {
+    "id": "1_092",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "092",
+    "text": "092. Combina verbo e substantivo com “este”, “aqui”, emitindo duas palavras (cadeira aqui)."
+  },
+  {
+    "id": "1_093",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "093",
+    "text": "093. Combina E em frases de dois itens."
+  },
+  {
+    "id": "1_094",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "094",
+    "text": "094. Combina substantivo + adjetivo em frases de duas palavras (bola feia)."
+  },
+  {
+    "id": "1_095",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "095",
+    "text": "095. Combina duas palavras para exprimir posse ( carro papai)."
+  },
+  {
+    "id": "1_096",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "096",
+    "text": "096. Combina substantivo + verbo em frase de duas palavras (papai vai)."
+  },
+  {
+    "id": "1_097",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "097",
+    "text": "097. Refere-se a si mesma pelo próprio nome."
+  },
+  {
+    "id": "1_098",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "098",
+    "text": "098. Responde a pergunta: “o que está fazendo?”, para atividades comuns."
+  },
+  {
+    "id": "1_099",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "099",
+    "text": "099. Verbaliza a necessidade de ir ao banheiro."
+  },
+  {
+    "id": "1_100",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "100",
+    "text": "100. Diz se é menino ou menina quando perguntada."
+  },
+  {
+    "id": "1_101",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "101",
+    "text": "101. Usa artigo na fala."
+  },
+  {
+    "id": "1_102",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "102",
+    "text": "102. Aplica a regra regular de gênero."
+  },
+  {
+    "id": "1_103",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "103",
+    "text": "103. Usa gerúndio."
+  },
+  {
+    "id": "1_104",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "104",
+    "text": "104. Usa algumas formas de presente."
+  },
+  {
+    "id": "1_105",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "105",
+    "text": "105. Usa algumas formas de passado."
+  },
+  {
+    "id": "1_106",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "106",
+    "text": "106. Pergunta “o que é isso?”."
+  },
+  {
+    "id": "1_107",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "107",
+    "text": "107. Diz “por favor”, “dá licença” e “obrigado”, quando lembrada."
+  },
+  {
+    "id": "1_108",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "108",
+    "text": "108. Controla volume de voz 90% do tempo."
+  },
+  {
+    "id": "1_109",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "109",
+    "text": "109. Responde a pergunta “quem?” com o nome."
+  },
+  {
+    "id": "1_110",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "110",
+    "text": "110. Aplica algumas regras de plural regular (nome e verbo)."
+  },
+  {
+    "id": "1_111",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "111",
+    "text": "111. Usa alguns substantivos por classe (brinquedo, animal)."
+  },
+  {
+    "id": "1_112",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "112",
+    "text": "112. Nomeia seus próprios desenhos."
+  },
+  {
+    "id": "1_113",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "113",
+    "text": "113. Canta e dança conforme a música."
+  },
+  {
+    "id": "1_114",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "114",
+    "text": "114. Saúda adultos, familiares sem precisar ser lembrado."
+  },
+  {
+    "id": "1_115",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "115",
+    "text": "115. Diz eu, meu, mim, em vez do próprio nome."
+  },
+  {
+    "id": "1_116",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "116",
+    "text": "116. Pede permissão para usar brinquedo com o qual o companheiro está brincando."
+  },
+  {
+    "id": "1_117",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "117",
+    "text": "117. Diz “por favor” 80% do tempo e “obrigado”, sem precisar ser lembrada."
+  },
+  {
+    "id": "1_118",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "118",
+    "text": "118. Responde ao telefone, chama um adulto, ou conversa com pessoa que lhe é familiar."
+  },
+  {
+    "id": "1_119",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "119",
+    "text": "119. Dá nome completo, quando lhe pedem."
+  },
+  {
+    "id": "1_120",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "120",
+    "text": "120. Responde a perguntas simples “como?”."
+  },
+  {
+    "id": "1_121",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "121",
+    "text": "121. Relata experiências imediatas."
+  },
+  {
+    "id": "1_122",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "122",
+    "text": "122. Diz como são usados objetos comuns."
+  },
+  {
+    "id": "1_123",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "123",
+    "text": "123. Expressa ocorrências futuras."
+  },
+  {
+    "id": "1_124",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "124",
+    "text": "124. Usa alguns plurais irregulares comuns (cães)."
+  },
+  {
+    "id": "1_125",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "125",
+    "text": "125. Relata dois acontecimentos em ordem de ocorrência."
+  },
+  {
+    "id": "1_126",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "126",
+    "text": "126. Designa pelo nome objetos grandes e pequenos."
+  },
+  {
+    "id": "1_127",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "127",
+    "text": "127. Nomeia noções espaciais: em cima, em baixo, dentro, atrás."
+  },
+  {
+    "id": "1_128",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "128",
+    "text": "128. Diz se um objeto é pesado ou leve."
+  },
+  {
+    "id": "1_129",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "129",
+    "text": "129. Descreve dois eventos ou personagens de histórias conhecidas."
+  },
+  {
+    "id": "1_130",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "130",
+    "text": "130. Repete brincadeiras de dedos com palavras e ações."
+  },
+  {
+    "id": "1_131",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "131",
+    "text": "131. Diz quais os objetos que combinam."
+  },
+  {
+    "id": "1_132",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "132",
+    "text": "132. Conta até três em imitação."
+  },
+  {
+    "id": "1_133",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "133",
+    "text": "133. Conta até dez objetos imitando."
+  },
+  {
+    "id": "1_134",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "134",
+    "text": "134. Nomeia objetos como iguais e diferentes."
+  },
+  {
+    "id": "1_135",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "135",
+    "text": "135. Nomeia três cores a pedido."
+  },
+  {
+    "id": "1_136",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "136",
+    "text": "136. Nomeia três formas."
+  },
+  {
+    "id": "1_137",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "137",
+    "text": "137. Pede  ajuda enquanto está  tendo dificuldades (ida ao banheiro, ou pegar uma bebida)."
+  },
+  {
+    "id": "1_138",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "138",
+    "text": "138. Contribui para conversa adulta."
+  },
+  {
+    "id": "1_139",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "139",
+    "text": "139. Repete rimas, canções ou danças para outras pessoas."
+  },
+  {
+    "id": "1_140",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "140",
+    "text": "140. Pede desculpas, sem precisar ser lembrada, 75% do tempo."
+  },
+  {
+    "id": "1_141",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "141",
+    "text": "141. Pede licença para usar objetos pertencentes a outras pessoas 75% do tempo."
+  },
+  {
+    "id": "1_142",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "142",
+    "text": "142. Usa o condicional (se + verbo)."
+  },
+  {
+    "id": "1_143",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "143",
+    "text": "143. Usa sentença composta, “vou ao banheiro e tomar água”..."
+  },
+  {
+    "id": "1_144",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "144",
+    "text": "144. Usa contrações."
+  },
+  {
+    "id": "1_145",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "145",
+    "text": "145. Diz antônimos de palavras conhecidas."
+  },
+  {
+    "id": "1_146",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "146",
+    "text": "146. Conta histórias familiares sem gravuras, com pistas."
+  },
+  {
+    "id": "1_147",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "147",
+    "text": "147. Designa gravura que não pertence a uma classe específica (que não seja classe de animais)."
+  },
+  {
+    "id": "1_148",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "148",
+    "text": "148. Usa sentenças complexas (quero comer porque estou com fome)."
+  },
+  {
+    "id": "1_149",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "149",
+    "text": "149. É capaz de dizer se um som é alto ou baixo."
+  },
+  {
+    "id": "1_150",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "150",
+    "text": "150. Nomeia duas texturas (áspero, macio)."
+  },
+  {
+    "id": "1_151",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "151",
+    "text": "151. Lembra de quatro objetos vistos em gravuras."
+  },
+  {
+    "id": "1_152",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "152",
+    "text": "152. Repete rimas familiares."
+  },
+  {
+    "id": "1_153",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "153",
+    "text": "153. Diz o que está faltando, quando um objeto é removido de um grupo de três."
+  },
+  {
+    "id": "1_154",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "154",
+    "text": "154. Designa oito cores."
+  },
+  {
+    "id": "1_155",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "155",
+    "text": "155. Dá a cor de objetos designados."
+  },
+  {
+    "id": "1_156",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "156",
+    "text": "156. Nomeia posição de objetos 1º, 2º, 3º e último."
+  },
+  {
+    "id": "1_157",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "157",
+    "text": "157. Associa-se a conversa na hora da refeição."
+  },
+  {
+    "id": "1_158",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "158",
+    "text": "158. Diz seu endereço."
+  },
+  {
+    "id": "1_159",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "159",
+    "text": "159. Diz seu número de telefone."
+  },
+  {
+    "id": "1_160",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "160",
+    "text": "160. Conta piada simples."
+  },
+  {
+    "id": "1_161",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "161",
+    "text": "161. Relata experiências diárias."
+  },
+  {
+    "id": "1_162",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "162",
+    "text": "162. Descreve localização ou movimento, por meio de:  para longe de, para, em cima."
+  },
+  {
+    "id": "1_163",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "163",
+    "text": "163. Responde a uma pergunta, “por que” com uma explicação."
+  },
+  {
+    "id": "1_164",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "164",
+    "text": "164.  Faz  um  conjunto  e  relata  três  a  cinco  partes  de  uma  história  de sequência."
+  },
+  {
+    "id": "1_165",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "165",
+    "text": "165. Responde a perguntas “o que acontece se...” (você derrubar um ovo)."
+  },
+  {
+    "id": "1_166",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "166",
+    "text": "166. Usa ontem e amanhã com significado."
+  },
+  {
+    "id": "1_167",
+    "area": "II - ÁREA LINGUAGEM",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "167",
+    "text": "167. Pergunta o significado de palavras novas ou pouco familiares."
+  },
+  {
+    "id": "2_001",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "001",
+    "text": "001. Tenta alcançar a mamadeira."
+  },
+  {
+    "id": "2_002",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "002",
+    "text": "002. Segura a mamadeira enquanto bebe."
+  },
+  {
+    "id": "2_003",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "003",
+    "text": "003.  Direciona  a  mamadeira,  guiando-se  no  sentido  da  boca  ou empurrando-a para o lado."
+  },
+  {
+    "id": "2_004",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "004",
+    "text": "004. Bebe na xícara quando segurada pelo pai ou mãe."
+  },
+  {
+    "id": "2_005",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "005",
+    "text": "005. Alimenta-se com os dedos."
+  },
+  {
+    "id": "2_006",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "006",
+    "text": "006. Segura e bebe na xícara usando as duas mãos."
+  },
+  {
+    "id": "2_007",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "007",
+    "text": "007. Com ajuda leva à boca uma colher cheia de alimentos."
+  },
+  {
+    "id": "2_008",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "008",
+    "text": "008. Estende as pernas e os braços enquanto se veste."
+  },
+  {
+    "id": "2_009",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "009",
+    "text": "009. Come alimentos com colher independentemente."
+  },
+  {
+    "id": "2_010",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "010",
+    "text": "010. Segura e bebe na xícara utilizando uma só mão."
+  },
+  {
+    "id": "2_011",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "011",
+    "text": "011. Molha as mãos e bate-as no rosto em imitação."
+  },
+  {
+    "id": "2_012",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "012",
+    "text": "012. Senta-se no pinico e assento sanitário infantil por cinco minutos."
+  },
+  {
+    "id": "2_013",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "013",
+    "text": "013. Puxa as meias para tirá-las."
+  },
+  {
+    "id": "2_014",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "014",
+    "text": "014. Empurra os braços para dentro das mangas e as pernas para dentro das calças."
+  },
+  {
+    "id": "2_015",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "015",
+    "text": "015. Tira os sapatos quando os laços estão desatados."
+  },
+  {
+    "id": "2_016",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "016",
+    "text": "016. Tenta tirar o casaco quando desabotoado."
+  },
+  {
+    "id": "2_017",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "017",
+    "text": "017. Abaixa as calças quando abertas."
+  },
+  {
+    "id": "2_018",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "018",
+    "text": "018. Avisa ou dá sinal quando molhada."
+  },
+  {
+    "id": "2_019",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "019",
+    "text": "019. Alimenta-se utilizando colher e xícara derramando um pouco."
+  },
+  {
+    "id": "2_020",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "020",
+    "text": "020. Pega a toalha de papel da mão do técnico e passa na própria mão e rosto."
+  },
+  {
+    "id": "2_021",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "021",
+    "text": "021. Mastiga e engole somente substâncias comestíveis."
+  },
+  {
+    "id": "2_022",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "022",
+    "text": "022. Espeta alimento com o garfo."
+  },
+  {
+    "id": "2_023",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "023",
+    "text": "023. Urina e evacua no urinol, pelo menos três vezes ao dia colocada."
+  },
+  {
+    "id": "2_024",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "024",
+    "text": "024. Tira a calça quando aberta."
+  },
+  {
+    "id": "2_025",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "025",
+    "text": "025. Fecha e abre zíper grande sem enganchar os terminais."
+  },
+  {
+    "id": "2_026",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "026",
+    "text": "026. Tira as meias."
+  },
+  {
+    "id": "2_027",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "027",
+    "text": "027. Tira o casaco quando aberto."
+  },
+  {
+    "id": "2_028",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "028",
+    "text": "028. Tenta colocar o seu próprio sapato."
+  },
+  {
+    "id": "2_029",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "029",
+    "text": "029. Usa gestos ou palavras que indiquem a necessidade de ir ao banheiro."
+  },
+  {
+    "id": "2_030",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "030",
+    "text": "030. Escova os dentes com ajuda."
+  },
+  {
+    "id": "2_031",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "031",
+    "text": "031. Tira a camiseta com ajuda."
+  },
+  {
+    "id": "2_032",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "032",
+    "text": "032. Usa o banheiro para evacuar com, no máximo um acidente diurno por semana."
+  },
+  {
+    "id": "2_033",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "033",
+    "text": "033. Pega água da torneira sem ajuda, quando lhe são oferecidos banquinhos ou degraus."
+  },
+  {
+    "id": "2_034",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "034",
+    "text": "034. Lava as mãos e o rosto usando sabonete, quando o adulto regula a água."
+  },
+  {
+    "id": "2_035",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "035",
+    "text": "035. Pede para ir ao banheiro durante o dia, a tempo de evitar acidente."
+  },
+  {
+    "id": "2_036",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "036",
+    "text": "036. Permanece seca durante as sonecas diurnas."
+  },
+  {
+    "id": "2_037",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "037",
+    "text": "037. Evita perigos tais como: cantos pontiagudos, escadas, etc..."
+  },
+  {
+    "id": "2_038",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "038",
+    "text": "038. Quando lembrada usa guardanapos."
+  },
+  {
+    "id": "2_039",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "039",
+    "text": "039. Junta alimentos com garfo e o leva à boca."
+  },
+  {
+    "id": "2_040",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "040",
+    "text": "040. Põe líquido de uma jarra pequena num copo, sem ajuda."
+  },
+  {
+    "id": "2_041",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "041",
+    "text": "041. Inicia tomar banho sozinha."
+  },
+  {
+    "id": "2_042",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "042",
+    "text": "042. Coloca meias com ajuda."
+  },
+  {
+    "id": "2_043",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "043",
+    "text": "043. Encontra as mangas iniciando o vestir (camisa, suéter, casaco)."
+  },
+  {
+    "id": "2_044",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "044",
+    "text": "044. Acorda seca duas manhãs em sete."
+  },
+  {
+    "id": "2_045",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "045",
+    "text": "045. Inicia o desabotoar de botões grandes na prancha."
+  },
+  {
+    "id": "2_046",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "046",
+    "text": "046. Abre colchetes de pressão ou de gancho."
+  },
+  {
+    "id": "2_047",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "047",
+    "text": "047. No lanche alimenta-se sozinha sem exigir muita atenção."
+  },
+  {
+    "id": "2_048",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "048",
+    "text": "048. Seca as mãos sem ajuda quando lhe dão a toalha."
+  },
+  {
+    "id": "2_049",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "049",
+    "text": "049. Coloca a camiseta com ajuda."
+  },
+  {
+    "id": "2_050",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "050",
+    "text": "050. Limpa o nariz quando lhe lembram."
+  },
+  {
+    "id": "2_051",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "051",
+    "text": "051. O menino urina na toalete permanecendo em pé e a menina, sentada."
+  },
+  {
+    "id": "2_052",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "052",
+    "text": "052. Despe-se e veste-se com pouco auxílio, excetuando o fecho."
+  },
+  {
+    "id": "2_053",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "053",
+    "text": "053.  Inicia  fechar ou enganchar fecho de roupa, colchete de  pressão  e gancho."
+  },
+  {
+    "id": "2_054",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "054",
+    "text": "054. Assoa o nariz quando lembrada."
+  },
+  {
+    "id": "2_055",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "055",
+    "text": "055. Evita perigo simples (fogão quente, vidro quebrado)."
+  },
+  {
+    "id": "2_056",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "056",
+    "text": "056. Coloca casaco no gancho, colocado a sua altura."
+  },
+  {
+    "id": "2_057",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "057",
+    "text": "057. Escova os dentes quando lhe dão instruções verbais."
+  },
+  {
+    "id": "2_058",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "058",
+    "text": "058. Desabotoa botões grandes sobre a prancha ou jaqueta colocada sobre a mesa."
+  },
+  {
+    "id": "2_059",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "059",
+    "text": "059. Calça  sapatos."
+  },
+  {
+    "id": "2_060",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "060",
+    "text": "060. Calça meias."
+  },
+  {
+    "id": "2_061",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "061",
+    "text": "061. Dadas às instruções coloca casaco no cabide e recoloca o cabide no lugar."
+  },
+  {
+    "id": "2_062",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "062",
+    "text": "062. Corta alimentos macios com faca (ex. salsicha, banana)."
+  },
+  {
+    "id": "2_063",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "063",
+    "text": "063. Reconhece a parte da frente da roupa."
+  },
+  {
+    "id": "2_064",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "064",
+    "text": "064. Limpa coisas derramadas usando um pano."
+  },
+  {
+    "id": "2_065",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "065",
+    "text": "065. Evita venenos e todas as substâncias perigosas."
+  },
+  {
+    "id": "2_066",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "066",
+    "text": "066. Desabotoa a própria roupa."
+  },
+  {
+    "id": "2_067",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "067",
+    "text": "067. Limpa seu lugar na mesa, tirando todos os utensílios."
+  },
+  {
+    "id": "2_068",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "068",
+    "text": "068. Encaixa os terminais do zíper."
+  },
+  {
+    "id": "2_069",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "069",
+    "text": "069. Lava as mãos e o rosto sem auxílio (regula o uso da torneira e usa sabonete)."
+  },
+  {
+    "id": "2_070",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "070",
+    "text": "070. Reconhece e usa adequadamente os talheres."
+  },
+  {
+    "id": "2_071",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "071",
+    "text": "071. Acorda durante a noite para usar o banheiro, ou fica seca durante a noite toda."
+  },
+  {
+    "id": "2_072",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "072",
+    "text": "072.  Limpa  e  assoa  o  nariz,  na  maioria  das  vezes,  sem  precisar  ser lembrada."
+  },
+  {
+    "id": "2_073",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "073",
+    "text": "073. Inicia o abotoar na prancha."
+  },
+  {
+    "id": "2_074",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "074",
+    "text": "074. Banha-se sozinha com exceção das costas, pescoço e orelhas."
+  },
+  {
+    "id": "2_075",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "075",
+    "text": "075. Usa faca para espalhar substâncias moles no pão."
+  },
+  {
+    "id": "2_076",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "076",
+    "text": "076. Desafivela e afivela cintos em vestidos ou calças e sapatos."
+  },
+  {
+    "id": "2_077",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "077",
+    "text": "077. Abotoa botões grandes na prancha ou jaqueta colocada em frente à criança."
+  },
+  {
+    "id": "2_078",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "078",
+    "text": "078. Veste-se por completo incluindo todos os fechos da parte da roupa, excetuando os laços."
+  },
+  {
+    "id": "2_079",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "079",
+    "text": "079. Serve-se sozinha à mesa com o adulto segurando a travessa."
+  },
+  {
+    "id": "2_080",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "080",
+    "text": "080. Ajuda arrumar a mesa colocando corretamente os pratos, guardanapos e talheres."
+  },
+  {
+    "id": "2_081",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "081",
+    "text": "081. Escova os dentes."
+  },
+  {
+    "id": "2_082",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "082",
+    "text": "082. Vai ao banheiro a tempo, despe-se, puxa a descarga e veste-se sem ajuda."
+  },
+  {
+    "id": "2_083",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "083",
+    "text": "083. Penteia ou escova seu próprio cabelo."
+  },
+  {
+    "id": "2_084",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "084",
+    "text": "084. Pendura roupa no cabide."
+  },
+  {
+    "id": "2_085",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "085",
+    "text": "085. Anda pela vizinhança sem necessitar de supervisão constante."
+  },
+  {
+    "id": "2_086",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "086",
+    "text": "086. Passa o cordão nos sapatos."
+  },
+  {
+    "id": "2_087",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "087",
+    "text": "087. Dá nó."
+  },
+  {
+    "id": "2_088",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "088",
+    "text": "088. Dá laço."
+  },
+  {
+    "id": "2_089",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "089",
+    "text": "089. Executa facilmente uma tarefa quando lhe pedem – varrer sala, limpar mesa, guardar material."
+  },
+  {
+    "id": "2_090",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "090",
+    "text": "090. Veste ou despe agasalho conforme a temperatura ambiental."
+  },
+  {
+    "id": "2_091",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "091",
+    "text": "091. Para na guia da calçada, olha os dois lados e atravessa a rua sem necessitar de aviso."
+  },
+  {
+    "id": "2_092",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "092",
+    "text": "092. Serve-se sozinha à mesa e passa a travessa com alimento."
+  },
+  {
+    "id": "2_093",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "093",
+    "text": "093. Prepara suco sem ajuda."
+  },
+  {
+    "id": "2_094",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "094",
+    "text": "094. Executa uma tarefa sob sua responsabilidade, sem ser lembrada."
+  },
+  {
+    "id": "2_095",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "095",
+    "text": "095. Ajusta a temperatura da água, ao lavar as mãos."
+  },
+  {
+    "id": "2_096",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "096",
+    "text": "096. Prepara alimentos simples (sanduíches por exemplo)."
+  },
+  {
+    "id": "2_097",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "097",
+    "text": "097. Vai até a escola, parque ou loja a dos quarteirões da casa, sozinho."
+  },
+  {
+    "id": "2_098",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "098",
+    "text": "098. Encontra o banheiro correto (de acordo com  o sexo em lugar público)."
+  },
+  {
+    "id": "2_099",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "099",
+    "text": "099. Abre um envelope de carta."
+  },
+  {
+    "id": "2_100",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "100",
+    "text": "100. Confere frente e avesso."
+  },
+  {
+    "id": "2_101",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "101",
+    "text": "101. Apanha carrega e coloca no lugar bandeja de refeitório."
+  },
+  {
+    "id": "2_102",
+    "area": "III – ÁREA CUIDADOS PRÓPRIOS",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "102",
+    "text": "102. Amarra laços na própria roupa,"
+  },
+  {
+    "id": "3_001",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "001",
+    "text": "001. Abre a boca para a mamadeira ou seio quando o bico toca a boca."
+  },
+  {
+    "id": "3_002",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "002",
+    "text": "002. Indica sensibilidade ao contato do corpo através do seguintes comportamentos: ficar quieta, chorar ou movimentar o corpo."
+  },
+  {
+    "id": "3_003",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "003",
+    "text": "003. Vira a cabeça em direção ao bico quando a bochecha e tocada."
+  },
+  {
+    "id": "3_004",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "004",
+    "text": "004. Olha na direção ou movimenta o corpo em resposta ao som."
+  },
+  {
+    "id": "3_005",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "005",
+    "text": "005.  Olha  para  a  pessoa,  fala  ou  movimenta-se  tentando  ganhar  sua atenção."
+  },
+  {
+    "id": "3_006",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "006",
+    "text": "006. Fica calma ou muda o movimento do corpo em resposta a presença de uma pessoa."
+  },
+  {
+    "id": "3_007",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "007",
+    "text": "007.  Mostra  resposta  a  voz  adulta  através  de  movimento  de  corpo  ou parando de chorar."
+  },
+  {
+    "id": "3_008",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "008",
+    "text": "008. Chora diferentemente devido a desconfortos diversos."
+  },
+  {
+    "id": "3_009",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "009",
+    "text": "009. Segue visualmente um objeto na linha mediana do corpo."
+  },
+  {
+    "id": "3_010",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "010",
+    "text": "010. Segue a luz com os olhos, virando a cabeça."
+  },
+  {
+    "id": "3_011",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "011",
+    "text": "011. Segue um som movimentando a cabeça."
+  },
+  {
+    "id": "3_012",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "012",
+    "text": "012. Observa sua mão."
+  },
+  {
+    "id": "3_013",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "013",
+    "text": "013. Abre a boca, começa a sugar antes do bico tocar a boca."
+  },
+  {
+    "id": "3_014",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "014",
+    "text": "014. Mantém contato visual durante três segundos."
+  },
+  {
+    "id": "3_015",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "015",
+    "text": "015. Golpeia objetos."
+  },
+  {
+    "id": "3_016",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "016",
+    "text": "016. Segue um objeto com os olhos através de uma área de 180º."
+  },
+  {
+    "id": "3_017",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "017",
+    "text": "017. Procura localizar o som virando a cabeça na sua direção."
+  },
+  {
+    "id": "3_018",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "018",
+    "text": "018. Tenta alcançar objetos e esforça-se para agarrá-los."
+  },
+  {
+    "id": "3_019",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "019",
+    "text": "019. Segura objeto utilizando preensão palmar durante trinta segundo com libertação involuntária."
+  },
+  {
+    "id": "3_020",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "020",
+    "text": "020. Olha ao redor quando carregada."
+  },
+  {
+    "id": "3_021",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "021",
+    "text": "021. Tira pano do rosto que obscurece sua visão."
+  },
+  {
+    "id": "3_022",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "022",
+    "text": "022. Procura objeto que tenha sido removido da sua linha de visão."
+  },
+  {
+    "id": "3_023",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "023",
+    "text": "023. Despeja objeto de um recipiente."
+  },
+  {
+    "id": "3_024",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "024",
+    "text": "024. Tira objetos do recipiente imitando."
+  },
+  {
+    "id": "3_025",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "025",
+    "text": "025. Coloca objeto no recipiente imitando."
+  },
+  {
+    "id": "3_026",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "026",
+    "text": "026. Chacoalha brinquedo sonoro segurando pelo fio."
+  },
+  {
+    "id": "3_027",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "027",
+    "text": "027. Transfere um objeto de uma mão para outra a fim de pegar outro objeto."
+  },
+  {
+    "id": "3_028",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "028",
+    "text": "028. Deixa cair e apanha um brinquedo."
+  },
+  {
+    "id": "3_029",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "029",
+    "text": "029. Encontra um objeto escondido debaixo de um recipiente."
+  },
+  {
+    "id": "3_030",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "030",
+    "text": "030. Gira círculo da prancha de formas."
+  },
+  {
+    "id": "3_031",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "031",
+    "text": "031. Executa gestos simples a pedido."
+  },
+  {
+    "id": "3_032",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "032",
+    "text": "032. Coloca um objeto num recipiente seguindo instrução verbal."
+  },
+  {
+    "id": "3_033",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "033",
+    "text": "033. Coloca três objetos num recipiente esvaziando-o depois."
+  },
+  {
+    "id": "3_034",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "034",
+    "text": "034. Empurra três cubos como se fosse trem em imitação."
+  },
+  {
+    "id": "3_035",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "035",
+    "text": "035. Tira pinos redondos da prancha perfurada."
+  },
+  {
+    "id": "3_036",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "036",
+    "text": "036. Tira seis objetos de um recipiente, um de cada vez."
+  },
+  {
+    "id": "3_037",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "037",
+    "text": "037. Aponta para uma parte do corpo."
+  },
+  {
+    "id": "3_038",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "038",
+    "text": "038. Empilha três cubos imitando."
+  },
+  {
+    "id": "3_039",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "039",
+    "text": "039. Rabisca."
+  },
+  {
+    "id": "3_040",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "040",
+    "text": "040. Aponta para si mesma quando lhe perguntam “onde está?”."
+  },
+  {
+    "id": "3_041",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "041",
+    "text": "041. Coloca cinco pinos redondos na prancha de pinos, a pedido."
+  },
+  {
+    "id": "3_042",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "042",
+    "text": "042. Aponta para uma figura nomeada."
+  },
+  {
+    "id": "3_043",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "043",
+    "text": "043. Vira folhas de um livro duas a três de cada vez para achar uma figura que foi nomeada."
+  },
+  {
+    "id": "3_044",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "044",
+    "text": "044. Coloca quatro argolas num pino."
+  },
+  {
+    "id": "3_045",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "045",
+    "text": "045. Tira pinos de três centímetros da prancha de pinos."
+  },
+  {
+    "id": "3_046",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "046",
+    "text": "046. Coloca pinos de três centímetros na prancha de pinos."
+  },
+  {
+    "id": "3_047",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "047",
+    "text": "047. Constrói torre de três blocos imitando."
+  },
+  {
+    "id": "3_048",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "048",
+    "text": "048. Imita movimento circular."
+  },
+  {
+    "id": "3_049",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "049",
+    "text": "049. Completa prancha de formas de três peças."
+  },
+  {
+    "id": "3_050",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "050",
+    "text": "050. Combina objetos semelhantes."
+  },
+  {
+    "id": "3_051",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "051",
+    "text": "051. Desenha uma linha vertical imitando."
+  },
+  {
+    "id": "3_052",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "052",
+    "text": "052. Desenha uma linha horizontal imitando."
+  },
+  {
+    "id": "3_053",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "053",
+    "text": "053. Desenha um círculo em imitação."
+  },
+  {
+    "id": "3_054",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "054",
+    "text": "054. Aponta para três cores quando nomeadas."
+  },
+  {
+    "id": "3_055",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "055",
+    "text": "055. Enfia quatro contas grandes."
+  },
+  {
+    "id": "3_056",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "056",
+    "text": "056. Vira maçanetas de porta, cabos, etc..."
+  },
+  {
+    "id": "3_057",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "057",
+    "text": "057. Constrói torre com cinco a seis cubos imitando."
+  },
+  {
+    "id": "3_058",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "058",
+    "text": "058. Vira páginas uma de cada vez."
+  },
+  {
+    "id": "3_059",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "059",
+    "text": "059. Desembrulha objetos pequenos."
+  },
+  {
+    "id": "3_060",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "060",
+    "text": "060. Dobra papel pela metade imitando."
+  },
+  {
+    "id": "3_061",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "061",
+    "text": "061. Desmonta e monta de novo brinquedo desmontável."
+  },
+  {
+    "id": "3_062",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "062",
+    "text": "062. Faz bolas de argila."
+  },
+  {
+    "id": "3_063",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "063",
+    "text": "063. Desparafusa brinquedos de encaixe."
+  },
+  {
+    "id": "3_064",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "064",
+    "text": "064. Aponta para grande ou pequeno quando lhe pedem."
+  },
+  {
+    "id": "3_065",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "065",
+    "text": "065. Combina três cores."
+  },
+  {
+    "id": "3_066",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "066",
+    "text": "066. Coloca objetos “em cima de”, “dentro”, “fora”."
+  },
+  {
+    "id": "3_067",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "067",
+    "text": "067. Monta um brinquedo de encaixe de quatro partes."
+  },
+  {
+    "id": "3_068",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "068",
+    "text": "068. Combina uma forma geométrica com a figura correspondente."
+  },
+  {
+    "id": "3_069",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 2 A 3 ANOS",
+    "number": "069",
+    "text": "069. Reconhece músicas que lhe são familiares."
+  },
+  {
+    "id": "3_070",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "070",
+    "text": "070. Encontra livro específico quando lhe pedem."
+  },
+  {
+    "id": "3_071",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "071",
+    "text": "071. Aponta para dez partes do corpo seguindo uma ordem verbal."
+  },
+  {
+    "id": "3_072",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "072",
+    "text": "072. Junta duas partes para formar um todo (figura)."
+  },
+  {
+    "id": "3_073",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "073",
+    "text": "073. Combina um a um três ou  mais objetos."
+  },
+  {
+    "id": "3_074",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "074",
+    "text": "074. Desenha uma cruz em imitação."
+  },
+  {
+    "id": "3_075",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "075",
+    "text": "075. A criança diz quais os objetos que se usam junto, por imitação."
+  },
+  {
+    "id": "3_076",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "076",
+    "text": "076. Constrói uma ponte com três cubos, imitando."
+  },
+  {
+    "id": "3_077",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "077",
+    "text": "077. Combina seqüência ou padrão de cubos ou contas,"
+  },
+  {
+    "id": "3_078",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "078",
+    "text": "078. Copia linha ondulada."
+  },
+  {
+    "id": "3_079",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "079",
+    "text": "079. Acrescenta perna e / ou braço ao desenho incompleto de uma pessoa."
+  },
+  {
+    "id": "3_080",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "080",
+    "text": "080. Aponta para três figuras simples quando nomeadas."
+  },
+  {
+    "id": "3_081",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "081",
+    "text": "081. Combina texturas."
+  },
+  {
+    "id": "3_082",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "082",
+    "text": "082. Junta quebra-cabeças ou prancha de formas de três peças."
+  },
+  {
+    "id": "3_083",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "083",
+    "text": "083. Martela cinco, entre cinco pinos."
+  },
+  {
+    "id": "3_084",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "084",
+    "text": "084. Corta com tesoura."
+  },
+  {
+    "id": "3_085",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "085",
+    "text": "085. Utiliza molde."
+  },
+  {
+    "id": "3_086",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "086",
+    "text": "086. Corta pelo menos ¼ de uma linha reta de 24 centímetros."
+  },
+  {
+    "id": "3_087",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "087",
+    "text": "087.  Segura  lápis entre  o  polegar  e  o  dedo  indicador,  descansando  no terceiro dedo."
+  },
+  {
+    "id": "3_088",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "088",
+    "text": "088. Pega o número especificado de objetos quando lhe pedem."
+  },
+  {
+    "id": "3_089",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "089",
+    "text": "089. Copia um triângulo a pedido."
+  },
+  {
+    "id": "3_090",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "090",
+    "text": "090. Empilha cinco ou mais argolas numa estaca por ordem alfabética."
+  },
+  {
+    "id": "3_091",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "091",
+    "text": "091. Demonstra compreensão (apontando) se um objeto é pesado ou leve."
+  },
+  {
+    "id": "3_092",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "092",
+    "text": "092. Separa objetos por categorias."
+  },
+  {
+    "id": "3_093",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "093",
+    "text": "093. Desenha uma linha em diagonal de canto de um papel quadrado em imitação"
+  },
+  {
+    "id": "3_094",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "094",
+    "text": "094. Recorta círculos de 20 cm"
+  },
+  {
+    "id": "3_095",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "095",
+    "text": "095. Desenha gravuras simples reconhecíveis tais como: homem, casa, árvore."
+  },
+  {
+    "id": "3_096",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "096",
+    "text": "096. Recorta e cola formas simples"
+  },
+  {
+    "id": "3_097",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "097",
+    "text": "097.  Copia  letras  maiúsculas,  grandes,  isoladas  em  qualquer  lugar  do papel."
+  },
+  {
+    "id": "3_098",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "098",
+    "text": "098. É capaz de copiar letras pequenas."
+  },
+  {
+    "id": "3_099",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "099",
+    "text": "099. Colore obedecendo a contornos."
+  },
+  {
+    "id": "3_100",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "100",
+    "text": "100. É capaz de cortar figuras de revistas, sem sair muito do contorno."
+  },
+  {
+    "id": "3_101",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "101",
+    "text": "101. Copia desenhos complexos."
+  },
+  {
+    "id": "3_102",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "102",
+    "text": "102. Rasga formas simples de papel."
+  },
+  {
+    "id": "3_103",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "103",
+    "text": "103. Dobra quadrado de papel duas vezes em diagonal."
+  },
+  {
+    "id": "3_104",
+    "area": "IV- ÁREA COGNITIVA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "104",
+    "text": "104. Escreve o nome."
+  },
+  {
+    "id": "4_001",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "001",
+    "text": "001. Movimenta a cabeça para o lado enquanto está deitada em decúbito dorsal."
+  },
+  {
+    "id": "4_002",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "002",
+    "text": "002. Ergue o pescoço momentaneamente, sustenta sua cabeça quando é segurada ao ombro (dorsal)."
+  },
+  {
+    "id": "4_003",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "003",
+    "text": "003. Estende os braços para o lado sem direção."
+  },
+  {
+    "id": "4_004",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "004",
+    "text": "004. Dá pontapés com força enquanto deitada em decúbito dorsal."
+  },
+  {
+    "id": "4_005",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "005",
+    "text": "005. Mexe a cabeça quando deitada em decúbito ventral, para cima, de um lado para o outro."
+  },
+  {
+    "id": "4_006",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "006",
+    "text": "006. Mantém a cabeça levantada  quando em decúbito ventral, durante cinco segundos."
+  },
+  {
+    "id": "4_007",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "007",
+    "text": "007.  Controla  a  cabeça  e  ombros  quando  sentada  e  apoiada  em travesseiros."
+  },
+  {
+    "id": "4_008",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "008",
+    "text": "008. Tenta pegar objeto a cerca de 20 cm à sua frente."
+  },
+  {
+    "id": "4_009",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "009",
+    "text": "009. Agarra objetos mantidos 10 cm à sua frente."
+  },
+  {
+    "id": "4_010",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "010",
+    "text": "010. Retém objeto, usando preensão palmar, durante 30 segundos, soltando involuntariamente."
+  },
+  {
+    "id": "4_011",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "011",
+    "text": "011. Tenta alcançar e agarrar, com preensão palmar, objeto à sua frente."
+  },
+  {
+    "id": "4_012",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "012",
+    "text": "012. Tenta alcançar e agarrar objeto predileto."
+  },
+  {
+    "id": "4_013",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "013",
+    "text": "013. Coloca objetos na boca."
+  },
+  {
+    "id": "4_014",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "014",
+    "text": "014. Mantém a cabeça ereta e firme, quando carregada em pé."
+  },
+  {
+    "id": "4_015",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "015",
+    "text": "015. Deitada de bruços, sustenta a cabeça e peito apoiada nos antebraços."
+  },
+  {
+    "id": "4_016",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "016",
+    "text": "016. Deitada sobre um braço, mantém a cabeça e o tórax eretos."
+  },
+  {
+    "id": "4_017",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "017",
+    "text": "017. Vira de bruços para o lado."
+  },
+  {
+    "id": "4_018",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "018",
+    "text": "018. Vira de bruços, para de costas."
+  },
+  {
+    "id": "4_019",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "019",
+    "text": "019. Estando de bruços tenta se movimentar para frente."
+  },
+  {
+    "id": "4_020",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "020",
+    "text": "020. Rola de costas para o lado."
+  },
+  {
+    "id": "4_021",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "021",
+    "text": "021. Vira de costas, para de bruços."
+  },
+  {
+    "id": "4_022",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "022",
+    "text": "022. Puxa para sentar-se quando agarrada nos dedos do adulto."
+  },
+  {
+    "id": "4_023",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "023",
+    "text": "023. Vira a cabeça livremente quando o corpo está apoiado."
+  },
+  {
+    "id": "4_024",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "024",
+    "text": "024. Mantém a posição sentada durante dois minutos."
+  },
+  {
+    "id": "4_025",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "025",
+    "text": "025. Larga um objeto deliberadamente para pegar outro."
+  },
+  {
+    "id": "4_026",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "026",
+    "text": "026. Pega e deixa cair objeto deliberadamente."
+  },
+  {
+    "id": "4_027",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "027",
+    "text": "027. Fica de pé com máximo apoio (quando mantida pela cintura)."
+  },
+  {
+    "id": "4_028",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "028",
+    "text": "028. Pula para cima e para baixo, quando em posição de pé, enquanto apoiada."
+  },
+  {
+    "id": "4_029",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "029",
+    "text": "029. Arrasta para frente para pegar objeto."
+  },
+  {
+    "id": "4_030",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "030",
+    "text": "030. Mantém-se sentada com apoio das  mãos para frente."
+  },
+  {
+    "id": "4_031",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "031",
+    "text": "031. De posição sentada, passa para a posição de mãos e joelhos."
+  },
+  {
+    "id": "4_032",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "032",
+    "text": "032. Passa de bruços para a posição sentada."
+  },
+  {
+    "id": "4_033",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "033",
+    "text": "033. Senta-se sem apoio de mão."
+  },
+  {
+    "id": "4_034",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "034",
+    "text": "034. Atira objetos para todos os lados."
+  },
+  {
+    "id": "4_035",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "035",
+    "text": "035. Balança para trás e para frente apoiada sobre mãos e joelhos."
+  },
+  {
+    "id": "4_036",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "036",
+    "text": "036. Transfere objeto de uma para outra mão em posição sentada."
+  },
+  {
+    "id": "4_037",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "037",
+    "text": "037. Retém dois cubos de 3 cm em uma das mãos."
+  },
+  {
+    "id": "4_038",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "038",
+    "text": "038. Coloca-se em posição de joelhos."
+  },
+  {
+    "id": "4_039",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "039",
+    "text": "039. Coloca-se em posição de pé."
+  },
+  {
+    "id": "4_040",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "040",
+    "text": "040. Usa preensão radial para pegar objetos."
+  },
+  {
+    "id": "4_041",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "041",
+    "text": "041. Engatinha."
+  },
+  {
+    "id": "4_042",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "042",
+    "text": "042. Tenta alcançar coisas de uma das mãos em posição de gatinhas."
+  },
+  {
+    "id": "4_043",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "043",
+    "text": "043. Fica de pé com o mínimo de apoio."
+  },
+  {
+    "id": "4_044",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "044",
+    "text": "044. Fica de pé sozinha durante um minuto."
+  },
+  {
+    "id": "4_045",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "045",
+    "text": "045. Vira vasilha despejando objetos."
+  },
+  {
+    "id": "4_046",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "046",
+    "text": "046. Faz movimentos de enfiar ou tirar com colher de pau."
+  },
+  {
+    "id": "4_047",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "047",
+    "text": "047. Coloca objetos grandes em um recipiente."
+  },
+  {
+    "id": "4_048",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "048",
+    "text": "048. Abaixa-se para sentar."
+  },
+  {
+    "id": "4_049",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "049",
+    "text": "049. Bate palmas."
+  },
+  {
+    "id": "4_050",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "050",
+    "text": "050. Caminha com o mínimo de auxílio."
+  },
+  {
+    "id": "4_051",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 0 A 1 ANO",
+    "number": "051",
+    "text": "051. Dá alguns passos sem apoio."
+  },
+  {
+    "id": "4_052",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "052",
+    "text": "052. Engatinha escadas acima."
+  },
+  {
+    "id": "4_053",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "053",
+    "text": "053. Passa da posição sentada para em pé."
+  },
+  {
+    "id": "4_054",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "054",
+    "text": "054. Rola uma bola em imitação."
+  },
+  {
+    "id": "4_055",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "055",
+    "text": "055. Sobe em cadeira de adulto vira e senta-se."
+  },
+  {
+    "id": "4_056",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "056",
+    "text": "056. Coloca quatro aros num pino."
+  },
+  {
+    "id": "4_057",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "057",
+    "text": "057. Tira pinos grandes de uma prancha."
+  },
+  {
+    "id": "4_058",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "058",
+    "text": "058. Coloca pinos grandes em uma prancha."
+  },
+  {
+    "id": "4_059",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "059",
+    "text": "059. Constrói torre de três cubos."
+  },
+  {
+    "id": "4_060",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "060",
+    "text": "060. Faz rabiscos com lápis cera ou lápis comum."
+  },
+  {
+    "id": "4_061",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "061",
+    "text": "061. Vira páginas de um livro várias de uma vez."
+  },
+  {
+    "id": "4_062",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "062",
+    "text": "062. Caminha independentemente."
+  },
+  {
+    "id": "4_063",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "063",
+    "text": "063. Engatinha escadas abaixo com os pés em primeiro lugar."
+  },
+  {
+    "id": "4_064",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "064",
+    "text": "064. Senta-se em cadeira pequena."
+  },
+  {
+    "id": "4_065",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "065",
+    "text": "065. Curva-se na altura da cintura para apanhar objetos sem cair."
+  },
+  {
+    "id": "4_066",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "066",
+    "text": "066. Empurra e puxa brinquedo enquanto anda."
+  },
+  {
+    "id": "4_067",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "067",
+    "text": "067. Usa cavalo de balanço."
+  },
+  {
+    "id": "4_068",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "068",
+    "text": "068. Sobe escadas com ajuda."
+  },
+  {
+    "id": "4_069",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "069",
+    "text": "069. Fica de cócoras e volta a ficar em pé."
+  },
+  {
+    "id": "4_070",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "070",
+    "text": "070. Segura um lápis em preensão radial."
+  },
+  {
+    "id": "4_071",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 1 A 2 ANOS",
+    "number": "071",
+    "text": "071. Imita movimento circular."
+  },
+  {
+    "id": "4_072",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "072",
+    "text": "072. Enfia quatro contas grandes em dois minutos."
+  },
+  {
+    "id": "4_073",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "073",
+    "text": "073. Vira trincos / maçanetas de portas."
+  },
+  {
+    "id": "4_074",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "074",
+    "text": "074. Salta sobre os dois pés."
+  },
+  {
+    "id": "4_075",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "075",
+    "text": "075. Salta o último degrau da escada com um pé na frente do outro."
+  },
+  {
+    "id": "4_076",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "076",
+    "text": "076. Caminha para trás."
+  },
+  {
+    "id": "4_077",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "077",
+    "text": "077. Desce escadas com ajuda."
+  },
+  {
+    "id": "4_078",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "078",
+    "text": "078. Atira bola para o adulto a um metro e meio sem o adulto mover os pés."
+  },
+  {
+    "id": "4_079",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "079",
+    "text": "079. Constrói torre de 5/6 cubos."
+  },
+  {
+    "id": "4_080",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "080",
+    "text": "080. Vira páginas, uma de cada vez."
+  },
+  {
+    "id": "4_081",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "081",
+    "text": "081. Desembrulha objetos pequenos."
+  },
+  {
+    "id": "4_082",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "082",
+    "text": "082. Dobra papel imitando."
+  },
+  {
+    "id": "4_083",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "083",
+    "text": "083. Separa e junta brinquedos que se completam de formas simples."
+  },
+  {
+    "id": "4_084",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "084",
+    "text": "084. Desparafusa brinquedos de encaixe."
+  },
+  {
+    "id": "4_085",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "085",
+    "text": "085. Dá pontapés em bolas grandes."
+  },
+  {
+    "id": "4_086",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "086",
+    "text": "086. Faz bolas de argila."
+  },
+  {
+    "id": "4_087",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 2 A 3 ANOS.",
+    "number": "087",
+    "text": "087. Dá cambalhotas para a frente com ajuda."
+  },
+  {
+    "id": "4_088",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "088",
+    "text": "088. Martela cinco pinos."
+  },
+  {
+    "id": "4_089",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "089",
+    "text": "089. Junta quebra-cabeças de três peças ou pranchas de formas."
+  },
+  {
+    "id": "4_090",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "090",
+    "text": "090. Corta com tesoura."
+  },
+  {
+    "id": "4_091",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "091",
+    "text": "091. Pula de uma altura de 24 cm com os dois pés unidos."
+  },
+  {
+    "id": "4_092",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "092",
+    "text": "092. Dá pontapés em bola grande quando rolam para elas."
+  },
+  {
+    "id": "4_093",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "093",
+    "text": "093. Anda na ponta dos pés."
+  },
+  {
+    "id": "4_094",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "094",
+    "text": "094. Corre dez passos com movimentos de braços coordenados."
+  },
+  {
+    "id": "4_095",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "095",
+    "text": "095. Pedala triciclo."
+  },
+  {
+    "id": "4_096",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "096",
+    "text": "096. Balança no balanço quando este é posto em movimento."
+  },
+  {
+    "id": "4_097",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "097",
+    "text": "097. Trepa e escorrega para baixo em escorregador de 4/6 pés."
+  },
+  {
+    "id": "4_098",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "098",
+    "text": "098. Dá cambalhotas para frente."
+  },
+  {
+    "id": "4_099",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "099",
+    "text": "099. Sobe escadas alternando os pés."
+  },
+  {
+    "id": "4_100",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "100",
+    "text": "100. Marcha."
+  },
+  {
+    "id": "4_101",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "101",
+    "text": "101. Agarra bola com as duas mãos."
+  },
+  {
+    "id": "4_102",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "102",
+    "text": "102. Usa molde."
+  },
+  {
+    "id": "4_103",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "103",
+    "text": "103. Recorta uma linha reta de 20 cm, um quarto da linha."
+  },
+  {
+    "id": "4_104",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 3 A 4 ANOS",
+    "number": "104",
+    "text": "104. Segura lápis entre o  polegar e indicador, descansando no terceiro dedo."
+  },
+  {
+    "id": "4_105",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "105",
+    "text": "105. Fica apoiada num pé só sem ajuda 4 a 5 segundos."
+  },
+  {
+    "id": "4_106",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "106",
+    "text": "106. Corre mudando de direção."
+  },
+  {
+    "id": "4_107",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "107",
+    "text": "107. Caminha sobre a tábua de equilíbrio."
+  },
+  {
+    "id": "4_108",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "108",
+    "text": "108. Pula para frente dez vezes sem cair."
+  },
+  {
+    "id": "4_109",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "109",
+    "text": "109. Pula sobre o fio a duas polegadas acima do chão."
+  },
+  {
+    "id": "4_110",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "110",
+    "text": "110. Pula para trás seis vezes."
+  },
+  {
+    "id": "4_111",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "111",
+    "text": "111. Bate e agarra bola grande."
+  },
+  {
+    "id": "4_112",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "112",
+    "text": "112. Faz formas de argila compostas de duas a três partes."
+  },
+  {
+    "id": "4_113",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "113",
+    "text": "113. Recorta curva."
+  },
+  {
+    "id": "4_114",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "114",
+    "text": "114. Parafusa objeto rosqueado."
+  },
+  {
+    "id": "4_115",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "115",
+    "text": "115. Desce escadas com pés alternados."
+  },
+  {
+    "id": "4_116",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "116",
+    "text": "116. Pedala triciclo mudando de direção."
+  },
+  {
+    "id": "4_117",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 4 A 5 ANOS",
+    "number": "117",
+    "text": "117. Pula sobre um dos pés cinco vezes sucessivas."
+  },
+  {
+    "id": "4_118",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "118",
+    "text": "118. Caminha sobre barra de equilíbrio para frente, para trás e para o lado."
+  },
+  {
+    "id": "4_119",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "119",
+    "text": "119. Salta rapidamente."
+  },
+  {
+    "id": "4_120",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "120",
+    "text": "120. Balança em balanço começando e sustentando movimento."
+  },
+  {
+    "id": "4_121",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "121",
+    "text": "121. Abre bem os dedos, tocando o polegar em cada dedo."
+  },
+  {
+    "id": "4_122",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "122",
+    "text": "122. Sobe degraus de escada íngreme."
+  },
+  {
+    "id": "4_123",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "123",
+    "text": "123. Bate com martelo em prego."
+  },
+  {
+    "id": "4_124",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "124",
+    "text": "124. Dribla bola com direção."
+  },
+  {
+    "id": "4_125",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "125",
+    "text": "125. Usa apontador de lápis."
+  },
+  {
+    "id": "4_126",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "126",
+    "text": "126. Segura bola macia ou saco com areia com uma das mãos."
+  },
+  {
+    "id": "4_127",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "127",
+    "text": "127. É capaz de pular corda sozinha."
+  },
+  {
+    "id": "4_128",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "128",
+    "text": "128. Bate na bola com bastão ou vareta."
+  },
+  {
+    "id": "4_129",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "129",
+    "text": "129. Apanha objeto do chão enquanto corre."
+  },
+  {
+    "id": "4_130",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "130",
+    "text": "130. Patina para frente cerca de dez metros."
+  },
+  {
+    "id": "4_131",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "131",
+    "text": "131. Anda de bicicleta."
+  },
+  {
+    "id": "4_132",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "132",
+    "text": "132. Caminha ou brinca na água até a cintura nas piscinas."
+  },
+  {
+    "id": "4_133",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "133",
+    "text": "133. Dirige carrinhos dando impulsos com os pés."
+  },
+  {
+    "id": "4_134",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "134",
+    "text": "134. Pula e gira em cima de um pé."
+  },
+  {
+    "id": "4_135",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "135",
+    "text": "135. Pula de uma altura de 50 cm e cai sobre a ponta dos pés."
+  },
+  {
+    "id": "4_136",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "136",
+    "text": "136. Permanece num pé só sem apoio, com olhos fechados durante dez segundos."
+  },
+  {
+    "id": "4_137",
+    "area": "V. ÁREA PSICOMOTORA",
+    "age_range": "IDADE 5 A 6 ANOS",
+    "number": "137",
+    "text": "137.  Segura-se  por  dez  segundos  a  uma  barra  horizontal,  apoiando  o próprio peso nos braços."
+  }
+]
