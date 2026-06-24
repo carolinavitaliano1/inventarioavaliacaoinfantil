@@ -5,6 +5,7 @@ import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import { AREAS, AREA_COLOR } from '../types'
 import type { ResponseType } from '../types'
 import type { View } from '../App'
+import { formatQuestion } from '../utils/formatQuestion'
 
 interface Props { hook: AssessmentHook; setView: (v: View) => void }
 
@@ -210,7 +211,7 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
                           onClick={() => setFocusedItemId(item.id)}
                           className={`px-4 py-3 border-t border-gray-50 cursor-pointer transition-all ${isFocused ? 'ring-2 ring-inset ring-purple-400 bg-purple-50' : idx % 2 === 0 ? 'bg-white hover:bg-gray-50/50' : 'bg-gray-50/60 hover:bg-gray-50'}`}
                         >
-                          <p className="text-sm text-gray-800 mb-2 leading-relaxed">{item.text}</p>
+                          <p className="text-sm text-gray-800 mb-2 leading-relaxed font-medium">{formatQuestion(item.text)}</p>
                           <div className="flex gap-2 flex-wrap">
                             <ResponseBtn value="sim" current={responses[item.id] ?? null} shortcut="S" onClick={() => updateResponse(item.id, responses[item.id] === 'sim' ? null : 'sim')} />
                             <ResponseBtn value="nao" current={responses[item.id] ?? null} shortcut="N" onClick={() => updateResponse(item.id, responses[item.id] === 'nao' ? null : 'nao')} />

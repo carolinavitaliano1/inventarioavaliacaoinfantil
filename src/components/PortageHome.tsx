@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ClipboardList, Plus, Eye, BarChart3, BookOpen, Trash2 } from 'lucide-react'
+import { ClipboardList, Plus, Eye, BarChart3, BookOpen, Trash2, BookMarked } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { StudentInfo } from '../types'
@@ -17,6 +17,8 @@ export default function PortageHome({ hook, setView }: Props) {
     const age = calcAge(value)
     setForm(f => ({ ...f, birthDate: value, age }))
   }
+
+  const [showRefs, setShowRefs] = useState(false)
 
   const handleCreate = () => {
     if (!form.name.trim()) return
@@ -38,10 +40,30 @@ export default function PortageHome({ hook, setView }: Props) {
         <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-2xl mb-4 shadow-lg">
           <ClipboardList className="w-8 h-8 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900">Escala Portage</h1>
-        <p className="text-gray-500 mt-1">Avaliação do Desenvolvimento Infantil</p>
-        <p className="text-sm text-gray-400 mt-1">{portageItems.length} habilidades · 5 áreas · 0–6 anos</p>
+        <h1 className="text-3xl font-bold text-gray-900">IADI</h1>
+        <p className="text-base font-semibold text-purple-700 mt-0.5">Inventário de Avaliação do Desenvolvimento Infantil</p>
+        <p className="text-sm text-gray-500 mt-1">Avaliação da Idade Desenvolvimental</p>
+        <p className="text-xs text-gray-400 mt-1">{portageItems.length} habilidades · 5 áreas · 0–6 anos</p>
+        <button onClick={() => setShowRefs(r => !r)} className="mt-3 inline-flex items-center gap-1.5 text-xs text-purple-500 hover:text-purple-700 transition">
+          <BookMarked className="w-3.5 h-3.5" /> Referências bibliográficas
+        </button>
       </div>
+
+      {/* Referências */}
+      {showRefs && (
+        <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5 mb-6 text-xs text-gray-600 space-y-3">
+          <h3 className="font-bold text-gray-800 text-sm">Referências Bibliográficas</h3>
+          <p className="text-gray-500 italic text-[11px]">Este instrumento é baseado no Portage Guide to Early Education e na sua adaptação brasileira (Inventário Portage Operacionalizado – IPO).</p>
+          <ol className="space-y-2 list-decimal list-inside">
+            <li>Bluma, S., Shearer, M., Frohman, A., &amp; Hilliard, J. (1976). <em>Portage guide to early education</em>. Portage, WI: Cooperative Educational Service Agency 12.</li>
+            <li>Shearer, D. E., &amp; Shearer, M. S. (1972). The Portage Project: A model for early childhood intervention. <em>Exceptional Children</em>, <em>36</em>(3), 210–217.</li>
+            <li>Bluma, S., Shearer, M., Frohman, A., &amp; Hilliard, J. (1994). <em>Portage guide to early education: Revised edition</em>. Portage, WI: CESA 5.</li>
+            <li>Williams, L. C. A., &amp; Aiello, A. L. R. (2001). <em>O Inventário Portage Operacionalizado: intervenção com famílias</em>. São Paulo: Memnon.</li>
+            <li>Boyd, R. D. (1989). What a difference a day makes: Age-related discontinuities and the Battelle Developmental Inventory. <em>Journal of Early Intervention</em>, <em>13</em>(2), 114–119.</li>
+            <li>Neisworth, J. T., &amp; Bagnato, S. J. (2004). The mismeasure of young children: The authentic assessment alternative. <em>Infants &amp; Young Children</em>, <em>17</em>(3), 198–212.</li>
+          </ol>
+        </div>
+      )}
 
       {/* Form nova avaliação */}
       {showForm ? (
