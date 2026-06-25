@@ -1,22 +1,79 @@
-import { useState } from 'react'
+import { useState, Component } from 'react'
+import type { ReactNode } from 'react'
 import PortageHome from './components/PortageHome'
 import PortageQuestionnaire from './components/PortageQuestionnaire'
 import PortageResults from './components/PortageResults'
 import PortagePEI from './components/PortagePEI'
+import LoginPage from './components/LoginPage'
+import Dashboard from './components/Dashboard'
 import { usePortageAssessment } from './hooks/usePortageAssessment'
+import { useAuth } from './hooks/useAuth'
+import { Loader2 } from 'lucide-react'
 
-export type View = 'home' | 'questionnaire' | 'results' | 'pei'
+export type View = 'home' | 'questionnaire' | 'results' | 'pei' | 'dashboard'
+
+class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state = { error: null }
+  static getDerivedStateFromError(error: Error) { return { error } }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
+          <p className="text-4xl mb-4">⚠️</p>
+          <p className="font-semibold text-gray-800 mb-2">Ocorreu um erro inesperado.</p>
+          <p className="text-sm text-gray-500 mb-6">Seus dados estão salvos. Recarregue a página para continuar.</p>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="bg-purple-600 text-white px-6 py-2 rounded-xl font-medium hover:bg-purple-700 transition"
+          >
+            Recarregar
+          </button>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
 
 export default function App() {
+  const auth = useAuth()
   const [view, setView] = useState<View>('home')
-  const hook = usePortageAssessment()
+  const hook = usePortageAssessment(auth.user?.id ?? null)
+
+  const safeSetView = (v: View) => {
+    if ((v === 'questionnaire' || v === 'results' || v === 'pei') && !hook.current) {
+      setView('home')
+      return
+    }
+    setView(v)
+  }
+
+  if (auth.loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50">
+        <Loader2 className="w-8 h-8 text-purple-600 animate-spin" />
+      </div>
+    )
+  }
+
+  if (!auth.user) {
+    return (
+      <ErrorBoundary>
+        <LoginPage auth={auth} />
+      </ErrorBoundary>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-      {view === 'home' && <PortageHome hook={hook} setView={setView} />}
-      {view === 'questionnaire' && <PortageQuestionnaire hook={hook} setView={setView} />}
-      {view === 'results' && <PortageResults hook={hook} setView={setView} />}
-      {view === 'pei' && <PortagePEI hook={hook} setView={setView} />}
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
+        {view === 'home' && <PortageHome hook={hook} setView={safeSetView} auth={auth} />}
+        {view === 'dashboard' && <Dashboard hook={hook} setView={safeSetView} auth={auth} />}
+        {view === 'questionnaire' && <PortageQuestionnaire hook={hook} setView={safeSetView} />}
+        {view === 'results' && <PortageResults hook={hook} setView={safeSetView} />}
+        {view === 'pei' && <PortagePEI hook={hook} setView={safeSetView} />}
+      </div>
+    </ErrorBoundary>
   )
 }
