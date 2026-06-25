@@ -7,7 +7,14 @@ export const portageItems: PortageItem[] = rawItems as PortageItem[]
 const STORAGE_KEY = 'portage_assessments'
 
 function load(): Assessment[] {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
+  try {
+    const data: Assessment[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+    // Retrocompatibilidade: assessments antigos sem childId recebem um derivado de nome+data
+    return data.map(a => a.childId ? a : {
+      ...a,
+      childId: `c_${(a.studentInfo.name + a.studentInfo.birthDate).toLowerCase().replace(/\W/g, '_')}`,
+    })
+  } catch { return [] }
 }
 function save(data: Assessment[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
@@ -21,8 +28,35 @@ export function usePortageAssessment() {
 
   const createAssessment = useCallback((info: StudentInfo): string => {
     const id = `a_${Date.now()}`
-    const a: Assessment = { id, studentInfo: info, responses: {}, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
+    const childId = `c_${(info.name + info.birthDate).toLowerCase().replace(/\W/g, '_')}`
+    const a: Assessment = { id, childId, studentInfo: info, responses: {}, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
     setAssessments(prev => { const next = [...prev, a]; save(next); return next })
+    setCurrentId(id)
+    return id
+  }, [])
+
+  // Reavaliação: nova avaliação com os mesmos dados da criança, data atual, respostas zeradas
+  const reAssess = useCallback((sourceId: string): string => {
+    const id = `a_${Date.now()}`
+    setAssessments(prev => {
+      const source = prev.find(a => a.id === sourceId)
+      if (!source) return prev
+      const newInfo: StudentInfo = {
+        ...source.studentInfo,
+        date: new Date().toLocaleDateString('pt-BR'),
+      }
+      const a: Assessment = {
+        id,
+        childId: source.childId,
+        studentInfo: newInfo,
+        responses: {},
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }
+      const next = [...prev, a]
+      save(next)
+      return next
+    })
     setCurrentId(id)
     return id
   }, [])
@@ -35,7 +69,6 @@ export function usePortageAssessment() {
     })
   }, [currentId])
 
-  // Batch update: marca vários itens de uma vez com um único setAssessments + save
   const batchUpdateResponses = useCallback((itemIds: string[], response: ResponseType) => {
     setAssessments(prev => {
       const next = prev.map(a => {
@@ -80,7 +113,20 @@ export function usePortageAssessment() {
     return Math.round((answered / portageItems.length) * 100)
   }, [current])
 
-  return { assessments, current, currentId, setCurrentId, createAssessment, updateResponse, batchUpdateResponses, deleteAssessment, getAreaStats, getItemsByResponse, getProgress }
+  // Retorna todas as avaliações da mesma criança (mesmo childId), ordenadas por data
+  const getSiblingAssessments = useCallback((assessmentId: string): Assessment[] => {
+    const source = assessments.find(a => a.id === assessmentId)
+    if (!source) return []
+    return assessments
+      .filter(a => a.childId === source.childId)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+  }, [assessments])
+
+  return {
+    assessments, current, currentId, setCurrentId,
+    createAssessment, reAssess, updateResponse, batchUpdateResponses,
+    deleteAssessment, getAreaStats, getItemsByResponse, getProgress, getSiblingAssessments,
+  }
 }
 
 export type AssessmentHook = ReturnType<typeof usePortageAssessment>

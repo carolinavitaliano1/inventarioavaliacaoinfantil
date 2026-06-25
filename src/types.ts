@@ -18,6 +18,7 @@ export interface StudentInfo {
 
 export interface Assessment {
   id: string
+  childId: string
   studentInfo: StudentInfo
   responses: Record<string, ResponseType>
   createdAt: string

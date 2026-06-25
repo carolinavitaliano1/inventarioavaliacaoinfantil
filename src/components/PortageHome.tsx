@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ClipboardList, Plus, Eye, BarChart3, BookOpen, Trash2, BookMarked } from 'lucide-react'
+import { ClipboardList, Plus, Eye, BarChart3, BookOpen, Trash2, BookMarked, RefreshCw } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { StudentInfo } from '../types'
@@ -9,7 +9,7 @@ import { calcAge } from '../utils/ageCalc'
 interface Props { hook: AssessmentHook; setView: (v: View) => void }
 
 export default function PortageHome({ hook, setView }: Props) {
-  const { assessments, createAssessment, deleteAssessment, setCurrentId, getAreaStats } = hook
+  const { assessments, createAssessment, reAssess, deleteAssessment, setCurrentId, getAreaStats, getSiblingAssessments } = hook
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState<StudentInfo>({ name: '', birthDate: '', diagnosis: '', age: '', date: new Date().toLocaleDateString('pt-BR') })
 
@@ -124,6 +124,8 @@ export default function PortageHome({ hook, setView }: Props) {
               const stats = getAreaStats(a.id)
               const nao = Object.values(stats).reduce((s, v) => s + v.nao, 0)
               const av = Object.values(stats).reduce((s, v) => s + v.av, 0)
+              const siblings = getSiblingAssessments(a.id)
+              const evalNum = siblings.findIndex(s => s.id === a.id) + 1
               return (
                 <div key={a.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition">
                   <div className="flex items-start justify-between gap-3">
@@ -131,6 +133,7 @@ export default function PortageHome({ hook, setView }: Props) {
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-semibold text-gray-900">{a.studentInfo.name}</span>
                         {a.studentInfo.diagnosis && <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{a.studentInfo.diagnosis}</span>}
+                        {siblings.length > 1 && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Avaliação {evalNum}/{siblings.length}</span>}
                       </div>
                       <p className="text-xs text-gray-400 mt-0.5">{a.studentInfo.age && `${a.studentInfo.age} · `}{a.studentInfo.date}</p>
                       <div className="flex items-center gap-2 mt-2 flex-wrap text-xs">
@@ -156,6 +159,9 @@ export default function PortageHome({ hook, setView }: Props) {
                           <BookOpen className="w-3.5 h-3.5" /> PEI
                         </button>
                       </>}
+                      <button onClick={() => { reAssess(a.id); setView('questionnaire') }} className="flex items-center gap-1 text-xs border border-green-200 text-green-700 rounded-lg px-2.5 py-1.5 hover:bg-green-50 transition">
+                        <RefreshCw className="w-3.5 h-3.5" /> Reavaliar
+                      </button>
                       <button onClick={() => deleteAssessment(a.id)} className="flex items-center gap-1 text-xs text-red-400 rounded-lg px-2.5 py-1.5 hover:bg-red-50 transition">
                         <Trash2 className="w-3.5 h-3.5" /> Excluir
                       </button>

@@ -15,6 +15,7 @@ import { AREAS, AREA_COLOR } from '../types'
 import type { View } from '../App'
 import { calcAreaDevResult, calcAgeMonths } from '../utils/ageCalc'
 import { exportWord } from '../utils/exportWord'
+import { formatQuestion } from '../utils/formatQuestion'
 
 interface Props { hook: AssessmentHook; setView: (v: View) => void }
 
@@ -37,8 +38,8 @@ const AREA_LINE_COLOR: Record<string, string> = {
 const FAIXAS = ['0–1 ano', '1–2 anos', '2–3 anos', '3–4 anos', '4–5 anos', '5–6 anos']
 
 export default function PortageResults({ hook, setView }: Props) {
-  const { current, getItemsByResponse } = hook
-  const [tab, setTab] = useState<'sintese' | 'graficos' | 'nao' | 'as_vezes'>('sintese')
+  const { current, getItemsByResponse, getSiblingAssessments, currentId } = hook
+  const [tab, setTab] = useState<'sintese' | 'graficos' | 'progressao' | 'nao' | 'as_vezes'>('sintese')
   const [exportingWord, setExportingWord] = useState(false)
   const lineChartRef = useRef<HTMLDivElement>(null)
   const radarChartRef = useRef<HTMLDivElement>(null)
@@ -64,6 +65,25 @@ export default function PortageResults({ hook, setView }: Props) {
   )
   const mediaGeral = areaResults.reduce((s, r) => s + r.idadeDesenvAnos, 0) / areaResults.length
   const idadeCronologicaAnos = studentInfo.birthDate ? calcAgeMonths(studentInfo.birthDate) / 12 : null
+
+  // Avaliações anteriores da mesma criança (para gráfico de progressão)
+  const siblings = currentId ? getSiblingAssessments(currentId) : []
+  const hasSiblings = siblings.length > 1
+
+  // Dados para o gráfico de progressão: uma entrada por avaliação
+  const progressionData = siblings.map((sib, i) => {
+    const sibResults = AREAS.map(area =>
+      calcAreaDevResult(area, portageItems.filter(item => item.area === area), sib.responses)
+    )
+    const sibMedia = sibResults.reduce((s, r) => s + r.idadeDesenvAnos, 0) / sibResults.length
+    const entry: Record<string, any> = {
+      label: `Aval. ${i + 1}`,
+      data: sib.studentInfo.date,
+      'Média Geral': parseFloat(sibMedia.toFixed(2)),
+    }
+    for (const r of sibResults) entry[AREA_SHORT[r.area]] = parseFloat(r.idadeDesenvAnos.toFixed(2))
+    return entry
+  })
 
   const handleExportWord = async () => {
     setExportingWord(true)
@@ -158,6 +178,7 @@ export default function PortageResults({ hook, setView }: Props) {
         {[
           { k: 'sintese', label: 'Tabela Síntese', icon: <TrendingUp className="w-3.5 h-3.5" /> },
           { k: 'graficos', label: 'Gráficos', icon: <TrendingUp className="w-3.5 h-3.5" /> },
+          ...(hasSiblings ? [{ k: 'progressao', label: `Progressão (${siblings.length})`, icon: <TrendingUp className="w-3.5 h-3.5" /> }] : []),
           { k: 'nao', label: `Prioridade (${naoItems.length})`, icon: <AlertCircle className="w-3.5 h-3.5" /> },
           { k: 'as_vezes', label: `Em Desenv. (${avItems.length})`, icon: <ClipboardList className="w-3.5 h-3.5" /> },
         ].map(t => (
@@ -413,6 +434,86 @@ export default function PortageResults({ hook, setView }: Props) {
         </div>
       )}
 
+      {/* ── PROGRESSÃO ───────────────────────────────────────────────────── */}
+      {tab === 'progressao' && (
+        <div className="space-y-5">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+            <h3 className="text-sm font-bold text-gray-700 mb-1">Progressão da Idade Desenvolvimental</h3>
+            <p className="text-xs text-gray-400 mb-4">Evolução entre avaliações — cada ponto representa uma avaliação da criança</p>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={progressionData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="label" tick={{ fontSize: 11 }} />
+                <YAxis domain={[0, 6]} tickCount={7} tick={{ fontSize: 10 }} unit=" anos" />
+                <Tooltip formatter={(v: any) => `${Number(v).toFixed(2)} anos`} labelFormatter={(l, p) => `${l} (${p[0]?.payload?.data ?? ''})`} />
+                <Legend wrapperStyle={{ fontSize: 11 }} />
+                <Line type="monotone" dataKey="Média Geral" stroke="#7c3aed" strokeWidth={3} dot={{ r: 5 }} activeDot={{ r: 7 }} strokeDasharray="" />
+                {areaResults.map(r => (
+                  <Line key={r.area} type="monotone" dataKey={AREA_SHORT[r.area]} stroke={AREA_LINE_COLOR[r.area]} strokeWidth={1.5} dot={{ r: 3 }} opacity={0.7} />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Tabela comparativa entre avaliações */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="px-4 py-2.5 bg-purple-50 border-b border-purple-100">
+              <p className="text-sm font-bold text-purple-800">Comparativo entre Avaliações</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-100">
+                    <th className="text-left px-3 py-2 font-semibold text-gray-600">Área</th>
+                    {siblings.map((_, i) => (
+                      <th key={i} className="text-center px-2 py-2 font-semibold text-gray-600 whitespace-nowrap">Aval. {i + 1}</th>
+                    ))}
+                    <th className="text-center px-2 py-2 font-semibold text-green-700">Δ Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {AREAS.map((area, ai) => {
+                    const c = AREA_COLOR[area]
+                    const sibVals = siblings.map(sib => {
+                      const r = calcAreaDevResult(area, portageItems.filter(i => i.area === area), sib.responses)
+                      return r.idadeDesenvAnos
+                    })
+                    const delta = sibVals.length > 1 ? sibVals[sibVals.length - 1] - sibVals[0] : 0
+                    return (
+                      <tr key={area} className={`border-b border-gray-50 ${ai % 2 === 0 ? '' : 'bg-gray-50/50'}`}>
+                        <td className={`px-3 py-2 font-semibold ${c.text}`}>{AREA_SHORT[area]}</td>
+                        {sibVals.map((v, i) => (
+                          <td key={i} className="px-2 py-2 text-center text-gray-700 font-medium">{v.toFixed(2)} anos</td>
+                        ))}
+                        <td className="px-2 py-2 text-center">
+                          <span className={`font-bold ${delta > 0 ? 'text-green-600' : delta < 0 ? 'text-red-500' : 'text-gray-400'}`}>
+                            {delta > 0 ? '+' : ''}{delta.toFixed(2)} anos
+                          </span>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                  <tr className="bg-purple-50 border-t-2 border-purple-200">
+                    <td className="px-3 py-2 font-bold text-purple-800">Média Geral</td>
+                    {progressionData.map((p, i) => (
+                      <td key={i} className="px-2 py-2 text-center font-bold text-purple-700">{p['Média Geral']} anos</td>
+                    ))}
+                    <td className="px-2 py-2 text-center">
+                      {progressionData.length > 1 && (
+                        <span className={`font-bold ${(progressionData[progressionData.length-1]['Média Geral'] - progressionData[0]['Média Geral']) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                          {(progressionData[progressionData.length-1]['Média Geral'] - progressionData[0]['Média Geral']) >= 0 ? '+' : ''}
+                          {(progressionData[progressionData.length-1]['Média Geral'] - progressionData[0]['Média Geral']).toFixed(2)} anos
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── NÃO / ÀS VEZES ────────────────────────────────────────────────── */}
       {(tab === 'nao' || tab === 'as_vezes') && (() => {
         const list = tab === 'nao' ? naoItems : avItems
@@ -430,7 +531,7 @@ export default function PortageResults({ hook, setView }: Props) {
                   <div className="p-3 space-y-2">
                     {items.map(item => (
                       <div key={item.id} className={`p-2.5 rounded-xl text-xs ${tab === 'nao' ? 'bg-red-50' : 'bg-yellow-50'}`}>
-                        <p className="text-gray-800">{item.text}</p>
+                        <p className="text-gray-800">{formatQuestion(item.text)}</p>
                         <p className="text-gray-400 mt-0.5">{item.age_range}</p>
                       </div>
                     ))}
