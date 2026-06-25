@@ -35,6 +35,20 @@ export function usePortageAssessment() {
     })
   }, [currentId])
 
+  // Batch update: marca vários itens de uma vez com um único setAssessments + save
+  const batchUpdateResponses = useCallback((itemIds: string[], response: ResponseType) => {
+    setAssessments(prev => {
+      const next = prev.map(a => {
+        if (a.id !== currentId) return a
+        const newResponses = { ...a.responses }
+        for (const id of itemIds) newResponses[id] = response
+        return { ...a, responses: newResponses, updatedAt: new Date().toISOString() }
+      })
+      save(next)
+      return next
+    })
+  }, [currentId])
+
   const deleteAssessment = useCallback((id: string) => {
     setAssessments(prev => { const next = prev.filter(a => a.id !== id); save(next); return next })
     if (currentId === id) setCurrentId(null)
@@ -66,7 +80,7 @@ export function usePortageAssessment() {
     return Math.round((answered / portageItems.length) * 100)
   }, [current])
 
-  return { assessments, current, currentId, setCurrentId, createAssessment, updateResponse, deleteAssessment, getAreaStats, getItemsByResponse, getProgress }
+  return { assessments, current, currentId, setCurrentId, createAssessment, updateResponse, batchUpdateResponses, deleteAssessment, getAreaStats, getItemsByResponse, getProgress }
 }
 
 export type AssessmentHook = ReturnType<typeof usePortageAssessment>
