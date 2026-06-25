@@ -36,6 +36,7 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient }: P
   const [newBody, setNewBody] = useState('')
   const [savingAnn, setSavingAnn] = useState(false)
   const [showRefs, setShowRefs] = useState(false)
+  const [creating, setCreating] = useState(false)
   const photoRef = useRef<HTMLInputElement>(null)
 
   const isAdmin = auth.user?.email === ADMIN_EMAIL
@@ -54,7 +55,8 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient }: P
   }
 
   const handleCreate = () => {
-    if (!form.name.trim()) return
+    if (!form.name.trim() || creating) return
+    setCreating(true)
     createPatient({
       name: form.name.trim(),
       birthDate: form.birthDate,
@@ -64,6 +66,7 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient }: P
     })
     setForm(BLANK_FORM)
     setShowForm(false)
+    setTimeout(() => setCreating(false), 500)
   }
 
   const handleSaveAnn = async () => {
@@ -237,8 +240,8 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient }: P
             </div>
           </div>
           <div className="flex gap-2 mt-4">
-            <button type="button" onClick={handleCreate}
-              className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition">
+            <button type="button" onClick={handleCreate} disabled={creating}
+              className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition disabled:opacity-60">
               <Plus className="w-4 h-4" /> Cadastrar
             </button>
             <button type="button" onClick={() => setShowForm(false)}
