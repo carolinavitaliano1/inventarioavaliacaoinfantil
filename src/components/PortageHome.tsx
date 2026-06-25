@@ -1,18 +1,25 @@
 import { useState } from 'react'
-import { ClipboardList, Plus, Eye, BarChart3, BookOpen, Trash2, LogOut, RefreshCw, LayoutDashboard } from 'lucide-react'
+import { ClipboardList, Plus, Eye, BarChart3, BookOpen, Trash2, LogOut, RefreshCw, LayoutDashboard, BookMarked } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { StudentInfo } from '../types'
 import type { View } from '../App'
 import type { useAuth } from '../hooks/useAuth'
+import { calcAge } from '../utils/ageCalc'
 
 type AuthHook = ReturnType<typeof useAuth>
 interface Props { hook: AssessmentHook; setView: (v: View) => void; auth: AuthHook }
 
 export default function PortageHome({ hook, setView, auth }: Props) {
-  const { assessments, createAssessment, deleteAssessment, setCurrentId, getAreaStats, reAssess, getSiblingAssessments } = hook
+  const { assessments, createAssessment, reAssess, deleteAssessment, setCurrentId, getAreaStats, getSiblingAssessments } = hook
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState<StudentInfo>({ name: '', birthDate: '', diagnosis: '', age: '', date: new Date().toLocaleDateString('pt-BR') })
+  const [showRefs, setShowRefs] = useState(false)
+
+  const handleBirthDate = (value: string) => {
+    const age = calcAge(value)
+    setForm(f => ({ ...f, birthDate: value, age }))
+  }
 
   const handleCreate = () => {
     if (!form.name.trim()) return
@@ -56,9 +63,29 @@ export default function PortageHome({ hook, setView, auth }: Props) {
           <ClipboardList className="w-8 h-8 text-white" />
         </div>
         <h1 className="text-3xl font-bold text-gray-900">IADI</h1>
-        <p className="text-gray-500 mt-1">Inventário de Avaliação do Desenvolvimento Infantil</p>
-        <p className="text-sm text-gray-400 mt-1">{portageItems.length} habilidades · 5 áreas · 0–6 anos</p>
+        <p className="text-base font-semibold text-purple-700 mt-0.5">Inventário de Avaliação do Desenvolvimento Infantil</p>
+        <p className="text-sm text-gray-500 mt-1">Avaliação da Idade Desenvolvimental</p>
+        <p className="text-xs text-gray-400 mt-1">{portageItems.length} habilidades · 5 áreas · 0–6 anos</p>
+        <button type="button" onClick={() => setShowRefs(r => !r)} className="mt-3 inline-flex items-center gap-1.5 text-xs text-purple-500 hover:text-purple-700 transition">
+          <BookMarked className="w-3.5 h-3.5" /> Referências bibliográficas
+        </button>
       </div>
+
+      {/* Referências */}
+      {showRefs && (
+        <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5 mb-6 text-xs text-gray-600 space-y-3">
+          <h3 className="font-bold text-gray-800 text-sm">Referências Bibliográficas</h3>
+          <p className="text-gray-500 italic text-[11px]">Este instrumento é baseado no Portage Guide to Early Education e na sua adaptação brasileira (Inventário Portage Operacionalizado – IPO).</p>
+          <ol className="space-y-2 list-decimal list-inside">
+            <li>Bluma, S., Shearer, M., Frohman, A., &amp; Hilliard, J. (1976). <em>Portage guide to early education</em>. Portage, WI: Cooperative Educational Service Agency 12.</li>
+            <li>Shearer, D. E., &amp; Shearer, M. S. (1972). The Portage Project: A model for early childhood intervention. <em>Exceptional Children</em>, <em>36</em>(3), 210–217.</li>
+            <li>Bluma, S., Shearer, M., Frohman, A., &amp; Hilliard, J. (1994). <em>Portage guide to early education: Revised edition</em>. Portage, WI: CESA 5.</li>
+            <li>Williams, L. C. A., &amp; Aiello, A. L. R. (2001). <em>O Inventário Portage Operacionalizado: intervenção com famílias</em>. São Paulo: Memnon.</li>
+            <li>Boyd, R. D. (1989). What a difference a day makes: Age-related discontinuities and the Battelle Developmental Inventory. <em>Journal of Early Intervention</em>, <em>13</em>(2), 114–119.</li>
+            <li>Neisworth, J. T., &amp; Bagnato, S. J. (2004). The mismeasure of young children: The authentic assessment alternative. <em>Infants &amp; Young Children</em>, <em>17</em>(3), 198–212.</li>
+          </ol>
+        </div>
+      )}
 
       {/* Form nova avaliação */}
       {showForm ? (
@@ -67,9 +94,7 @@ export default function PortageHome({ hook, setView, auth }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               { label: 'Nome da Criança *', key: 'name', placeholder: 'Nome completo', type: 'text' },
-              { label: 'Data de Nascimento', key: 'birthDate', placeholder: '', type: 'date' },
               { label: 'Diagnóstico', key: 'diagnosis', placeholder: 'Ex: TEA, Síndrome de Down...', type: 'text' },
-              { label: 'Idade Atual', key: 'age', placeholder: 'Ex: 3 anos e 2 meses', type: 'text' },
               { label: 'Data da Avaliação', key: 'date', placeholder: '', type: 'text' },
             ].map(({ label, key, placeholder, type }) => (
               <div key={key}>
@@ -83,6 +108,16 @@ export default function PortageHome({ hook, setView, auth }: Props) {
                 />
               </div>
             ))}
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1">Data de Nascimento</label>
+              <input type="date" value={form.birthDate} onChange={e => handleBirthDate(e.target.value)}
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1">Idade (calculada automaticamente)</label>
+              <input type="text" value={form.age} readOnly
+                className="w-full border border-gray-100 bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-500 cursor-not-allowed" />
+            </div>
           </div>
           <div className="flex gap-2 mt-4">
             <button type="button" onClick={handleCreate} className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition">
@@ -113,7 +148,7 @@ export default function PortageHome({ hook, setView, auth }: Props) {
               const nao = Object.values(stats).reduce((s, v) => s + v.nao, 0)
               const av = Object.values(stats).reduce((s, v) => s + v.av, 0)
               const siblings = getSiblingAssessments(a.id)
-              const siblingIdx = siblings.findIndex(s => s.id === a.id)
+              const evalNum = siblings.findIndex(s => s.id === a.id) + 1
               return (
                 <div key={a.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition">
                   <div className="flex items-start justify-between gap-3">
@@ -121,7 +156,7 @@ export default function PortageHome({ hook, setView, auth }: Props) {
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-semibold text-gray-900">{a.studentInfo.name}</span>
                         {a.studentInfo.diagnosis && <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{a.studentInfo.diagnosis}</span>}
-                        {siblings.length > 1 && <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Avaliação {siblingIdx + 1}/{siblings.length}</span>}
+                        {siblings.length > 1 && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Avaliação {evalNum}/{siblings.length}</span>}
                       </div>
                       <p className="text-xs text-gray-400 mt-0.5">{a.studentInfo.age && `${a.studentInfo.age} · `}{a.studentInfo.date}</p>
                       <div className="flex items-center gap-2 mt-2 flex-wrap text-xs">
