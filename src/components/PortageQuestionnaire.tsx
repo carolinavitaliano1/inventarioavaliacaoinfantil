@@ -21,7 +21,7 @@ function ResponseBtn({ value, current, onClick, shortcut }: {
   const c = cfg[value as string]
   const active = current === value
   return (
-    <button
+    <button type="button"
       onClick={onClick}
       className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border transition-all ${active ? c.on : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}`}
     >
@@ -44,7 +44,7 @@ function MarkGroupBtns({ onMark }: { onMark: (r: ResponseType) => void }) {
           as_vezes: { label: 'A', cls: 'bg-yellow-500 hover:bg-yellow-600' },
         }[r!]!
         return (
-          <button
+          <button type="button"
             key={r}
             onClick={e => { e.stopPropagation(); onMark(r) }}
             className={`text-white text-[10px] font-bold px-1.5 py-0.5 rounded transition ${cfg.cls}`}
@@ -94,6 +94,9 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
     return items
   }, [grouped, expandedAreas, expandedAges, onlyUnanswered, current?.responses])
 
+  useEffect(() => {
+    if (!current) setView('home')
+  }, [current, setView])
   if (!current) return null
   const { responses } = current
   const progress = getProgress()
@@ -141,17 +144,17 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
     <div className="max-w-3xl mx-auto p-4 py-6">
       {/* Header */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <button onClick={() => setView('home')} className="p-2 rounded-lg hover:bg-white/70 transition">
+        <button type="button" onClick={() => setView('home')} className="p-2 rounded-lg hover:bg-white/70 transition">
           <ArrowLeft className="w-4 h-4" />
         </button>
         <div className="flex-1 min-w-0">
           <p className="font-bold text-gray-900 truncate">{current.studentInfo.name}</p>
           <p className="text-xs text-gray-400">{current.studentInfo.diagnosis && `${current.studentInfo.diagnosis} · `}{current.studentInfo.date}</p>
         </div>
-        <button onClick={() => setShowShortcuts(s => !s)} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
+        <button type="button" onClick={() => setShowShortcuts(s => !s)} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
           <Keyboard className="w-3.5 h-3.5" /> Atalhos
         </button>
-        <button onClick={() => setView('results')} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
+        <button type="button" onClick={() => setView('results')} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
           <BarChart3 className="w-3.5 h-3.5" /> Resultados
         </button>
       </div>
@@ -188,17 +191,17 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
 
       {/* Filtro + Marcar tudo global */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <button onClick={() => setOnlyUnanswered(false)} className={`text-xs px-3 py-1.5 rounded-lg border transition ${!onlyUnanswered ? 'bg-purple-600 text-white border-purple-600' : 'bg-white border-gray-200 text-gray-500'}`}>Todos</button>
-        <button onClick={() => setOnlyUnanswered(true)} className={`text-xs px-3 py-1.5 rounded-lg border transition ${onlyUnanswered ? 'bg-purple-600 text-white border-purple-600' : 'bg-white border-gray-200 text-gray-500'}`}>Não respondidos</button>
+        <button type="button" onClick={() => setOnlyUnanswered(false)} className={`text-xs px-3 py-1.5 rounded-lg border transition ${!onlyUnanswered ? 'bg-purple-600 text-white border-purple-600' : 'bg-white border-gray-200 text-gray-500'}`}>Todos</button>
+        <button type="button" onClick={() => setOnlyUnanswered(true)} className={`text-xs px-3 py-1.5 rounded-lg border transition ${onlyUnanswered ? 'bg-purple-600 text-white border-purple-600' : 'bg-white border-gray-200 text-gray-500'}`}>Não respondidos</button>
         <div className="flex-1" />
         <span className="text-xs text-gray-400">Marcar tudo:</span>
-        <button onClick={() => markAll('sim')} className="flex items-center gap-1 text-xs bg-green-500 text-white px-3 py-1.5 rounded-lg hover:bg-green-600 transition font-medium">
+        <button type="button" onClick={() => markAll('sim')} className="flex items-center gap-1 text-xs bg-green-500 text-white px-3 py-1.5 rounded-lg hover:bg-green-600 transition font-medium">
           <CheckCircle className="w-3.5 h-3.5" /> Sim
         </button>
-        <button onClick={() => markAll('as_vezes')} className="flex items-center gap-1 text-xs bg-yellow-500 text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600 transition font-medium">
+        <button type="button" onClick={() => markAll('as_vezes')} className="flex items-center gap-1 text-xs bg-yellow-500 text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600 transition font-medium">
           <MinusCircle className="w-3.5 h-3.5" /> Às vezes
         </button>
-        <button onClick={() => markAll('nao')} className="flex items-center gap-1 text-xs bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition font-medium">
+        <button type="button" onClick={() => markAll('nao')} className="flex items-center gap-1 text-xs bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition font-medium">
           <XCircle className="w-3.5 h-3.5" /> Não
         </button>
       </div>
@@ -217,7 +220,7 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
 
           return (
             <div key={area} className={`rounded-2xl border overflow-hidden shadow-sm ${c.bg}`}>
-              <button onClick={() => toggleArea(area)} className={`w-full flex items-center justify-between p-4 text-left ${c.header} text-white hover:opacity-90 transition`}>
+              <button type="button" onClick={() => toggleArea(area)} className={`w-full flex items-center justify-between p-4 text-left ${c.header} text-white hover:opacity-90 transition`}>
                 <div>
                   <p className="font-semibold text-sm">{area}</p>
                   <p className="text-xs opacity-75 mt-0.5">{answered}/{areaItems.length} · ✓{sim} ✗{nao} ~{av}</p>
@@ -236,7 +239,7 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
                   <div key={ageRange}>
                     {/* Cabeçalho da faixa etária com botões de marcar tudo do grupo */}
                     <div className="flex items-center gap-2 px-4 py-2.5 bg-white/70 hover:bg-white/90 border-t border-white/40">
-                      <button onClick={() => toggleAge(key)} className="flex items-center gap-2 flex-1 text-left">
+                      <button type="button" onClick={() => toggleAge(key)} className="flex items-center gap-2 flex-1 text-left">
                         <span className="text-xs font-semibold text-gray-700">
                           {ageRange} <span className="text-gray-400 font-normal">({ageAnswered}/{items.length})</span>
                         </span>
@@ -263,7 +266,7 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
                             <ResponseBtn value="as_vezes" current={responses[item.id] ?? null} shortcut="A"
                               onClick={e => { e.stopPropagation(); updateResponse(item.id, responses[item.id] === 'as_vezes' ? null : 'as_vezes') }} />
                           </div>
-                          <button
+                          <button type="button"
                             onClick={e => toggleTip(item.id, e)}
                             className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-700 transition mt-0.5"
                           >
@@ -286,7 +289,7 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
         })}
       </div>
 
-      <button onClick={() => setView('results')} className="w-full mt-6 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition shadow">
+      <button type="button" onClick={() => setView('results')} className="w-full mt-6 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition shadow">
         Ver Resultados
       </button>
     </div>
