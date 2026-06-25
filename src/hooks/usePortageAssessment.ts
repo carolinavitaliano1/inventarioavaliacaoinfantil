@@ -68,9 +68,9 @@ export function usePortageAssessment(userId: string | null) {
     })
   }, [userId])
 
-  const createAssessment = useCallback((info: StudentInfo): string => {
+  const createAssessment = useCallback((info: StudentInfo, explicitChildId?: string): string => {
     const id = `a_${Date.now()}`
-    const childId = `c_${(info.name + info.birthDate).toLowerCase().replace(/\W/g, '_')}`
+    const childId = explicitChildId ?? `c_${(info.name + info.birthDate).toLowerCase().replace(/\W/g, '_')}`
     const a: Assessment = { id, childId, studentInfo: info, responses: {}, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
     setAssessments(prev => { const next = [...prev, a]; saveLocal(next); return next })
     setCurrentId(id)

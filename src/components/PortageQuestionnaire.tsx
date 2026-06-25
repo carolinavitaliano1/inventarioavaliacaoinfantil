@@ -79,20 +79,6 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
     return r
   }, [])
 
-  // Flat list of visible items for keyboard navigation
-  const visibleItems = useMemo(() => {
-    const items: typeof portageItems = []
-    for (const area of AREAS) {
-      if (!expandedAreas.has(area)) continue
-      for (const [ageRange, ageItems] of Object.entries(grouped[area] || {})) {
-        const key = `${area}__${ageRange}`
-        if (!expandedAges.has(key)) continue
-        const list = onlyUnanswered ? ageItems.filter(i => !current?.responses[i.id]) : ageItems
-        items.push(...list)
-      }
-    }
-    return items
-  }, [grouped, expandedAreas, expandedAges, onlyUnanswered, current?.responses])
 
   useEffect(() => {
     if (!current) setView('home')

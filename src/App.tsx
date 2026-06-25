@@ -6,11 +6,13 @@ import PortageResults from './components/PortageResults'
 import PortagePEI from './components/PortagePEI'
 import LoginPage from './components/LoginPage'
 import Dashboard from './components/Dashboard'
+import PatientDetail from './components/PatientDetail'
 import { usePortageAssessment } from './hooks/usePortageAssessment'
+import { usePatients } from './hooks/usePatients'
 import { useAuth } from './hooks/useAuth'
 import { Loader2 } from 'lucide-react'
 
-export type View = 'home' | 'questionnaire' | 'results' | 'pei' | 'dashboard'
+export type View = 'dashboard' | 'home' | 'patient' | 'questionnaire' | 'results' | 'pei'
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null }
@@ -38,15 +40,22 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
 
 export default function App() {
   const auth = useAuth()
-  const [view, setView] = useState<View>('home')
+  const [view, setView] = useState<View>('dashboard')
+  const [currentPatientId, setCurrentPatientId] = useState<string | null>(null)
   const hook = usePortageAssessment(auth.user?.id ?? null)
+  const patientsHook = usePatients()
 
   const safeSetView = (v: View) => {
     if ((v === 'questionnaire' || v === 'results' || v === 'pei') && !hook.current) {
-      setView('home')
+      setView('dashboard')
       return
     }
     setView(v)
+  }
+
+  const openPatient = (patientId: string) => {
+    setCurrentPatientId(patientId)
+    setView('patient')
   }
 
   if (auth.loading) {
@@ -68,8 +77,25 @@ export default function App() {
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
+        {view === 'dashboard' && (
+          <Dashboard
+            hook={hook}
+            setView={safeSetView}
+            auth={auth}
+            patientsHook={patientsHook}
+            onOpenPatient={openPatient}
+          />
+        )}
+        {view === 'patient' && currentPatientId && (
+          <PatientDetail
+            patientId={currentPatientId}
+            patientsHook={patientsHook}
+            assessmentHook={hook}
+            setView={safeSetView}
+            onBack={() => setView('dashboard')}
+          />
+        )}
         {view === 'home' && <PortageHome hook={hook} setView={safeSetView} auth={auth} />}
-        {view === 'dashboard' && <Dashboard hook={hook} setView={safeSetView} auth={auth} />}
         {view === 'questionnaire' && <PortageQuestionnaire hook={hook} setView={safeSetView} />}
         {view === 'results' && <PortageResults hook={hook} setView={safeSetView} />}
         {view === 'pei' && <PortagePEI hook={hook} setView={safeSetView} />}
