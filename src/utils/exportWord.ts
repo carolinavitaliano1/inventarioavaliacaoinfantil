@@ -3,6 +3,7 @@ import { saveAs } from 'file-saver'
 import type { Assessment } from '../types'
 import type { AreaDevResult } from './ageCalc'
 import { AGE_RANGE_LABEL } from './ageCalc'
+import { formatQuestion } from './formatQuestion'
 
 function cell(text: string, bold = false, shade?: string): TableCell {
   return new TableCell({
@@ -80,7 +81,7 @@ export async function exportWord(assessment: Assessment, areaResults: AreaDevRes
   if (naoItems.length > 0) {
     const rows: TableRow[] = [headerRow(['Área', 'Faixa Etária', 'Habilidade'])]
     for (const item of naoItems) {
-      rows.push(new TableRow({ children: [cell(item.area), cell(item.age_range), cell(item.text)] }))
+      rows.push(new TableRow({ children: [cell(item.area), cell(item.age_range), cell(formatQuestion(item.text))] }))
     }
     sections.push(new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows }))
   } else {
@@ -94,7 +95,7 @@ export async function exportWord(assessment: Assessment, areaResults: AreaDevRes
   if (avItems.length > 0) {
     const rows: TableRow[] = [headerRow(['Área', 'Faixa Etária', 'Habilidade'])]
     for (const item of avItems) {
-      rows.push(new TableRow({ children: [cell(item.area), cell(item.age_range), cell(item.text)] }))
+      rows.push(new TableRow({ children: [cell(item.area), cell(item.age_range), cell(formatQuestion(item.text))] }))
     }
     sections.push(new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows }))
   } else {

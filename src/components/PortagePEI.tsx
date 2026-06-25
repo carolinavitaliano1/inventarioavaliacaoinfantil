@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import { ArrowLeft, BarChart3, Plus, Trash2, Save, Printer } from 'lucide-react'
+import { ArrowLeft, BarChart3, Plus, Trash2, Save, FileDown, Loader2 } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { View } from '../App'
+import { formatQuestion } from '../utils/formatQuestion'
+import { Document, Packer, Paragraph, Table, TableRow, TableCell, TextRun, HeadingLevel, WidthType, AlignmentType } from 'docx'
+import { saveAs } from 'file-saver'
 
 interface Props { hook: AssessmentHook; setView: (v: View) => void }
 
@@ -13,10 +16,23 @@ interface PEIItem {
   status: 'pendente' | 'em_andamento' | 'concluido'
 }
 
-const PRAZO = { curto: 'Curto Prazo (3 meses)', medio: 'Médio Prazo (6 meses)', longo: 'Longo Prazo (9-12 meses)' }
+const PRAZO = { curto: 'Curto Prazo (3 meses)', medio: 'Médio Prazo (6 meses)', longo: 'Longo Prazo (9–12 meses)' }
 const STATUS = { pendente: 'Pendente', em_andamento: 'Em andamento', concluido: 'Concluído' }
-const STATUS_COLOR = { pendente: 'bg-gray-100 text-gray-600', em_andamento: 'bg-blue-100 text-blue-700', concluido: 'bg-green-100 text-green-700' }
-const PRAZO_COLOR = { curto: 'bg-orange-100 text-orange-700', medio: 'bg-blue-100 text-blue-700', longo: 'bg-purple-100 text-purple-700' }
+const STATUS_COLOR = {
+  pendente: 'bg-gray-100 text-gray-600',
+  em_andamento: 'bg-blue-100 text-blue-700',
+  concluido: 'bg-green-100 text-green-700',
+}
+const PRAZO_COLOR = {
+  curto: 'bg-orange-100 text-orange-700',
+  medio: 'bg-blue-100 text-blue-700',
+  longo: 'bg-purple-100 text-purple-700',
+}
+const PRAZO_BORDER = {
+  curto: 'border-orange-200',
+  medio: 'border-blue-200',
+  longo: 'border-purple-200',
+}
 
 function loadPEI(id: string): PEIItem[] {
   try { return JSON.parse(localStorage.getItem(`pei_${id}`) || '[]') } catch { return [] }
@@ -25,12 +41,81 @@ function savePEI(id: string, items: PEIItem[]) {
   localStorage.setItem(`pei_${id}`, JSON.stringify(items))
 }
 
+function wCell(text: string, bold = false, shade?: string): TableCell {
+  return new TableCell({
+    shading: shade ? { fill: shade, type: 'clear' as any } : undefined,
+    children: [new Paragraph({ children: [new TextRun({ text: String(text || '—'), bold, size: 18 })] })],
+  })
+}
+
+async function exportPEIWord(current: { studentInfo: { name: string; age: string; diagnosis?: string; birthDate: string; date: string }; id: string }, pei: PEIItem[]) {
+  const { studentInfo } = current
+  const sections: any[] = []
+
+  sections.push(new Paragraph({
+    text: 'PLANO DE ENSINO INDIVIDUALIZADO (PEI)',
+    heading: HeadingLevel.HEADING_1,
+    alignment: AlignmentType.CENTER,
+  }))
+  sections.push(new Paragraph({ text: 'Escala Portage – Avaliação do Desenvolvimento Infantil', alignment: AlignmentType.CENTER }))
+  sections.push(new Paragraph({ text: '' }))
+
+  sections.push(new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: [
+      new TableRow({ children: [wCell('Aluno', true), wCell(studentInfo.name), wCell('Idade', true), wCell(studentInfo.age)] }),
+      new TableRow({ children: [wCell('Diagnóstico', true), wCell(studentInfo.diagnosis || '—'), wCell('Data da Avaliação', true), wCell(studentInfo.date)] }),
+    ],
+  }))
+  sections.push(new Paragraph({ text: '' }))
+
+  const grouped: Record<PEIItem['prazo'], PEIItem[]> = { curto: [], medio: [], longo: [] }
+  for (const p of pei) grouped[p.prazo].push(p)
+
+  for (const prazo of ['curto', 'medio', 'longo'] as const) {
+    const items = grouped[prazo]
+    if (items.length === 0) continue
+    sections.push(new Paragraph({ text: PRAZO[prazo], heading: HeadingLevel.HEADING_2 }))
+    const rows: TableRow[] = [
+      new TableRow({
+        children: [
+          wCell('Habilidade', true, 'D6BCF7'),
+          wCell('Área', true, 'D6BCF7'),
+          wCell('Status', true, 'D6BCF7'),
+          wCell('Início', true, 'D6BCF7'),
+          wCell('Fim', true, 'D6BCF7'),
+          wCell('Estratégias', true, 'D6BCF7'),
+        ],
+      }),
+    ]
+    for (const item of items) {
+      rows.push(new TableRow({
+        children: [
+          wCell(formatQuestion(item.skill)),
+          wCell(item.area),
+          wCell(STATUS[item.status]),
+          wCell(item.startDate ? new Date(item.startDate + 'T00:00:00').toLocaleDateString('pt-BR') : '—'),
+          wCell(item.endDate ? new Date(item.endDate + 'T00:00:00').toLocaleDateString('pt-BR') : '—'),
+          wCell(item.estrategias || '—'),
+        ],
+      }))
+    }
+    sections.push(new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows }))
+    sections.push(new Paragraph({ text: '' }))
+  }
+
+  const doc = new Document({ sections: [{ children: sections }] })
+  const blob = await Packer.toBlob(doc)
+  saveAs(blob, `PEI_${studentInfo.name}_${studentInfo.date}.docx`)
+}
+
 export default function PortagePEI({ hook, setView }: Props) {
   const { current, getItemsByResponse } = hook
   const [pei, setPei] = useState<PEIItem[]>(() => current ? loadPEI(current.id) : [])
   const [tab, setTab] = useState<'select' | 'plan'>('select')
   const [editId, setEditId] = useState<string | null>(null)
   const [editForm, setEditForm] = useState<Partial<PEIItem>>({})
+  const [exporting, setExporting] = useState(false)
 
   if (!current) return null
 
@@ -62,45 +147,54 @@ export default function PortagePEI({ hook, setView }: Props) {
   const grouped: Record<PEIItem['prazo'], PEIItem[]> = { curto: [], medio: [], longo: [] }
   for (const p of pei) grouped[p.prazo].push(p)
 
+  const handleExport = async () => {
+    setExporting(true)
+    try { await exportPEIWord(current, pei) } finally { setExporting(false) }
+  }
+
   return (
-    <div className="max-w-4xl mx-auto p-4 py-6 print:py-4">
+    <div className="max-w-4xl mx-auto p-4 py-6">
       {/* Header */}
-      <div className="flex items-center gap-2 mb-5 print:hidden">
-        <button onClick={() => setView('home')} className="p-2 rounded-lg hover:bg-white/70 transition"><ArrowLeft className="w-4 h-4" /></button>
-        <div className="flex-1">
-          <p className="font-bold text-gray-900">Plano de Ensino Individualizado (PEI)</p>
-          <p className="text-xs text-gray-400">{current.studentInfo.name}</p>
+      <div className="flex items-center gap-2 mb-6">
+        <button type="button" onClick={() => setView('home')} className="p-2 rounded-lg hover:bg-white/70 transition">
+          <ArrowLeft className="w-4 h-4" />
+        </button>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-gray-900">Plano de Ensino Individualizado</p>
+          <p className="text-xs text-gray-400">{current.studentInfo.name}{current.studentInfo.age ? ` · ${current.studentInfo.age}` : ''}</p>
         </div>
-        <button onClick={() => setView('results')} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
+        <button type="button" onClick={() => setView('results')} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
           <BarChart3 className="w-3.5 h-3.5" /> Resultados
         </button>
-        <button onClick={() => window.print()} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
-          <Printer className="w-3.5 h-3.5" /> Imprimir
+        <button
+          type="button"
+          onClick={handleExport}
+          disabled={exporting || pei.length === 0}
+          className="flex items-center gap-1.5 text-xs bg-purple-600 text-white rounded-lg px-3 py-1.5 hover:bg-purple-700 transition disabled:opacity-50 font-medium"
+        >
+          {exporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileDown className="w-3.5 h-3.5" />}
+          Exportar Word
         </button>
       </div>
 
-      {/* Print header */}
-      <div className="hidden print:block mb-6 text-center border-b pb-4">
-        <h1 className="text-xl font-bold">PLANO DE ENSINO INDIVIDUALIZADO (PEI)</h1>
-        <p className="text-sm text-gray-500">Escala Portage de Desenvolvimento</p>
-        <div className="grid grid-cols-3 gap-3 mt-3 text-sm text-left border rounded p-3">
-          <span><b>Aluno:</b> {current.studentInfo.name}</span>
-          <span><b>Idade:</b> {current.studentInfo.age}</span>
-          <span><b>Diagnóstico:</b> {current.studentInfo.diagnosis}</span>
-          <span><b>Nasc.:</b> {current.studentInfo.birthDate}</span>
-          <span><b>Avaliação:</b> {current.studentInfo.date}</span>
-        </div>
+      {/* Info aluno */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-5 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div><p className="text-[10px] text-gray-400 uppercase tracking-wide">Aluno</p><p className="text-sm font-semibold text-gray-800 truncate">{current.studentInfo.name}</p></div>
+        <div><p className="text-[10px] text-gray-400 uppercase tracking-wide">Idade</p><p className="text-sm font-semibold text-gray-800">{current.studentInfo.age || '—'}</p></div>
+        <div><p className="text-[10px] text-gray-400 uppercase tracking-wide">Diagnóstico</p><p className="text-sm font-semibold text-gray-800 truncate">{current.studentInfo.diagnosis || '—'}</p></div>
+        <div><p className="text-[10px] text-gray-400 uppercase tracking-wide">Avaliação</p><p className="text-sm font-semibold text-gray-800">{current.studentInfo.date}</p></div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-5 print:hidden">
+      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-5">
         {[
-          { k: 'select', label: `Selecionar Habilidades (${allPriority.length})` },
-          { k: 'plan', label: `Plano PEI (${pei.length})` },
+          { k: 'select', label: `Selecionar Habilidades`, count: allPriority.length },
+          { k: 'plan', label: `Plano PEI`, count: pei.length },
         ].map(t => (
-          <button key={t.k} onClick={() => setTab(t.k as typeof tab)}
-            className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition ${tab === t.k ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
+          <button key={t.k} type="button" onClick={() => setTab(t.k as typeof tab)}
+            className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${tab === t.k ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
             {t.label}
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${tab === t.k ? 'bg-purple-100 text-purple-700' : 'bg-gray-200 text-gray-500'}`}>{t.count}</span>
           </button>
         ))}
       </div>
@@ -108,49 +202,89 @@ export default function PortagePEI({ hook, setView }: Props) {
       {/* Select tab */}
       {tab === 'select' && (
         <div className="space-y-2">
-          {allPriority.length === 0 && <p className="text-center text-gray-300 py-10 text-sm">Responda o questionário primeiro.</p>}
-          {allPriority.map(item => {
-            const isNao = naoItems.includes(item)
-            const added = inPEI(item.text)
-            return (
-              <div key={item.id} className={`p-3 rounded-xl border flex items-start gap-3 ${isNao ? 'bg-red-50 border-red-100' : 'bg-yellow-50 border-yellow-100'}`}>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-800">{item.text}</p>
-                  <div className="flex gap-2 mt-1">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${isNao ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                      {isNao ? 'Alta Prioridade' : 'Em Desenvolvimento'}
-                    </span>
-                    <span className="text-xs text-gray-400">{item.age_range}</span>
-                  </div>
-                </div>
-                <button
-                  onClick={() => added ? remove(pei.find(p => p.skill === item.text)!.id) : add(item)}
-                  className={`shrink-0 text-xs px-3 py-1.5 rounded-lg font-medium transition ${added ? 'bg-gray-100 text-gray-400 border border-gray-200' : 'bg-purple-600 text-white hover:bg-purple-700'}`}
-                >
-                  {added ? '✓ Adicionado' : <span className="flex items-center gap-1"><Plus className="w-3 h-3" /> Adicionar</span>}
-                </button>
+          {allPriority.length === 0 && (
+            <div className="text-center py-16 text-gray-300">
+              <p className="text-sm">Responda o questionário primeiro para ver as habilidades prioritárias.</p>
+            </div>
+          )}
+          {naoItems.length > 0 && (
+            <div className="mb-2">
+              <p className="text-xs font-semibold text-red-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-red-400 inline-block" /> Alta Prioridade — Não adquiridas
+              </p>
+              <div className="space-y-2">
+                {naoItems.map(item => {
+                  const added = inPEI(item.text)
+                  return (
+                    <div key={item.id} className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-start gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-800 leading-relaxed">{formatQuestion(item.text)}</p>
+                        <p className="text-xs text-gray-400 mt-0.5">{item.area} · {item.age_range}</p>
+                      </div>
+                      <button type="button"
+                        onClick={() => added ? remove(pei.find(p => p.skill === item.text)!.id) : add(item)}
+                        className={`shrink-0 text-xs px-3 py-1.5 rounded-lg font-medium transition ${added ? 'bg-gray-100 text-gray-400 border border-gray-200' : 'bg-red-500 text-white hover:bg-red-600'}`}
+                      >
+                        {added ? '✓ Adicionado' : <span className="flex items-center gap-1"><Plus className="w-3 h-3" />Adicionar</span>}
+                      </button>
+                    </div>
+                  )
+                })}
               </div>
-            )
-          })}
+            </div>
+          )}
+          {avItems.length > 0 && (
+            <div>
+              <p className="text-xs font-semibold text-yellow-600 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" /> Em Desenvolvimento — Às vezes
+              </p>
+              <div className="space-y-2">
+                {avItems.map(item => {
+                  const added = inPEI(item.text)
+                  return (
+                    <div key={item.id} className="bg-yellow-50 border border-yellow-100 rounded-xl p-3 flex items-start gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-800 leading-relaxed">{formatQuestion(item.text)}</p>
+                        <p className="text-xs text-gray-400 mt-0.5">{item.area} · {item.age_range}</p>
+                      </div>
+                      <button type="button"
+                        onClick={() => added ? remove(pei.find(p => p.skill === item.text)!.id) : add(item)}
+                        className={`shrink-0 text-xs px-3 py-1.5 rounded-lg font-medium transition ${added ? 'bg-gray-100 text-gray-400 border border-gray-200' : 'bg-yellow-500 text-white hover:bg-yellow-600'}`}
+                      >
+                        {added ? '✓ Adicionado' : <span className="flex items-center gap-1"><Plus className="w-3 h-3" />Adicionar</span>}
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
       {/* Plan tab */}
-      {(tab === 'plan' || true) && (tab === 'plan' || typeof window !== 'undefined') && tab === 'plan' && (
-        <div className="space-y-6 print:space-y-4">
-          {pei.length === 0 && <p className="text-center text-gray-300 py-10 text-sm">Nenhuma habilidade no PEI. Selecione na aba anterior.</p>}
+      {tab === 'plan' && (
+        <div className="space-y-6">
+          {pei.length === 0 && (
+            <div className="text-center py-16 text-gray-300">
+              <p className="text-sm">Nenhuma habilidade no PEI ainda.</p>
+              <button type="button" onClick={() => setTab('select')} className="mt-3 text-xs text-purple-500 hover:text-purple-700">Selecionar habilidades →</button>
+            </div>
+          )}
           {(['curto', 'medio', 'longo'] as const).map(prazo => {
             const items = grouped[prazo]
             if (items.length === 0) return null
             return (
               <div key={prazo}>
-                <h2 className="font-bold text-sm text-gray-600 mb-3 print:text-base">{PRAZO[prazo]}</h2>
+                <div className={`inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full text-xs font-semibold border ${PRAZO_COLOR[prazo]} ${PRAZO_BORDER[prazo]}`}>
+                  {PRAZO[prazo]}
+                </div>
                 <div className="space-y-3">
                   {items.map(item => (
-                    <div key={item.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden print:shadow-none print:border">
+                    <div key={item.id} className={`bg-white rounded-2xl border shadow-sm overflow-hidden ${PRAZO_BORDER[prazo]}`}>
                       {editId === item.id ? (
                         <div className="p-4 space-y-3">
-                          <p className="text-sm font-medium text-gray-800">{item.skill}</p>
+                          <p className="text-sm font-medium text-gray-800 leading-relaxed">{formatQuestion(item.skill)}</p>
                           <div className="grid grid-cols-2 gap-3">
                             <div>
                               <label className="text-xs text-gray-500 block mb-1">Prazo</label>
@@ -158,7 +292,7 @@ export default function PortagePEI({ hook, setView }: Props) {
                                 className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-purple-400">
                                 <option value="curto">Curto (3 meses)</option>
                                 <option value="medio">Médio (6 meses)</option>
-                                <option value="longo">Longo (9-12 meses)</option>
+                                <option value="longo">Longo (9–12 meses)</option>
                               </select>
                             </div>
                             <div>
@@ -188,29 +322,36 @@ export default function PortagePEI({ hook, setView }: Props) {
                               className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none" />
                           </div>
                           <div className="flex gap-2">
-                            <button onClick={saveEdit} className="flex items-center gap-1 text-xs bg-green-600 text-white px-3 py-1.5 rounded-lg hover:bg-green-700 transition">
+                            <button type="button" onClick={saveEdit} className="flex items-center gap-1 text-xs bg-green-600 text-white px-3 py-1.5 rounded-lg hover:bg-green-700 transition">
                               <Save className="w-3 h-3" /> Salvar
                             </button>
-                            <button onClick={() => { setEditId(null); setEditForm({}) }} className="text-xs border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition">Cancelar</button>
+                            <button type="button" onClick={() => { setEditId(null); setEditForm({}) }} className="text-xs border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition">Cancelar</button>
                           </div>
                         </div>
                       ) : (
-                        <div className="p-4 flex items-start gap-3">
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm text-gray-800 leading-relaxed">{item.skill}</p>
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              <span className={`text-xs px-2 py-0.5 rounded-full ${PRAZO_COLOR[item.prazo]}`}>{PRAZO[item.prazo]}</span>
-                              <span className={`text-xs px-2 py-0.5 rounded-full ${STATUS_COLOR[item.status]}`}>{STATUS[item.status]}</span>
-                              {item.startDate && <span className="text-xs text-gray-400">Início: {new Date(item.startDate + 'T00:00:00').toLocaleDateString('pt-BR')}</span>}
-                              {item.endDate && <span className="text-xs text-gray-400">Fim: {new Date(item.endDate + 'T00:00:00').toLocaleDateString('pt-BR')}</span>}
+                        <div className="p-4">
+                          <div className="flex items-start gap-3">
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-gray-800 leading-relaxed font-medium">{formatQuestion(item.skill)}</p>
+                              <p className="text-xs text-gray-400 mt-0.5">{item.area} · {item.ageRange}</p>
+                              <div className="flex flex-wrap gap-2 mt-2">
+                                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLOR[item.status]}`}>{STATUS[item.status]}</span>
+                                {item.startDate && <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">Início: {new Date(item.startDate + 'T00:00:00').toLocaleDateString('pt-BR')}</span>}
+                                {item.endDate && <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">Fim: {new Date(item.endDate + 'T00:00:00').toLocaleDateString('pt-BR')}</span>}
+                              </div>
+                              {item.estrategias && (
+                                <div className="mt-3 p-2.5 bg-gray-50 border border-gray-100 rounded-xl">
+                                  <p className="text-[10px] text-gray-400 uppercase tracking-wide mb-1 font-medium">Estratégias</p>
+                                  <p className="text-xs text-gray-600 leading-relaxed">{item.estrategias}</p>
+                                </div>
+                              )}
                             </div>
-                            {item.estrategias && <p className="text-xs text-gray-600 mt-2 p-2 bg-gray-50 rounded-lg">{item.estrategias}</p>}
-                          </div>
-                          <div className="flex flex-col gap-1 shrink-0 print:hidden">
-                            <button onClick={() => { setEditId(item.id); setEditForm(item) }} className="text-xs border border-gray-200 px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition">Editar</button>
-                            <button onClick={() => remove(item.id)} className="text-xs text-red-400 px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition flex items-center gap-1">
-                              <Trash2 className="w-3 h-3" />
-                            </button>
+                            <div className="flex flex-col gap-1 shrink-0">
+                              <button type="button" onClick={() => { setEditId(item.id); setEditForm(item) }} className="text-xs border border-gray-200 px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition">Editar</button>
+                              <button type="button" onClick={() => remove(item.id)} className="text-xs text-red-400 px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition flex items-center justify-center gap-1">
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       )}
@@ -220,6 +361,17 @@ export default function PortagePEI({ hook, setView }: Props) {
               </div>
             )
           })}
+          {pei.length > 0 && (
+            <button
+              type="button"
+              onClick={handleExport}
+              disabled={exporting}
+              className="w-full flex items-center justify-center gap-2 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition shadow disabled:opacity-50"
+            >
+              {exporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileDown className="w-4 h-4" />}
+              Exportar PEI em Word
+            </button>
+          )}
         </div>
       )}
     </div>

@@ -1,3 +1,13 @@
+export interface Patient {
+  id: string
+  name: string
+  birthDate: string
+  diagnosis: string
+  responsibleName: string
+  photoBase64?: string
+  createdAt: string
+}
+
 export interface PortageItem {
   id: string
   area: string

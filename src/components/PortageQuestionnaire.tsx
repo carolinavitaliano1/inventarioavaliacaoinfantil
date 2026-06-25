@@ -79,20 +79,6 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
     return r
   }, [])
 
-  // Flat list of visible items for keyboard navigation
-  const visibleItems = useMemo(() => {
-    const items: typeof portageItems = []
-    for (const area of AREAS) {
-      if (!expandedAreas.has(area)) continue
-      for (const [ageRange, ageItems] of Object.entries(grouped[area] || {})) {
-        const key = `${area}__${ageRange}`
-        if (!expandedAges.has(key)) continue
-        const list = onlyUnanswered ? ageItems.filter(i => !current?.responses[i.id]) : ageItems
-        items.push(...list)
-      }
-    }
-    return items
-  }, [grouped, expandedAreas, expandedAges, onlyUnanswered, current?.responses])
 
   useEffect(() => {
     if (!current) setView('home')
@@ -126,19 +112,31 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
       else if (key === 'a') { e.preventDefault(); updateResponse(focusedItemId, resp === 'as_vezes' ? null : 'as_vezes') }
       else if (key === 'arrowdown' || key === 'tab') {
         e.preventDefault()
-        const idx = visibleItems.findIndex(i => i.id === focusedItemId)
-        const next = visibleItems[idx + 1]
-        if (next) { setFocusedItemId(next.id); document.getElementById(`item-${next.id}`)?.scrollIntoView({ block: 'nearest' }) }
+        const allItems = onlyUnanswered ? portageItems.filter(i => !responses[i.id]) : portageItems
+        const idx = allItems.findIndex(i => i.id === focusedItemId)
+        const next = allItems[idx + 1]
+        if (next) {
+          setExpandedAreas(p => new Set([...p, next.area]))
+          setExpandedAges(p => new Set([...p, `${next.area}__${next.age_range}`]))
+          setFocusedItemId(next.id)
+          setTimeout(() => document.getElementById(`item-${next.id}`)?.scrollIntoView({ block: 'nearest' }), 50)
+        }
       } else if (key === 'arrowup') {
         e.preventDefault()
-        const idx = visibleItems.findIndex(i => i.id === focusedItemId)
-        const prev = visibleItems[idx - 1]
-        if (prev) { setFocusedItemId(prev.id); document.getElementById(`item-${prev.id}`)?.scrollIntoView({ block: 'nearest' }) }
+        const allItems = onlyUnanswered ? portageItems.filter(i => !responses[i.id]) : portageItems
+        const idx = allItems.findIndex(i => i.id === focusedItemId)
+        const prev = allItems[idx - 1]
+        if (prev) {
+          setExpandedAreas(p => new Set([...p, prev.area]))
+          setExpandedAges(p => new Set([...p, `${prev.area}__${prev.age_range}`]))
+          setFocusedItemId(prev.id)
+          setTimeout(() => document.getElementById(`item-${prev.id}`)?.scrollIntoView({ block: 'nearest' }), 50)
+        }
       }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [focusedItemId, responses, updateResponse, visibleItems])
+  }, [focusedItemId, responses, updateResponse, onlyUnanswered, setExpandedAreas, setExpandedAges])
 
   return (
     <div className="max-w-3xl mx-auto p-4 py-6">
