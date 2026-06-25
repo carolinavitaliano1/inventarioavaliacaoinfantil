@@ -15,7 +15,10 @@ export function usePatients() {
 
   const createPatient = useCallback((data: Omit<Patient, 'id' | 'createdAt'>): Patient => {
     const p: Patient = { ...data, id: `p_${Date.now()}`, createdAt: new Date().toISOString() }
-    setPatients(prev => { const next = [...prev, p]; save(next); return next })
+    setPatients(prev => {
+      if (prev.some(x => x.id === p.id)) return prev  // guard contra dupla chamada (React StrictMode)
+      const next = [...prev, p]; save(next); return next
+    })
     return p
   }, [])
 
