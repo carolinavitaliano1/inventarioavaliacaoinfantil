@@ -1,73 +1,108 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import rawItems from '../portageData.json'
 import type { PortageItem, ResponseType, StudentInfo, Assessment } from '../types'
+import { supabase } from '../lib/supabase'
 
 export const portageItems: PortageItem[] = rawItems as PortageItem[]
 
 const STORAGE_KEY = 'portage_assessments'
 
-function load(): Assessment[] {
+function loadLocal(): Assessment[] {
   try {
     const data: Assessment[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-    // Retrocompatibilidade: assessments antigos sem childId recebem um derivado de nome+data
     return data.map(a => a.childId ? a : {
       ...a,
       childId: `c_${(a.studentInfo.name + a.studentInfo.birthDate).toLowerCase().replace(/\W/g, '_')}`,
     })
   } catch { return [] }
 }
-function save(data: Assessment[]) {
+function saveLocal(data: Assessment[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
 }
 
-export function usePortageAssessment() {
-  const [assessments, setAssessments] = useState<Assessment[]>(load)
+function rowToAssessment(row: Record<string, unknown>): Assessment {
+  return {
+    id: row.id as string,
+    childId: row.child_id as string,
+    studentInfo: row.student_info as StudentInfo,
+    responses: (row.responses ?? {}) as Record<string, ResponseType>,
+    createdAt: row.created_at as string,
+    updatedAt: row.updated_at as string,
+  }
+}
+
+export function usePortageAssessment(userId: string | null) {
+  const [assessments, setAssessments] = useState<Assessment[]>(loadLocal)
   const [currentId, setCurrentId] = useState<string | null>(null)
+  const [synced, setSynced] = useState(false)
+
+  useEffect(() => {
+    if (!userId) { setSynced(false); return }
+    supabase
+      .from('assessments')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: true })
+      .then(({ data }) => {
+        if (!data) return
+        const remote: Assessment[] = data.map(rowToAssessment)
+        const remoteIds = new Set(remote.map(a => a.id))
+        const localOnly = loadLocal().filter(a => !remoteIds.has(a.id))
+        const merged = [...remote, ...localOnly]
+        setAssessments(merged)
+        saveLocal(merged)
+        setSynced(true)
+      })
+  }, [userId])
 
   const current = assessments.find(a => a.id === currentId) ?? null
+
+  const upsertRemote = useCallback(async (a: Assessment) => {
+    if (!userId) return
+    await supabase.from('assessments').upsert({
+      id: a.id,
+      child_id: a.childId,
+      user_id: userId,
+      student_info: a.studentInfo,
+      responses: a.responses,
+    })
+  }, [userId])
 
   const createAssessment = useCallback((info: StudentInfo): string => {
     const id = `a_${Date.now()}`
     const childId = `c_${(info.name + info.birthDate).toLowerCase().replace(/\W/g, '_')}`
     const a: Assessment = { id, childId, studentInfo: info, responses: {}, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
-    setAssessments(prev => { const next = [...prev, a]; save(next); return next })
+    setAssessments(prev => { const next = [...prev, a]; saveLocal(next); return next })
     setCurrentId(id)
+    upsertRemote(a)
     return id
-  }, [])
+  }, [upsertRemote])
 
-  // Reavaliação: nova avaliação com os mesmos dados da criança, data atual, respostas zeradas
   const reAssess = useCallback((sourceId: string): string => {
     const id = `a_${Date.now()}`
     setAssessments(prev => {
       const source = prev.find(a => a.id === sourceId)
       if (!source) return prev
-      const newInfo: StudentInfo = {
-        ...source.studentInfo,
-        date: new Date().toLocaleDateString('pt-BR'),
-      }
-      const a: Assessment = {
-        id,
-        childId: source.childId,
-        studentInfo: newInfo,
-        responses: {},
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      }
+      const newInfo: StudentInfo = { ...source.studentInfo, date: new Date().toLocaleDateString('pt-BR') }
+      const a: Assessment = { id, childId: source.childId, studentInfo: newInfo, responses: {}, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
       const next = [...prev, a]
-      save(next)
+      saveLocal(next)
+      upsertRemote(a)
       return next
     })
     setCurrentId(id)
     return id
-  }, [])
+  }, [upsertRemote])
 
   const updateResponse = useCallback((itemId: string, response: ResponseType) => {
     setAssessments(prev => {
       const next = prev.map(a => a.id === currentId ? { ...a, responses: { ...a.responses, [itemId]: response }, updatedAt: new Date().toISOString() } : a)
-      save(next)
+      saveLocal(next)
+      const updated = next.find(a => a.id === currentId)
+      if (updated) upsertRemote(updated)
       return next
     })
-  }, [currentId])
+  }, [currentId, upsertRemote])
 
   const batchUpdateResponses = useCallback((itemIds: string[], response: ResponseType) => {
     setAssessments(prev => {
@@ -77,15 +112,18 @@ export function usePortageAssessment() {
         for (const id of itemIds) newResponses[id] = response
         return { ...a, responses: newResponses, updatedAt: new Date().toISOString() }
       })
-      save(next)
+      saveLocal(next)
+      const updated = next.find(a => a.id === currentId)
+      if (updated) upsertRemote(updated)
       return next
     })
-  }, [currentId])
+  }, [currentId, upsertRemote])
 
   const deleteAssessment = useCallback((id: string) => {
-    setAssessments(prev => { const next = prev.filter(a => a.id !== id); save(next); return next })
+    setAssessments(prev => { const next = prev.filter(a => a.id !== id); saveLocal(next); return next })
     if (currentId === id) setCurrentId(null)
-  }, [currentId])
+    if (userId) supabase.from('assessments').delete().eq('id', id)
+  }, [currentId, userId])
 
   const getAreaStats = useCallback((assessmentId?: string) => {
     const a = assessmentId ? assessments.find(x => x.id === assessmentId) : current
@@ -113,7 +151,6 @@ export function usePortageAssessment() {
     return Math.round((answered / portageItems.length) * 100)
   }, [current])
 
-  // Retorna todas as avaliações da mesma criança (mesmo childId), ordenadas por data
   const getSiblingAssessments = useCallback((assessmentId: string): Assessment[] => {
     const source = assessments.find(a => a.id === assessmentId)
     if (!source) return []
@@ -123,7 +160,7 @@ export function usePortageAssessment() {
   }, [assessments])
 
   return {
-    assessments, current, currentId, setCurrentId,
+    assessments, current, currentId, setCurrentId, synced,
     createAssessment, reAssess, updateResponse, batchUpdateResponses,
     deleteAssessment, getAreaStats, getItemsByResponse, getProgress, getSiblingAssessments,
   }

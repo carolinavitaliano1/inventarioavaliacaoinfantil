@@ -4,11 +4,14 @@ import PortageHome from './components/PortageHome'
 import PortageQuestionnaire from './components/PortageQuestionnaire'
 import PortageResults from './components/PortageResults'
 import PortagePEI from './components/PortagePEI'
+import LoginPage from './components/LoginPage'
+import Dashboard from './components/Dashboard'
 import { usePortageAssessment } from './hooks/usePortageAssessment'
+import { useAuth } from './hooks/useAuth'
+import { Loader2 } from 'lucide-react'
 
-export type View = 'home' | 'questionnaire' | 'results' | 'pei'
+export type View = 'home' | 'questionnaire' | 'results' | 'pei' | 'dashboard'
 
-// ErrorBoundary global: evita tela branca em erros de render
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null }
   static getDerivedStateFromError(error: Error) { return { error } }
@@ -34,10 +37,10 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
 }
 
 export default function App() {
+  const auth = useAuth()
   const [view, setView] = useState<View>('home')
-  const hook = usePortageAssessment()
+  const hook = usePortageAssessment(auth.user?.id ?? null)
 
-  // Se current é null e estamos em uma view que precisa dele, volta para home
   const safeSetView = (v: View) => {
     if ((v === 'questionnaire' || v === 'results' || v === 'pei') && !hook.current) {
       setView('home')
@@ -46,10 +49,27 @@ export default function App() {
     setView(v)
   }
 
+  if (auth.loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50">
+        <Loader2 className="w-8 h-8 text-purple-600 animate-spin" />
+      </div>
+    )
+  }
+
+  if (!auth.user) {
+    return (
+      <ErrorBoundary>
+        <LoginPage auth={auth} />
+      </ErrorBoundary>
+    )
+  }
+
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-        {view === 'home' && <PortageHome hook={hook} setView={safeSetView} />}
+        {view === 'home' && <PortageHome hook={hook} setView={safeSetView} auth={auth} />}
+        {view === 'dashboard' && <Dashboard hook={hook} setView={safeSetView} auth={auth} />}
         {view === 'questionnaire' && <PortageQuestionnaire hook={hook} setView={safeSetView} />}
         {view === 'results' && <PortageResults hook={hook} setView={safeSetView} />}
         {view === 'pei' && <PortagePEI hook={hook} setView={safeSetView} />}
