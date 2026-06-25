@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import {
   ArrowLeft, ClipboardList, BookOpen, TrendingUp, AlertCircle,
-  FileText, User, Calendar
+  FileText, User, Calendar, Download
 } from 'lucide-react'
+import { toPng } from 'html-to-image'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
@@ -39,6 +40,18 @@ export default function PortageResults({ hook, setView }: Props) {
   const { current, getItemsByResponse } = hook
   const [tab, setTab] = useState<'sintese' | 'graficos' | 'nao' | 'as_vezes'>('sintese')
   const [exportingWord, setExportingWord] = useState(false)
+  const lineChartRef = useRef<HTMLDivElement>(null)
+  const radarChartRef = useRef<HTMLDivElement>(null)
+  const barChartRef = useRef<HTMLDivElement>(null)
+
+  const downloadChart = async (ref: React.RefObject<HTMLDivElement | null>, name: string) => {
+    if (!ref.current) return
+    const dataUrl = await toPng(ref.current, { backgroundColor: '#ffffff', pixelRatio: 2 })
+    const a = document.createElement('a')
+    a.href = dataUrl
+    a.download = `${name}-${current?.studentInfo?.name ?? 'grafico'}.png`
+    a.click()
+  }
 
   if (!current) return null
 
@@ -301,8 +314,14 @@ export default function PortageResults({ hook, setView }: Props) {
         <div className="space-y-5">
           {/* Gráfico de linhas: % por faixa etária, uma linha por área */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-            <h3 className="text-sm font-bold text-gray-700 mb-1">% de Acertos por Faixa Etária e Área</h3>
+            <div className="flex items-center justify-between mb-1">
+              <h3 className="text-sm font-bold text-gray-700">% de Acertos por Faixa Etária e Área</h3>
+              <button onClick={() => downloadChart(lineChartRef, 'grafico-linhas')} className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition">
+                <Download className="w-3.5 h-3.5" /> Baixar
+              </button>
+            </div>
             <p className="text-xs text-gray-400 mb-4">Cada linha representa uma área; eixo X = faixa etária</p>
+            <div ref={lineChartRef} className="bg-white p-2 rounded-xl">
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={lineData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -323,12 +342,19 @@ export default function PortageResults({ hook, setView }: Props) {
                 ))}
               </LineChart>
             </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Radar: perfil desenvolvimental */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-            <h3 className="text-sm font-bold text-gray-700 mb-1">Perfil Desenvolvimental por Área</h3>
+            <div className="flex items-center justify-between mb-1">
+              <h3 className="text-sm font-bold text-gray-700">Perfil Desenvolvimental por Área</h3>
+              <button onClick={() => downloadChart(radarChartRef, 'grafico-radar')} className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition">
+                <Download className="w-3.5 h-3.5" /> Baixar
+              </button>
+            </div>
             <p className="text-xs text-gray-400 mb-4">Idade desenvolvimental em anos vs. cronológica</p>
+            <div ref={radarChartRef} className="bg-white p-2 rounded-xl">
             <ResponsiveContainer width="100%" height={300}>
               <RadarChart data={radarData}>
                 <PolarGrid />
@@ -342,11 +368,18 @@ export default function PortageResults({ hook, setView }: Props) {
                 <Tooltip formatter={(v: any) => `${Number(v).toFixed(2)} anos`} />
               </RadarChart>
             </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Mini barras por área mostrando % por faixa */}
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-            <h3 className="text-sm font-bold text-gray-700 mb-4">Perfil de Acertos por Área e Faixa Etária</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-bold text-gray-700">Perfil de Acertos por Área e Faixa Etária</h3>
+              <button onClick={() => downloadChart(barChartRef, 'grafico-barras')} className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 transition">
+                <Download className="w-3.5 h-3.5" /> Baixar
+              </button>
+            </div>
+            <div ref={barChartRef} className="bg-white p-2 rounded-xl">
             <div className="space-y-4">
               {areaResults.map(result => {
                 const c = AREA_COLOR[result.area]
@@ -374,6 +407,7 @@ export default function PortageResults({ hook, setView }: Props) {
                   </div>
                 )
               })}
+            </div>
             </div>
           </div>
         </div>

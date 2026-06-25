@@ -13,5 +13,5 @@ export function formatQuestion(text: string): string {
   const lower = t.charAt(0).toLowerCase() + t.slice(1)
 
   // Constrói a pergunta no estilo cuidador
-  return `Seu filho(a) ${lower}?`
+  return `A criança ${lower}?`
 }

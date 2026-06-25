@@ -1,11 +1,12 @@
 import { useState, useMemo, useEffect } from 'react'
-import { ChevronDown, ChevronRight, ArrowLeft, BarChart3, CheckCircle, XCircle, MinusCircle, Circle, Keyboard } from 'lucide-react'
+import { ChevronDown, ChevronRight, ArrowLeft, BarChart3, CheckCircle, XCircle, MinusCircle, Circle, Keyboard, Info } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import { AREAS, AREA_COLOR } from '../types'
 import type { ResponseType } from '../types'
 import type { View } from '../App'
 import { formatQuestion } from '../utils/formatQuestion'
+import { getEvaluationTip } from '../utils/getEvaluationTip'
 
 interface Props { hook: AssessmentHook; setView: (v: View) => void }
 
@@ -62,6 +63,11 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
   const [onlyUnanswered, setOnlyUnanswered] = useState(false)
   const [focusedItemId, setFocusedItemId] = useState<string | null>(null)
   const [showShortcuts, setShowShortcuts] = useState(false)
+  const [expandedTips, setExpandedTips] = useState<Set<string>>(new Set())
+  const toggleTip = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    setExpandedTips(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
+  }
 
   const grouped = useMemo(() => {
     const r: Record<string, Record<string, typeof portageItems>> = {}
@@ -249,7 +255,7 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
                           className={`px-4 py-3 border-t border-gray-50 cursor-pointer transition-colors ${isFocused ? 'ring-2 ring-inset ring-purple-400 bg-purple-50' : idx % 2 === 0 ? 'bg-white hover:bg-gray-50/50' : 'bg-gray-50/60 hover:bg-gray-50'}`}
                         >
                           <p className="text-sm text-gray-800 mb-2 leading-relaxed font-medium">{formatQuestion(item.text)}</p>
-                          <div className="flex gap-2 flex-wrap">
+                          <div className="flex gap-2 flex-wrap mb-2">
                             <ResponseBtn value="sim" current={responses[item.id] ?? null} shortcut="S"
                               onClick={e => { e.stopPropagation(); updateResponse(item.id, responses[item.id] === 'sim' ? null : 'sim') }} />
                             <ResponseBtn value="nao" current={responses[item.id] ?? null} shortcut="N"
@@ -257,6 +263,18 @@ export default function PortageQuestionnaire({ hook, setView }: Props) {
                             <ResponseBtn value="as_vezes" current={responses[item.id] ?? null} shortcut="A"
                               onClick={e => { e.stopPropagation(); updateResponse(item.id, responses[item.id] === 'as_vezes' ? null : 'as_vezes') }} />
                           </div>
+                          <button
+                            onClick={e => toggleTip(item.id, e)}
+                            className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-700 transition mt-0.5"
+                          >
+                            <Info className="w-3 h-3" />
+                            {expandedTips.has(item.id) ? 'Ocultar orientação' : 'Como avaliar este comportamento'}
+                          </button>
+                          {expandedTips.has(item.id) && (
+                            <div className="mt-2 p-2.5 bg-blue-50 border border-blue-100 rounded-xl text-[11px] text-blue-800 leading-relaxed">
+                              {getEvaluationTip(item)}
+                            </div>
+                          )}
                         </div>
                       )
                     })}
