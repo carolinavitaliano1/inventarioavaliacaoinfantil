@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ClipboardList, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Activity, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react'
 import type { useAuth } from '../hooks/useAuth'
 
 type AuthHook = ReturnType<typeof useAuth>
@@ -38,26 +38,74 @@ export default function LoginPage({ auth }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-sm">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-2xl mb-4 shadow-lg">
-            <ClipboardList className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900">IADI</h1>
-          <p className="text-sm font-semibold text-purple-700 mt-0.5">Inventário de Avaliação do Desenvolvimento Infantil</p>
-          <p className="text-xs text-gray-400 mt-1">Avaliação da Idade Desenvolvimental</p>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-md border border-purple-100 p-6">
-          <h2 className="text-base font-semibold text-gray-800 mb-4">
-            {mode === 'login' ? 'Entrar' : mode === 'signup' ? 'Criar conta' : 'Redefinir senha'}
-          </h2>
-
-          <form onSubmit={handle} className="space-y-3">
+    <div className="min-h-screen flex">
+      {/* ── Painel esquerdo: marca ────────────────────────────── */}
+      <div className="hidden md:flex flex-col justify-between w-[52%] bg-purple-800 p-10 text-white relative overflow-hidden">
+        {/* fundo gradiente sutil */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-purple-800 to-blue-800 opacity-90" />
+        <div className="relative z-10 flex flex-col h-full">
+          {/* logo */}
+          <div className="flex items-center gap-3 mb-auto">
+            <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center">
+              <Activity className="w-5 h-5 text-white" />
+            </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">E-mail</label>
+              <p className="font-bold text-white text-base leading-none">IADI</p>
+              <p className="text-white/60 text-xs leading-none mt-0.5">Avaliação do Desenvolvimento Infantil</p>
+            </div>
+          </div>
+
+          {/* headline */}
+          <div className="my-auto">
+            <h1 className="text-3xl font-bold leading-snug mb-4">
+              Avaliação clínica do desenvolvimento, de ponta a ponta.
+            </h1>
+            <p className="text-white/70 text-sm leading-relaxed max-w-xs">
+              Inventário de Avaliação Infantil, idade desenvolvimental por área, progressão entre avaliações e plano de ensino individualizado — em um só lugar.
+            </p>
+          </div>
+
+          {/* métricas */}
+          <div className="flex gap-8 mt-auto mb-6">
+            <div>
+              <p className="text-2xl font-bold">5</p>
+              <p className="text-white/50 text-xs uppercase tracking-wide mt-0.5">Áreas</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold">0–6</p>
+              <p className="text-white/50 text-xs uppercase tracking-wide mt-0.5">Anos</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold">IAI</p>
+              <p className="text-white/50 text-xs uppercase tracking-wide mt-0.5">Método</p>
+            </div>
+          </div>
+
+          <p className="text-white/40 text-xs">Dados privados, vinculados à conta do profissional.</p>
+        </div>
+      </div>
+
+      {/* ── Painel direito: formulário ────────────────────────── */}
+      <div className="flex-1 flex items-center justify-center p-8 bg-white">
+        <div className="w-full max-w-sm">
+          {/* logo mobile */}
+          <div className="flex md:hidden items-center gap-2 mb-8">
+            <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+              <Activity className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-bold text-gray-900">IADI</span>
+          </div>
+
+          <h2 className="text-2xl font-bold text-gray-900 mb-1">
+            {mode === 'login' ? 'Entrar na conta' : mode === 'signup' ? 'Criar conta' : 'Redefinir senha'}
+          </h2>
+          <p className="text-sm text-gray-400 mb-7">
+            {mode === 'login' ? 'Acesse o painel de pacientes.' : mode === 'signup' ? 'Crie sua conta profissional.' : 'Enviaremos um link por e-mail.'}
+          </p>
+
+          <form onSubmit={handle} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">E-mail profissional</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -65,15 +113,15 @@ export default function LoginPage({ auth }: Props) {
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  placeholder="seu@email.com"
-                  className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  placeholder="ana.terapeuta@clinica.com.br"
+                  className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent"
                 />
               </div>
             </div>
 
             {mode !== 'reset' && (
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Senha</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">Senha</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
@@ -83,24 +131,24 @@ export default function LoginPage({ auth }: Props) {
                     onChange={e => setPassword(e.target.value)}
                     placeholder="••••••••"
                     minLength={6}
-                    className="w-full border border-gray-200 rounded-lg pl-9 pr-9 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    className="w-full border border-gray-200 rounded-xl pl-10 pr-11 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPwd(s => !s)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
                   >
                     {showPwd ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 {mode === 'signup' && (
-                  <p className="text-[11px] text-gray-400 mt-1">Mínimo de 6 caracteres</p>
+                  <p className="text-xs text-gray-400 mt-1">Mínimo de 6 caracteres</p>
                 )}
               </div>
             )}
 
             {message && (
-              <div className={`text-xs p-3 rounded-lg ${message.type === 'error' ? 'bg-red-50 text-red-700 border border-red-100' : 'bg-green-50 text-green-700 border border-green-100'}`}>
+              <div className={`text-xs p-3 rounded-xl ${message.type === 'error' ? 'bg-red-50 text-red-700 border border-red-100' : 'bg-green-50 text-green-700 border border-green-100'}`}>
                 {message.text}
               </div>
             )}
@@ -108,35 +156,31 @@ export default function LoginPage({ auth }: Props) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-purple-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-purple-700 transition disabled:opacity-60"
+              className="w-full flex items-center justify-center gap-2 bg-purple-600 text-white py-3 rounded-xl text-sm font-semibold hover:bg-purple-700 transition disabled:opacity-60 mt-2"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
               {mode === 'login' ? 'Entrar' : mode === 'signup' ? 'Criar conta' : 'Enviar e-mail'}
             </button>
           </form>
 
-          <div className="mt-4 space-y-2 text-center text-xs">
+          <div className="mt-5 space-y-2 text-center text-sm">
             {mode === 'login' && (
               <>
-                <button type="button" onClick={() => { setMode('reset'); setMessage(null) }} className="text-purple-500 hover:text-purple-700 block w-full">
+                <button type="button" onClick={() => { setMode('reset'); setMessage(null) }} className="text-purple-500 hover:text-purple-700 block w-full transition">
                   Esqueci minha senha
                 </button>
-                <button type="button" onClick={() => { setMode('signup'); setMessage(null) }} className="text-gray-500 hover:text-gray-700 block w-full">
-                  Não tem conta? <span className="font-medium text-purple-600">Criar conta</span>
+                <button type="button" onClick={() => { setMode('signup'); setMessage(null) }} className="text-gray-400 hover:text-gray-600 block w-full transition">
+                  Não tem conta? <span className="font-medium text-purple-600">Criar agora</span>
                 </button>
               </>
             )}
             {(mode === 'signup' || mode === 'reset') && (
-              <button type="button" onClick={() => { setMode('login'); setMessage(null) }} className="text-gray-500 hover:text-gray-700">
+              <button type="button" onClick={() => { setMode('login'); setMessage(null) }} className="text-gray-400 hover:text-gray-600 transition">
                 ← Voltar para o login
               </button>
             )}
           </div>
         </div>
-
-        <p className="text-center text-[11px] text-gray-400 mt-4">
-          Seus dados são privados e vinculados à sua conta.
-        </p>
       </div>
     </div>
   )
