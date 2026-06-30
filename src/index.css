@@ -1,1 +1,100 @@
+/* ── IADI — tema clínico (remapeia tokens do Tailwind v4) ──────────────────
+   Toda a UI usa classes utilitárias (purple-*, blue-*, rounded-*, etc.).
+   Em vez de reescrever cada componente, redefinimos os tokens do tema aqui,
+   e o novo visual clínico se propaga por todas as telas.                    */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
+
+@theme {
+  /* tipografia clínica */
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* raios um pouco mais contidos (menos "lúdico") */
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.625rem;
+  --radius-2xl: 0.75rem;
+
+  /* ── MARCA: "purple" → azul clínico (matiz ~214) ───────────────────────── */
+  --color-purple-50:  #eff4fb;
+  --color-purple-100: #dbe7f5;
+  --color-purple-200: #bdd3ec;
+  --color-purple-300: #93b6de;
+  --color-purple-400: #5d92cb;
+  --color-purple-500: #3a76b8;
+  --color-purple-600: #2f64a0;
+  --color-purple-700: #285485;
+  --color-purple-800: #23466c;
+  --color-purple-900: #1f3b59;
+
+  /* ── SECUNDÁRIA / Linguagem: "blue" → petróleo (matiz ~196) ────────────── */
+  --color-blue-50:  #ecf5f8;
+  --color-blue-100: #d3e9ef;
+  --color-blue-200: #aed6e1;
+  --color-blue-300: #79bccd;
+  --color-blue-400: #449bb1;
+  --color-blue-500: #2c8198;
+  --color-blue-600: #246b80;
+  --color-blue-700: #20596a;
+  --color-blue-800: #1e4a58;
+  --color-blue-900: #1c3e4a;
+
+  /* ── Cuidados Próprios / "Sim": verde clínico mais sóbrio ───────────────── */
+  --color-green-50:  #edf6f0;
+  --color-green-100: #d4ebdb;
+  --color-green-200: #aedabd;
+  --color-green-500: #3f9d6a;
+  --color-green-600: #348a5b;
+  --color-green-700: #2c7350;
+  --color-green-800: #265e43;
+
+  /* ── Cognitiva: âmbar/ocre contido ─────────────────────────────────────── */
+  --color-orange-50:  #fbf2e8;
+  --color-orange-100: #f6e0c9;
+  --color-orange-200: #eecaa1;
+  --color-orange-500: #cc8542;
+  --color-orange-600: #ba7434;
+  --color-orange-700: #99602e;
+
+  /* ── "Às vezes": amarelo → ocre legível ────────────────────────────────── */
+  --color-yellow-50:  #faf3e1;
+  --color-yellow-100: #f4e7c2;
+  --color-yellow-500: #c89a2f;
+  --color-yellow-600: #b1861f;
+  --color-yellow-700: #92701d;
+
+  /* ── Psicomotora / "Não": vermelho-tijolo clínico ──────────────────────── */
+  --color-red-50:  #fceeed;
+  --color-red-100: #f8d9d6;
+  --color-red-200: #f1b8b2;
+  --color-red-300: #e59189;
+  --color-red-400: #d96b61;
+  --color-red-500: #c8554b;
+  --color-red-600: #b3463d;
+  --color-red-700: #943a33;
+
+  /* ── Cinzas com leve viés frio (clínico) ───────────────────────────────── */
+  --color-gray-50:  #f6f7f9;
+  --color-gray-100: #eceef2;
+  --color-gray-200: #dde1e7;
+  --color-gray-300: #c5cbd4;
+  --color-gray-400: #99a1ad;
+  --color-gray-500: #6c7480;
+  --color-gray-600: #4e5560;
+  --color-gray-700: #3a404a;
+  --color-gray-800: #262b33;
+  --color-gray-900: #181c22;
+}
+
+@layer base {
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "tnum" 0;
+  }
+  /* números tabulares onde houver dados/medidas */
+  .font-mono, table, .tabular {
+    font-feature-settings: "tnum" 1;
+  }
+}
