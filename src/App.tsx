@@ -10,6 +10,8 @@ import PatientDetail from './components/PatientDetail'
 import { usePortageAssessment } from './hooks/usePortageAssessment'
 import { usePatients } from './hooks/usePatients'
 import { useAuth } from './hooks/useAuth'
+import { useSubscription } from './hooks/useSubscription'
+import PricingPage from './components/PricingPage'
 import { Loader2 } from 'lucide-react'
 
 export type View = 'dashboard' | 'home' | 'patient' | 'questionnaire' | 'results' | 'pei'
@@ -40,6 +42,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
 
 export default function App() {
   const auth = useAuth()
+  const subHook = useSubscription(auth.user)
   const [view, setView] = useState<View>('dashboard')
   const [currentPatientId, setCurrentPatientId] = useState<string | null>(null)
   const hook = usePortageAssessment(auth.user?.id ?? null)
@@ -58,7 +61,7 @@ export default function App() {
     setView('patient')
   }
 
-  if (auth.loading) {
+  if (auth.loading || subHook.loadingSub) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50">
         <Loader2 className="w-8 h-8 text-purple-600 animate-spin" />
@@ -70,6 +73,14 @@ export default function App() {
     return (
       <ErrorBoundary>
         <LoginPage auth={auth} />
+      </ErrorBoundary>
+    )
+  }
+
+  if (!subHook.isActive) {
+    return (
+      <ErrorBoundary>
+        <PricingPage subHook={subHook} auth={auth} />
       </ErrorBoundary>
     )
   }
