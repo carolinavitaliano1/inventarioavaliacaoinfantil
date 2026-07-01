@@ -113,10 +113,10 @@ export default function PricingPage({ subHook, auth }: Props) {
           <div className="mb-5">
             <p className="text-sm font-semibold text-purple-200 mb-1">Anual</p>
             <div className="flex items-end gap-1">
-              <span className="text-4xl font-bold text-white">R$&nbsp;97</span>
+              <span className="text-4xl font-bold text-white">R$&nbsp;87</span>
               <span className="text-purple-300 text-sm mb-1">/ano</span>
             </div>
-            <p className="text-xs text-purple-300 mt-1">R$ 8,08 por mês · economize 35%</p>
+            <p className="text-xs text-purple-300 mt-1">R$ 7,25 por mês · economize 35%</p>
           </div>
 
           <ul className="space-y-2.5 mb-6 flex-1">
