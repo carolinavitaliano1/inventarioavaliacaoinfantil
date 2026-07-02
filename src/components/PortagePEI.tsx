@@ -57,7 +57,7 @@ async function exportPEIWord(current: { studentInfo: { name: string; age: string
     heading: HeadingLevel.HEADING_1,
     alignment: AlignmentType.CENTER,
   }))
-  sections.push(new Paragraph({ text: 'Escala Portage – Avaliação do Desenvolvimento Infantil', alignment: AlignmentType.CENTER }))
+  sections.push(new Paragraph({ text: 'Inventário de Avaliação Infantil', alignment: AlignmentType.CENTER }))
   sections.push(new Paragraph({ text: '' }))
 
   sections.push(new Table({
@@ -79,12 +79,12 @@ async function exportPEIWord(current: { studentInfo: { name: string; age: string
     const rows: TableRow[] = [
       new TableRow({
         children: [
-          wCell('Habilidade', true, 'D6BCF7'),
-          wCell('Área', true, 'D6BCF7'),
-          wCell('Status', true, 'D6BCF7'),
-          wCell('Início', true, 'D6BCF7'),
-          wCell('Fim', true, 'D6BCF7'),
-          wCell('Estratégias', true, 'D6BCF7'),
+          wCell('Habilidade', true, 'C9DCF1'),
+          wCell('Área', true, 'C9DCF1'),
+          wCell('Status', true, 'C9DCF1'),
+          wCell('Início', true, 'C9DCF1'),
+          wCell('Fim', true, 'C9DCF1'),
+          wCell('Estratégias', true, 'C9DCF1'),
         ],
       }),
     ]
