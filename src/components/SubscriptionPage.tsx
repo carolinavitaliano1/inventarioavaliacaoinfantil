@@ -165,7 +165,7 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
                     <span style={{ fontSize: 30, fontWeight: 700, lineHeight: 1, letterSpacing: '-0.03em' }}>R$&nbsp;37</span>
                     <span style={{ fontSize: 13, color: 'var(--ink-3)', marginBottom: 2 }}>/3 meses</span>
                   </div>
-                  <div style={{ fontSize: 11.5, color: 'var(--ink-4)', marginTop: 3 }}>R$ 12,33 por mês</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--ink-4)', marginTop: 3 }}>3 dias grátis · depois R$ 12,33/mês</div>
                 </div>
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px', flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {FEATURES.map(f => (
@@ -175,7 +175,7 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
                   ))}
                 </ul>
                 <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }} onClick={() => checkout('trimestral')} disabled={!!loading}>
-                  {loading === 'trimestral' ? <><Loader2 size={14} className="animate-spin" /> Aguarde…</> : isActive && subscription?.plan === 'trimestral' ? <><RefreshCw size={14} /> Renovar</> : 'Assinar trimestral'}
+                  {loading === 'trimestral' ? <><Loader2 size={14} className="animate-spin" /> Aguarde…</> : isActive && subscription?.plan === 'trimestral' ? <><RefreshCw size={14} /> Renovar</> : 'Testar grátis · trimestral'}
                 </button>
               </div>
 
@@ -190,7 +190,7 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
                     <span style={{ fontSize: 30, fontWeight: 700, lineHeight: 1, letterSpacing: '-0.03em', color: '#fff' }}>R$&nbsp;87</span>
                     <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginBottom: 2 }}>/ano</span>
                   </div>
-                  <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.6)', marginTop: 3 }}>R$ 7,25/mês · economize 35%</div>
+                  <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.6)', marginTop: 3 }}>3 dias grátis · depois R$ 7,25/mês · economize 35%</div>
                 </div>
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px', flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {FEATURES.map(f => (
@@ -204,14 +204,14 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
                   onClick={() => checkout('anual')}
                   disabled={!!loading}
                 >
-                  {loading === 'anual' ? <><Loader2 size={14} className="animate-spin" /> Aguarde…</> : isActive && subscription?.plan === 'anual' ? <><RefreshCw size={14} /> Renovar</> : 'Assinar anual'}
+                  {loading === 'anual' ? <><Loader2 size={14} className="animate-spin" /> Aguarde…</> : isActive && subscription?.plan === 'anual' ? <><RefreshCw size={14} /> Renovar</> : 'Testar grátis · anual'}
                 </button>
               </div>
             </div>
 
             <p style={{ fontSize: 11.5, color: 'var(--ink-4)', textAlign: 'center', marginTop: 18 }}>
               <CreditCard size={12} style={{ display: 'inline', marginRight: 5 }} />
-              Pagamento seguro via Stripe · Cancele quando quiser · Sem taxas ocultas
+              3 dias grátis · sem cobrança durante o trial · Pagamento seguro via Stripe · Cancele quando quiser
             </p>
           </>
         )}

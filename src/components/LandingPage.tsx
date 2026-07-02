@@ -76,7 +76,7 @@ export default function LandingPage({ onGetStarted }: Props) {
           </nav>
           <div style={{ flex: 1 }} />
           <button onClick={onGetStarted} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 600, fontSize: 15, padding: '13px 24px', borderRadius: 8, border: 'none', cursor: 'pointer', background: 'var(--primary)', color: '#fff', boxShadow: '0 2px 8px hsl(214 56% 40% / .3)' }}>
-            Assinar agora
+            3 dias grátis →
           </button>
         </div>
       </header>
@@ -99,7 +99,7 @@ export default function LandingPage({ onGetStarted }: Props) {
             </p>
             <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
               <button onClick={onGetStarted} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 600, fontSize: 16, padding: '16px 30px', borderRadius: 8, border: 'none', cursor: 'pointer', background: 'var(--primary)', color: '#fff', boxShadow: '0 2px 8px hsl(214 56% 40% / .3)' }}>
-                Assinar o IADI {ARROW}
+                Testar grátis por 3 dias {ARROW}
               </button>
               <a href="#como" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 600, fontSize: 16, padding: '16px 30px', borderRadius: 8, border: '1px solid var(--line-2)', cursor: 'pointer', background: 'var(--surface)', color: 'var(--ink)', textDecoration: 'none' }}>
                 Ver como funciona
@@ -107,7 +107,7 @@ export default function LandingPage({ onGetStarted }: Props) {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 18, fontSize: 13.5, color: 'var(--ink-3)' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--pos)' }}><path d="M20 6 9 17l-5-5"/></svg>
-              A partir de <strong style={{ color: 'var(--ink-2)', margin: '0 3px' }}>R$ 7,25/mês</strong> no plano anual · dados seguros por profissional
+              3 dias grátis · depois a partir de <strong style={{ color: 'var(--ink-2)', margin: '0 3px' }}>R$ 7,25/mês</strong> · cancele quando quiser
             </div>
           </div>
 
@@ -252,7 +252,7 @@ export default function LandingPage({ onGetStarted }: Props) {
           <div style={secHead}>
             <span style={eyebrow}>Planos</span>
             <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: '14px 0 0' }}>Escolha e comece hoje</h2>
-            <p style={{ fontSize: 17, color: 'var(--ink-2)', marginTop: 16 }}>Acesso completo a todos os recursos em qualquer plano. Sem taxa de adesão.</p>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', marginTop: 16 }}>3 dias grátis para testar. Acesso completo a todos os recursos em qualquer plano. Sem taxa de adesão.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 380px))', gap: 24, justifyContent: 'center' }}>
             {/* Trimestral */}
@@ -273,7 +273,7 @@ export default function LandingPage({ onGetStarted }: Props) {
                 ))}
               </ul>
               <button onClick={onGetStarted} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9, fontWeight: 600, fontSize: 15, padding: '13px 24px', borderRadius: 8, border: '1px solid var(--line-2)', cursor: 'pointer', background: 'var(--surface)', color: 'var(--ink)' }}>
-                Assinar trimestral
+                Testar grátis · depois R$ 37/tri
               </button>
             </div>
 
@@ -298,12 +298,12 @@ export default function LandingPage({ onGetStarted }: Props) {
                 ))}
               </ul>
               <button onClick={onGetStarted} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9, fontWeight: 600, fontSize: 15, padding: '13px 24px', borderRadius: 8, border: 'none', cursor: 'pointer', background: 'var(--primary)', color: '#fff', boxShadow: '0 2px 8px hsl(214 56% 40% / .3)' }}>
-                Assinar anual
+                Testar grátis · depois R$ 87/ano
               </button>
             </div>
           </div>
           <p style={{ textAlign: 'center', fontSize: 13.5, color: 'var(--ink-3)', marginTop: 30 }}>
-            Pagamento único por período · sem fidelidade · cancele quando quiser.
+            3 dias grátis · sem cobrança durante o período de teste · cancele quando quiser.
           </p>
         </div>
       </section>
@@ -343,7 +343,7 @@ export default function LandingPage({ onGetStarted }: Props) {
               <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: 0 }}>Ganhe tempo na avaliação e entregue mais valor</h2>
               <p style={{ fontSize: 18, opacity: 0.9, margin: '16px auto 32px', maxWidth: '46ch' }}>Comece hoje a aplicar, calcular e gerar relatórios do desenvolvimento infantil em um só lugar.</p>
               <button onClick={onGetStarted} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 600, fontSize: 16, padding: '16px 30px', borderRadius: 8, border: 'none', cursor: 'pointer', background: '#fff', color: 'var(--primary-strong)', boxShadow: '0 8px 24px hsl(220 40% 10% / .25)' }}>
-                Assinar o IADI agora {ARROW}
+                Testar grátis por 3 dias {ARROW}
               </button>
             </div>
           </div>

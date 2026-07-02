@@ -63,6 +63,7 @@ serve(async (req) => {
       success_url: `${origin}?checkout=success`,
       cancel_url: `${origin}?checkout=cancel`,
       subscription_data: {
+        trial_period_days: 3,
         metadata: { supabase_user_id: user.id, plan },
       },
       locale: 'pt-BR',
