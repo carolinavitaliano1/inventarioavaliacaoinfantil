@@ -7,10 +7,8 @@ import type { useAuth } from '../hooks/useAuth'
 import { formatQuestion } from '../utils/formatQuestion'
 import { areaVars } from '../utils/areaDesign'
 import TopBar from './TopBar'
-import { exportWord } from '../utils/exportWord'
-import { AREAS } from '../types'
-import type { PortageItem, ResponseType } from '../types'
-import { calcAreaDevResult } from '../utils/ageCalc'
+import { exportPEI } from '../utils/exportPEI'
+import type { PortageItem } from '../types'
 
 type AuthHook = ReturnType<typeof useAuth>
 interface Props { hook: AssessmentHook; setView: (v: View) => void; auth?: AuthHook; onBack?: () => void }
@@ -78,12 +76,7 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
 
   const handleExportWord = async () => {
     setExportingWord(true)
-    const results = AREAS.map(area => {
-      const items = portageItems.filter(i => i.area === area)
-      return calcAreaDevResult(area, items as PortageItem[], current.responses as Record<string, ResponseType>)
-    })
-    const media = results.reduce((s, r) => s + r.idadeDesenvAnos, 0) / results.length
-    try { await exportWord(current, results, media) } finally { setExportingWord(false) }
+    try { await exportPEI(current, plan) } finally { setExportingWord(false) }
   }
 
   return (
