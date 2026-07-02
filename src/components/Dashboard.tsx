@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Plus, Megaphone, Trash2, Loader2, Camera, X, ChevronRight, BookMarked, Search, Users, ClipboardList, TrendingUp, Calendar, MessageSquare } from 'lucide-react'
+import { Plus, Megaphone, Trash2, Loader2, Camera, X, ChevronRight, BookMarked, Search, Users, ClipboardList, TrendingUp, Calendar, MessageSquare, UserCircle } from 'lucide-react'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { PatientsHook } from '../hooks/usePatients'
@@ -118,9 +118,14 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
   return (
     <div className="shell">
       <TopBar auth={auth} onLogoClick={() => {}} right={
-        <button className="btn btn-ghost btn-sm" onClick={() => setView?.('community')}>
-          <MessageSquare size={14} /> Comunidade
-        </button>
+        <div style={{ display: 'flex', gap: 6 }}>
+          <button className="btn btn-ghost btn-sm" onClick={() => setView?.('community')}>
+            <MessageSquare size={14} /> Comunidade
+          </button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setView?.('profile')}>
+            <UserCircle size={14} /> Perfil
+          </button>
+        </div>
       } />
 
       <div className="app-frame screen" style={{ padding: '28px 24px 64px' }}>

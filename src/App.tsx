@@ -13,9 +13,11 @@ import { useAuth } from './hooks/useAuth'
 import { useSubscription } from './hooks/useSubscription'
 import PricingPage from './components/PricingPage'
 import Community from './components/Community'
+import ProfilePage from './components/ProfilePage'
+import SubscriptionPage from './components/SubscriptionPage'
 import { Loader2 } from 'lucide-react'
 
-export type View = 'dashboard' | 'home' | 'patient' | 'questionnaire' | 'results' | 'pei' | 'community'
+export type View = 'dashboard' | 'home' | 'patient' | 'questionnaire' | 'results' | 'pei' | 'community' | 'profile' | 'subscription'
 
 const ASSESSMENT_VIEWS: View[] = ['questionnaire', 'results', 'pei']
 
@@ -129,6 +131,8 @@ export default function App() {
           />
         )}
         {view === 'community' && <Community auth={auth} onBack={() => setView('dashboard')} />}
+        {view === 'profile' && <ProfilePage auth={auth} subHook={subHook} onBack={() => setView('dashboard')} onGoSubscription={() => setView('subscription')} />}
+        {view === 'subscription' && <SubscriptionPage auth={auth} subHook={subHook} onBack={() => setView('profile')} />}
         {view === 'home' && <PortageHome hook={hook} setView={safeSetView} auth={auth} />}
         {view === 'questionnaire' && <PortageQuestionnaire hook={hook} setView={safeSetView} auth={auth} onBack={() => setView('patient')} />}
         {view === 'results' && <PortageResults hook={hook} setView={safeSetView} auth={auth} onBack={() => setView('patient')} />}
