@@ -1,7 +1,6 @@
 import type { PortageItem } from '../types'
 
-// Baseado no Portage Guide to Early Education (Bluma et al., 1976) e
-// no Inventário Portage Operacionalizado – Williams & Aiello (2001).
+// Orientações de observação para cada item, organizadas por área e faixa etária.
 
 function pick<T>(arr: T[], seed: string): T {
   let h = 0
@@ -57,7 +56,7 @@ function tipLinguagem(t: string, id: string): string {
   return pick([
     'Como avaliar: Observe a comunicação espontânea da criança durante brincadeiras livres. Não solicite o comportamento diretamente; aguarde que ele emerja naturalmente por pelo menos 10 minutos de observação.',
     'Como avaliar: Crie uma situação comunicativa que motive a criança a usar a habilidade descrita (livro, objeto novo, situação-problema). Registre qualidade e frequência da resposta.',
-    'Como avaliar: Combine observação direta com relato do cuidador: "A criança faz isso em casa?" A consistência entre contextos (casa/escola) é critério importante na metodologia Portage.',
+    'Como avaliar: Combine observação direta com relato do cuidador: "A criança faz isso em casa?" A consistência entre contextos (casa/escola) é critério importante na avaliação do desenvolvimento.',
   ], id)
 }
 
