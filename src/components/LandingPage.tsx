@@ -1,210 +1,198 @@
 interface Props { onGetStarted: () => void }
 
+const CHECK = (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+)
+const ARROW = (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+)
+const CHEV = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+)
+
+const BARS = [
+  { label: 'Socialização',   w: 82, color: 'hsl(224 46% 50%)', val: '4a 1m',  vc: 'hsl(224 48% 40%)' },
+  { label: 'Linguagem',      w: 64, color: 'hsl(190 46% 44%)', val: '3a 2m',  vc: 'hsl(190 48% 34%)' },
+  { label: 'Cuidados Próp.', w: 88, color: 'hsl(150 46% 42%)', val: '4a 5m',  vc: 'hsl(150 48% 32%)' },
+  { label: 'Cognição',       w: 71, color: 'hsl(40 70% 46%)',  val: '3a 7m',  vc: 'hsl(40 72% 34%)' },
+  { label: 'Psicomotora',    w: 78, color: 'hsl(6 55% 52%)',   val: '3a 11m', vc: 'hsl(6 58% 42%)' },
+]
+
 const FEATURES = [
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-        <polyline points="9 12 11 14 15 10"/>
-      </svg>
-    ),
-    title: 'Questionário Portage guiado',
-    desc: 'As 5 áreas completas — Socialização, Linguagem, Cognição, Motor Fino e Motor Grosso — num fluxo digital simples de marcar.',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
-      </svg>
-    ),
-    title: 'Relatório Word profissional',
-    desc: 'Exportado automaticamente com formatação profissional, pronto para entregar ao responsável ou incluir no prontuário.',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
-      </svg>
-    ),
-    title: 'PEI automático',
-    desc: 'Plano de Ensino Individualizado gerado a partir das prioridades identificadas na avaliação, com estratégias por prazo.',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-      </svg>
-    ),
-    title: 'Gráficos de progressão',
-    desc: 'Evolução do paciente em formato de radar e barras por área — visual para mostrar ao responsável.',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-      </svg>
-    ),
-    title: 'Pacientes ilimitados',
-    desc: 'Cadastre e acompanhe quantos pacientes precisar, com histórico completo de todas as avaliações.',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-      </svg>
-    ),
-    title: 'Comunidade e tutoriais',
-    desc: 'Tire dúvidas, troque experiências e acesse tutoriais em vídeo publicados pela equipe IADI.',
-  },
+  { title: '5 áreas, 0 a 6 anos', desc: 'Socialização, Linguagem, Cuidados Próprios, Cognição e Psicomotora, por faixa etária.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg> },
+  { title: 'Idade desenvolvimental', desc: 'O sistema calcula automaticamente a idade de desenvolvimento em cada área avaliada.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> },
+  { title: 'Evolução entre avaliações', desc: 'Compare aplicações ao longo do tempo em gráficos claros e mostre o progresso à família.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18M17 6h6v6"/></svg> },
+  { title: 'Gráficos e relatórios prontos', desc: 'Síntese, gráficos por área e laudo interpretativo gerados na hora, sem formatar nada.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18M18 9l-5 5-3-3-3 3"/></svg> },
+  { title: 'Exportação Word · Excel · PDF', desc: 'Baixe relatórios editáveis em Word, dados em Excel ou um PDF pronto para entregar.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> },
+  { title: 'Plano de Ensino (PEI)', desc: 'Transforme as habilidades prioritárias em um plano individualizado com metas e prazos.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5z"/></svg> },
+  { title: 'Economia de tempo', desc: 'O que levava horas em planilhas e editores de texto passa a levar minutos.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg> },
+  { title: 'Dados seguros por profissional', desc: 'Cada conta acessa apenas os próprios pacientes, com informações privadas e organizadas.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> },
+]
+
+const STEPS = [
+  { n: 1, title: 'Cadastre o paciente', desc: 'Registre a criança com data de nascimento e diagnóstico. A idade cronológica é calculada sozinha.' },
+  { n: 2, title: 'Aplique o inventário', desc: 'Responda os itens por área e faixa etária, com marcação rápida e orientações de como avaliar.' },
+  { n: 3, title: 'Veja os resultados', desc: 'Idade desenvolvimental, gráficos, prioridades e evolução aparecem automaticamente.' },
+  { n: 4, title: 'Gere relatório e PEI', desc: 'Exporte o laudo em Word, PDF ou Excel e monte o plano individualizado.' },
 ]
 
 const FAQS = [
-  { q: 'Preciso instalar algum aplicativo?', a: 'Não. O IADI funciona 100% no navegador — no celular, tablet ou computador. Basta criar sua conta e começar.' },
-  { q: 'Os dados dos meus pacientes estão seguros?', a: 'Sim. Todos os dados são armazenados com criptografia na infraestrutura AWS. Cada usuário acessa apenas seus próprios pacientes.' },
-  { q: 'Posso cancelar quando quiser?', a: 'Sim, sem burocracia. Cancele a qualquer momento pelo portal do Stripe, sem taxas e sem fidelidade.' },
-  { q: 'O relatório gerado é adequado para uso profissional?', a: 'Sim. O relatório é exportado em .docx com formatação profissional, incluindo resultados por área, gráficos e resumo da avaliação.' },
-  { q: 'Quantos pacientes posso cadastrar?', a: 'Ilimitados. Não existe restrição de número de pacientes ou avaliações em nenhum dos planos.' },
+  { q: 'Para quais profissionais o IADI é indicado?', a: 'Para todos os profissionais que atuam com desenvolvimento infantil — psicólogos, fonoaudiólogos, terapeutas ocupacionais, fisioterapeutas, pedagogos e psicopedagogos, em consultório ou clínica.' },
+  { q: 'Preciso instalar algo?', a: 'Não. O IADI funciona direto no navegador, no computador ou no tablet. Você acessa com seu login e seus dados ficam salvos na sua conta.' },
+  { q: 'Qual a diferença entre o plano trimestral e o anual?', a: 'Os recursos são exatamente os mesmos. O trimestral (R$ 37 a cada 3 meses) é ótimo para começar; o anual (R$ 87 por ano) sai bem mais barato por mês e reduz o número de renovações.' },
+  { q: 'Os dados dos meus pacientes ficam seguros?', a: 'Sim. Cada conta acessa apenas os próprios pacientes, e as informações ficam vinculadas ao seu login profissional.' },
+  { q: 'Posso exportar os relatórios?', a: 'Sim. Você gera relatórios em Word (editável), Excel (dados) e PDF (pronto para entregar), incluindo o Plano de Ensino Individualizado.' },
 ]
 
-const AREAS = [
-  { label: 'Socialização',  pct: 84, color: '#18D47A' },
-  { label: 'Linguagem',     pct: 62, color: '#F7A826' },
-  { label: 'Cognição',      pct: 71, color: '#18D47A' },
-  { label: 'Motor Fino',    pct: 48, color: '#FF6B6B' },
-  { label: 'Motor Grosso',  pct: 79, color: '#18D47A' },
-]
+const w: React.CSSProperties = { maxWidth: 1120, margin: '0 auto', padding: '0 24px' }
+const eyebrow: React.CSSProperties = { fontSize: 12.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.09em', color: 'var(--primary-ink)' }
+const secHead: React.CSSProperties = { textAlign: 'center', maxWidth: 640, margin: '0 auto 52px' }
 
-const navy = '#07112B'
-const navy2 = '#0E1E3D'
-const blue = '#4C6BF5'
-const amber = '#F7A826'
-const green = '#18D47A'
-const light = '#F2F5FF'
-const ink2 = '#3A4F68'
-const ink3 = '#62788F'
-const onDark = '#C8D6EE'
-const onDark2 = '#8BA3C3'
-const line = '#DDE4EF'
+import { useState } from 'react'
 
 export default function LandingPage({ onGetStarted }: Props) {
+  const [openFaq, setOpenFaq] = useState(0)
+
   return (
-    <div style={{ fontFamily: "system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif", background: '#fff', color: '#0C1A30', lineHeight: 1.6, WebkitFontSmoothing: 'antialiased' }}>
+    <div style={{ background: 'var(--bg)', color: 'var(--ink)', fontFamily: "'IBM Plex Sans', system-ui, sans-serif", lineHeight: 1.6 }}>
 
       {/* NAV */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 200, background: 'rgba(7,17,43,.95)', backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(255,255,255,.06)' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px', display: 'flex', alignItems: 'center', height: 62, gap: 28 }}>
-          <div style={{ fontSize: 19, fontWeight: 800, letterSpacing: '-.03em', color: '#fff' }}>
-            IA<span style={{ color: blue }}>DI</span>
+      <header style={{ position: 'sticky', top: 0, zIndex: 50, background: 'hsl(0 0% 100% / .82)', backdropFilter: 'saturate(1.5) blur(14px)', borderBottom: '1px solid var(--line)' }}>
+        <div style={{ ...w, display: 'flex', alignItems: 'center', gap: 20, height: 66 }}>
+          {/* brand */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 9, background: 'var(--primary)', color: '#fff', display: 'grid', placeItems: 'center', boxShadow: 'inset 0 1px 0 hsl(0 0% 100% / .25)' }}>
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 17, letterSpacing: '-0.02em' }}>IADI</div>
+              <div style={{ fontSize: 10.5, color: 'var(--ink-3)' }}>Avaliação do Desenvolvimento Infantil</div>
+            </div>
           </div>
+          <nav style={{ display: 'flex', gap: 28, marginLeft: 18 }}>
+            {[['#recursos','Recursos'],['#como','Como funciona'],['#planos','Planos'],['#faq','Dúvidas']].map(([h,l]) => (
+              <a key={h} href={h} style={{ fontSize: 14.5, color: 'var(--ink-2)', fontWeight: 500 }}>{l}</a>
+            ))}
+          </nav>
           <div style={{ flex: 1 }} />
-          <button onClick={onGetStarted} style={{ fontSize: 13.5, fontWeight: 500, color: onDark2, background: 'none', border: 'none', cursor: 'pointer', padding: '7px 14px', borderRadius: 10 }}>
-            Entrar
-          </button>
-          <button onClick={onGetStarted} style={{ fontSize: 13.5, fontWeight: 700, background: amber, color: navy, border: 'none', cursor: 'pointer', padding: '8px 18px', borderRadius: 10 }}>
-            Começar grátis →
+          <button onClick={onGetStarted} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 600, fontSize: 15, padding: '13px 24px', borderRadius: 8, border: 'none', cursor: 'pointer', background: 'var(--primary)', color: '#fff', boxShadow: '0 2px 8px hsl(214 56% 40% / .3)' }}>
+            Assinar agora
           </button>
         </div>
-      </nav>
+      </header>
 
       {/* HERO */}
-      <section style={{ background: navy, padding: '76px 0 96px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 55% 60% at 78% 50%,rgba(76,107,245,.14) 0%,transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px', position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 400px', gap: 56, alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: blue, marginBottom: 18 }}>
-                Para terapeutas e educadores especializados
-              </div>
-              <h1 style={{ fontFamily: "Georgia,'Times New Roman',serif", fontSize: 'clamp(38px,4.8vw,56px)', fontWeight: 700, lineHeight: 1.06, letterSpacing: '-.01em', color: '#fff', marginBottom: 22 }}>
-                Avaliação Portage digital.<br />
-                Relatório profissional<br />
-                <em style={{ color: amber, fontStyle: 'italic' }}>em 1 clique.</em>
-              </h1>
-              <p style={{ fontSize: 16.5, color: onDark, lineHeight: 1.68, marginBottom: 34, maxWidth: 460 }}>
-                Você cuida do desenvolvimento infantil. O IADI cuida da burocracia.
-                Questionário guiado, relatório Word automático e PEI completo — num app simples, seguro e que cabe no bolso.
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginBottom: 16 }}>
-                <button onClick={onGetStarted} style={{ fontSize: 15, fontWeight: 700, background: amber, color: navy, border: 'none', cursor: 'pointer', padding: '13px 26px', borderRadius: 10 }}>
-                  Começar por R$ 7,25/mês →
-                </button>
-                <button onClick={onGetStarted} style={{ fontSize: 15, fontWeight: 600, color: '#fff', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.15)', cursor: 'pointer', padding: '13px 24px', borderRadius: 10 }}>
-                  Ver como funciona
-                </button>
-              </div>
-              <div style={{ fontSize: 12.5, color: onDark2, display: 'flex', gap: 0, flexWrap: 'wrap', alignItems: 'center' }}>
-                Sem cartão para testar <span style={{ margin: '0 8px', opacity: .3 }}>·</span> Cancele quando quiser <span style={{ margin: '0 8px', opacity: .3 }}>·</span> Funciona no celular
-              </div>
+      <section style={{ position: 'relative', overflow: 'hidden', padding: '76px 0 84px' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'radial-gradient(720px 380px at 78% -8%, hsl(214 56% 92% / .8), transparent 60%), radial-gradient(600px 340px at 8% 110%, hsl(190 50% 92% / .55), transparent 60%)' }} />
+        <div style={{ ...w, position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1.02fr 0.98fr', gap: 56, alignItems: 'center' }}>
+          <div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 22 }}>
+              {['5 áreas do desenvolvimento', '0 a 6 anos'].map(p => (
+                <span key={p} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 12.5, fontWeight: 500, color: 'var(--primary-ink)', background: 'var(--primary-bg)', border: '1px solid var(--primary-line)', padding: '5px 12px', borderRadius: 99 }}>{p}</span>
+              ))}
             </div>
+            <h1 style={{ fontSize: 50, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: 0 }}>
+              A avaliação do desenvolvimento infantil, do questionário ao relatório.
+            </h1>
+            <p style={{ fontSize: 18.5, color: 'var(--ink-2)', marginTop: 22, maxWidth: '33ch' }}>
+              Aplique, calcule a idade desenvolvimental por área, acompanhe a evolução e gere relatórios profissionais — sem planilhas soltas nem horas de trabalho manual.
+            </p>
+            <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
+              <button onClick={onGetStarted} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 600, fontSize: 16, padding: '16px 30px', borderRadius: 8, border: 'none', cursor: 'pointer', background: 'var(--primary)', color: '#fff', boxShadow: '0 2px 8px hsl(214 56% 40% / .3)' }}>
+                Assinar o IADI {ARROW}
+              </button>
+              <a href="#como" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 600, fontSize: 16, padding: '16px 30px', borderRadius: 8, border: '1px solid var(--line-2)', cursor: 'pointer', background: 'var(--surface)', color: 'var(--ink)', textDecoration: 'none' }}>
+                Ver como funciona
+              </a>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 18, fontSize: 13.5, color: 'var(--ink-3)' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--pos)' }}><path d="M20 6 9 17l-5-5"/></svg>
+              A partir de <strong style={{ color: 'var(--ink-2)', margin: '0 3px' }}>R$ 7,25/mês</strong> no plano anual · dados seguros por profissional
+            </div>
+          </div>
 
-            {/* Mockup */}
-            <div style={{ background: navy2, borderRadius: 16, border: '1px solid rgba(255,255,255,.1)', overflow: 'hidden', boxShadow: '0 32px 72px rgba(0,0,0,.4)' }}>
-              <div style={{ background: 'rgba(255,255,255,.04)', borderBottom: '1px solid rgba(255,255,255,.07)', padding: '11px 16px', display: 'flex', alignItems: 'center', gap: 6 }}>
-                {['#FF5F57','#FFBD2E','#28CA41'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
-                <span style={{ fontSize: 11.5, color: onDark2, marginLeft: 6, fontWeight: 500 }}>IADI — Avaliação Portage</span>
+          {/* Mock */}
+          <div style={{ position: 'relative' }}>
+            <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 18, boxShadow: '0 24px 60px hsl(220 35% 25% / .13), 0 8px 20px hsl(220 30% 30% / .06)', overflow: 'hidden' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '12px 15px', borderBottom: '1px solid var(--line)', background: 'var(--surface-2)' }}>
+                {[1,2,3].map(i => <span key={i} style={{ width: 10, height: 10, borderRadius: 99, background: 'var(--line-2)', display: 'block' }} />)}
+                <span style={{ marginLeft: 8, fontSize: 11.5, color: 'var(--ink-3)', fontFamily: "'IBM Plex Mono', monospace" }}>iadi · resultados</span>
               </div>
               <div style={{ padding: 20 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 11, marginBottom: 20 }}>
-                  <div style={{ width: 38, height: 38, borderRadius: 9, background: 'rgba(76,107,245,.22)', display: 'grid', placeItems: 'center', fontSize: 12, fontWeight: 800, color: blue }}>SM</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 16 }}>
                   <div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>
-                      Sofia M. <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 700, background: 'rgba(24,212,122,.15)', color: green, padding: '2px 8px', borderRadius: 99, marginLeft: 6 }}>Nova avaliação</span>
-                    </div>
-                    <div style={{ fontSize: 11.5, color: onDark2 }}>4 anos e 2 meses · Avaliação #3</div>
+                    <div style={{ fontSize: 13, fontWeight: 700 }}>Perfil desenvolvimental por área</div>
+                    <div style={{ fontSize: 11.5, color: 'var(--ink-3)', marginTop: 2 }}>Lívia, 4a 11m · avaliação de 18/02</div>
                   </div>
+                  <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--primary-ink)', background: 'var(--primary-bg)', padding: '3px 8px', borderRadius: 5 }}>Idade desenv.</span>
                 </div>
-                <div style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: '.09em', textTransform: 'uppercase', color: onDark2, marginBottom: 11 }}>Resultado por área Portage</div>
-                {AREAS.map(a => (
-                  <div key={a.label} style={{ marginBottom: 9 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11.5, color: onDark2, marginBottom: 4 }}>
-                      <b style={{ color: onDark, fontWeight: 600 }}>{a.label}</b>
-                      <span style={{ color: a.color, fontWeight: 700 }}>{a.pct}%</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+                  {BARS.map(b => (
+                    <div key={b.label} style={{ display: 'grid', gridTemplateColumns: '92px 1fr 42px', gap: 10, alignItems: 'center' }}>
+                      <span style={{ fontSize: 11.5, color: 'var(--ink-2)', fontWeight: 500 }}>{b.label}</span>
+                      <span style={{ height: 8, borderRadius: 99, background: 'var(--surface-2)', overflow: 'hidden', display: 'block' }}>
+                        <span style={{ display: 'block', height: '100%', borderRadius: 99, background: b.color, width: `${b.w}%` }} />
+                      </span>
+                      <span style={{ fontSize: 11, fontWeight: 600, textAlign: 'right', color: b.vc, fontFamily: "'IBM Plex Mono', monospace" }}>{b.val}</span>
                     </div>
-                    <div style={{ height: 5, background: 'rgba(255,255,255,.07)', borderRadius: 99, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', borderRadius: 99, background: a.color, width: `${a.pct}%` }} />
-                    </div>
-                  </div>
-                ))}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: green, color: '#082818', fontSize: 13, fontWeight: 700, padding: 11, borderRadius: 9, marginTop: 18 }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                  Exportar relatório Word
+                  ))}
                 </div>
+              </div>
+            </div>
+            {/* Float 1 */}
+            <div style={{ position: 'absolute', top: -22, right: -18, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, boxShadow: '0 24px 60px hsl(220 35% 25% / .13)', padding: '13px 15px', display: 'flex', alignItems: 'center', gap: 11 }}>
+              <div style={{ width: 34, height: 34, borderRadius: 8, background: 'var(--pos-bg)', color: 'var(--pos)', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18M17 6h6v6"/></svg>
+              </div>
+              <div>
+                <div style={{ fontSize: 11, color: 'var(--ink-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Evolução</div>
+                <div style={{ fontWeight: 700, color: 'var(--pos)', fontFamily: "'IBM Plex Mono', monospace" }}>+0,42 ano</div>
+              </div>
+            </div>
+            {/* Float 2 */}
+            <div style={{ position: 'absolute', bottom: -24, left: -22, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, boxShadow: '0 24px 60px hsl(220 35% 25% / .13)', padding: '13px 15px', display: 'flex', alignItems: 'center', gap: 11 }}>
+              <div style={{ width: 34, height: 34, borderRadius: 8, background: 'var(--primary-bg)', color: 'var(--primary-ink)', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"/></svg>
+              </div>
+              <div>
+                <div style={{ fontSize: 11, color: 'var(--ink-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Relatório</div>
+                <div style={{ fontWeight: 700, fontSize: 13 }}>Word · PDF · Excel</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TRUST BAR */}
-      <div style={{ background: light, padding: '18px 28px', borderBottom: `1px solid ${line}`, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: 13, color: ink2, fontWeight: 500 }}>Usado por:</span>
-        {['Terapeutas Ocupacionais','Fonoaudiólogos','Psicopedagogos','Professores de Educação Especial','Psicólogos Infantis'].map(l => (
-          <span key={l} style={{ fontSize: 12, fontWeight: 600, color: ink2, background: '#fff', border: `1px solid ${line}`, padding: '4px 12px', borderRadius: 99 }}>{l}</span>
-        ))}
+      {/* TRUST STRIP */}
+      <div style={{ borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', background: 'var(--surface)' }}>
+        <div style={{ ...w, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
+          {[['5','áreas avaliadas'],['0–6','anos de idade'],['589','habilidades mapeadas'],['3','formatos de relatório']].map(([n,l], i) => (
+            <div key={l} style={{ padding: '26px 20px', textAlign: 'center', borderRight: i < 3 ? '1px solid var(--line)' : 'none' }}>
+              <div style={{ fontSize: 30, fontWeight: 700, color: 'var(--primary-ink)', letterSpacing: '-0.02em' }}>{n}</div>
+              <div style={{ fontSize: 13, color: 'var(--ink-3)', marginTop: 3 }}>{l}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* PAIN */}
-      <section style={{ background: light, padding: '84px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.09em', textTransform: 'uppercase', color: blue, marginBottom: 12 }}>O problema que resolvemos</div>
-          <h2 style={{ fontFamily: "Georgia,serif", fontSize: 'clamp(28px,3.5vw,42px)', fontWeight: 700, letterSpacing: '-.01em', lineHeight: 1.15, color: '#0C1A30', marginBottom: 14 }}>Você ainda faz assim?</h2>
-          <p style={{ fontSize: 16, color: ink2, lineHeight: 1.65, maxWidth: 520, marginBottom: 52 }}>A rotina de avaliação infantil ainda é manual para a maioria — e isso custa tempo, energia e precisão.</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 14 }}>
+      {/* PROBLEM */}
+      <section style={{ padding: '84px 0' }}>
+        <div style={w}>
+          <div style={secHead}>
+            <span style={eyebrow}>O trabalho manual custa caro</span>
+            <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: '14px 0 0' }}>Avaliar desenvolvimento não precisa ser exaustivo</h2>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', marginTop: 16 }}>Quem trabalha com desenvolvimento infantil conhece a rotina: aplicar a avaliação é só o começo.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {[
-              { t: 'Questionários em papel', d: 'Difícil de localizar, sujeito a perda, impossível de comparar entre avaliações.' },
-              { t: 'Planilhas manuais', d: 'Erros de digitação, sem padronização, nenhuma visualização do progresso.' },
-              { t: 'Relatório feito do zero', d: 'Horas para formatar, digitar resultados e organizar o documento para o responsável.' },
-              { t: 'PEI criado manualmente', d: 'Sem base estruturada de habilidades e estratégias, cada PEI começa do zero.' },
+              { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8v5M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>, t: 'Cálculos à mão', d: 'Somar pontos, converter em idade desenvolvimental por área e conferir tudo em planilha toma tempo — e abre espaço para erro.' },
+              { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18M18 9l-5 5-3-3-3 3"/></svg>, t: 'Evolução difícil de mostrar', d: 'Comparar avaliações ao longo do tempo e demonstrar progresso para a família raramente é simples.' },
+              { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>, t: 'Relatórios do zero', d: 'Montar cada laudo manualmente, formatar tabelas e gráficos... horas que poderiam ser do atendimento.' },
             ].map(c => (
-              <div key={c.t} style={{ background: '#fff', border: `1px solid ${line}`, borderRadius: 10, padding: 24 }}>
-                <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 24, height: 24, borderRadius: '50%', background: '#FEE2E2', color: '#DC2626', fontSize: 12, fontWeight: 900, marginBottom: 14 }}>✕</div>
-                <h3 style={{ fontSize: 14.5, fontWeight: 700, color: '#0C1A30', marginBottom: 6 }}>{c.t}</h3>
-                <p style={{ fontSize: 13, color: ink3, lineHeight: 1.55, margin: 0 }}>{c.d}</p>
+              <div key={c.t} style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, padding: 26 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: 'hsl(6 60% 96%)', color: 'hsl(6 60% 50%)', display: 'grid', placeItems: 'center', marginBottom: 16 }}>{c.icon}</div>
+                <h3 style={{ fontSize: 17, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: 0 }}>{c.t}</h3>
+                <p style={{ fontSize: 14.5, color: 'var(--ink-2)', marginTop: 9 }}>{c.d}</p>
               </div>
             ))}
           </div>
@@ -212,17 +200,21 @@ export default function LandingPage({ onGetStarted }: Props) {
       </section>
 
       {/* FEATURES */}
-      <section style={{ background: '#fff', padding: '84px 0' }} id="funcionalidades">
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.09em', textTransform: 'uppercase', color: blue, marginBottom: 12 }}>Funcionalidades</div>
-          <h2 style={{ fontFamily: "Georgia,serif", fontSize: 'clamp(28px,3.5vw,42px)', fontWeight: 700, letterSpacing: '-.01em', lineHeight: 1.15, color: '#0C1A30', marginBottom: 14 }}>Com o IADI, tudo muda.</h2>
-          <p style={{ fontSize: 16, color: ink2, lineHeight: 1.65, maxWidth: 520, marginBottom: 52 }}>Uma ferramenta completa pensada para a rotina real de quem avalia desenvolvimento infantil.</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, background: line, border: `1px solid ${line}`, borderRadius: 16, overflow: 'hidden' }}>
+      <section id="recursos" style={{ padding: '84px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div style={w}>
+          <div style={secHead}>
+            <span style={eyebrow}>Tudo em um só lugar</span>
+            <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: '14px 0 0' }}>O que o IADI faz por você</h2>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', marginTop: 16 }}>Da aplicação ao plano de intervenção — um fluxo pensado para a prática clínica.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }}>
             {FEATURES.map(f => (
-              <div key={f.title} style={{ background: '#fff', padding: '28px 24px' }}>
-                <div style={{ width: 40, height: 40, borderRadius: 10, background: '#EEF1FF', display: 'grid', placeItems: 'center', marginBottom: 16, color: blue }}>{f.icon}</div>
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: '#0C1A30', marginBottom: 6 }}>{f.title}</h3>
-                <p style={{ fontSize: 13, color: ink3, lineHeight: 1.55, margin: 0 }}>{f.desc}</p>
+              <div key={f.title} style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, padding: 24 }}>
+                <div style={{ width: 44, height: 44, borderRadius: 11, background: 'var(--primary-bg)', color: 'var(--primary-ink)', display: 'grid', placeItems: 'center', marginBottom: 16 }}>
+                  <svg style={{ width: 22, height: 22 }} viewBox={f.icon.props.viewBox} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{f.icon.props.children}</svg>
+                </div>
+                <h3 style={{ fontSize: 16, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: 0 }}>{f.title}</h3>
+                <p style={{ fontSize: 14, color: 'var(--ink-2)', marginTop: 8 }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -230,48 +222,24 @@ export default function LandingPage({ onGetStarted }: Props) {
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ background: light, padding: '84px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.09em', textTransform: 'uppercase', color: blue, marginBottom: 12 }}>Simples assim</div>
-          <h2 style={{ fontFamily: "Georgia,serif", fontSize: 'clamp(28px,3.5vw,42px)', fontWeight: 700, letterSpacing: '-.01em', lineHeight: 1.15, color: '#0C1A30', marginBottom: 14 }}>Do cadastro ao relatório em menos de uma hora.</h2>
-          <p style={{ fontSize: 16, color: ink2, lineHeight: 1.65, maxWidth: 520, marginBottom: 52 }}>Sem curva de aprendizado. Se você já fez o Portage em papel, o IADI vai ser natural desde a primeira sessão.</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 36 }}>
-            {[
-              { n: 1, t: 'Cadastre o paciente', d: 'Nome, data de nascimento e informações básicas. Em segundos o perfil está criado e pronto para avaliações.' },
-              { n: 2, t: 'Aplique o questionário', d: 'Marque as habilidades presentes ou ausentes nas 5 áreas do Portage. O app calcula tudo automaticamente.' },
-              { n: 3, t: 'Exporte o relatório e o PEI', d: 'Com um clique, o relatório Word e o PEI ficam prontos para download — formatados e completos.' },
-            ].map(s => (
-              <div key={s.n}>
-                <div style={{ width: 44, height: 44, borderRadius: '50%', background: blue, color: '#fff', display: 'grid', placeItems: 'center', fontSize: 17, fontWeight: 800, marginBottom: 20, border: `4px solid ${light}` }}>{s.n}</div>
-                <h3 style={{ fontSize: 16, fontWeight: 700, color: '#0C1A30', marginBottom: 8 }}>{s.t}</h3>
-                <p style={{ fontSize: 13.5, color: ink2, lineHeight: 1.6, margin: 0 }}>{s.d}</p>
-              </div>
-            ))}
+      <section id="como" style={{ padding: '84px 0' }}>
+        <div style={w}>
+          <div style={secHead}>
+            <span style={eyebrow}>Simples do início ao fim</span>
+            <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: '14px 0 0' }}>Como funciona</h2>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', marginTop: 16 }}>Quatro passos entre cadastrar a criança e ter o relatório na mão.</p>
           </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section style={{ background: navy, padding: '84px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.09em', textTransform: 'uppercase', color: blue, marginBottom: 12 }}>Quem já usa o IADI</div>
-          <h2 style={{ fontFamily: "Georgia,serif", fontSize: 'clamp(28px,3.5vw,42px)', fontWeight: 700, letterSpacing: '-.01em', color: '#fff', marginBottom: 48 }}>O que os profissionais dizem.</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18 }}>
-            {[
-              { q: '"Eu gastava em média 3 horas por paciente só para organizar o relatório. Agora levo 20 minutos do início ao fim. O IADI mudou completamente minha rotina."', n: 'Ana Paula R.', r: 'Terapeuta Ocupacional · SP', av: 'AP' },
-              { q: '"O PEI gerado automaticamente é impressionante. Ainda personalizo algumas partes, mas a estrutura já vem pronta com as habilidades priorizadas."', n: 'Carla B.', r: 'Psicopedagoga · MG', av: 'CB' },
-              { q: '"Mostro os gráficos de progressão para os pais e a reação é sempre muito positiva. Visualizar a evolução da criança torna o trabalho muito mais concreto."', n: 'Fernanda M.', r: 'Fonoaudióloga · RS', av: 'FM' },
-            ].map(t => (
-              <div key={t.n} style={{ background: navy2, border: '1px solid rgba(255,255,255,.08)', borderRadius: 10, padding: 28 }}>
-                <div style={{ color: amber, fontSize: 14, letterSpacing: '.05em', marginBottom: 14 }}>★★★★★</div>
-                <p style={{ fontSize: 14.5, color: onDark, lineHeight: 1.7, marginBottom: 20, fontStyle: 'italic' }}>{t.q}</p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <div style={{ width: 35, height: 35, borderRadius: '50%', background: 'rgba(76,107,245,.2)', display: 'grid', placeItems: 'center', fontSize: 11, fontWeight: 800, color: blue }}>{t.av}</div>
-                  <div>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{t.n}</div>
-                    <div style={{ fontSize: 11.5, color: onDark2 }}>{t.r}</div>
-                  </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, counterReset: 'step' }}>
+            {STEPS.map((s, i) => (
+              <div key={s.n} style={{ position: 'relative', paddingTop: 8 }}>
+                <div style={{ width: 42, height: 42, borderRadius: 99, background: 'var(--primary)', color: '#fff', fontWeight: 700, fontSize: 17, display: 'grid', placeItems: 'center', marginBottom: 16, boxShadow: '0 2px 8px hsl(214 56% 40% / .3)', position: 'relative' }}>
+                  {s.n}
+                  {i < STEPS.length - 1 && (
+                    <span style={{ position: 'absolute', top: 20, left: 52, right: -12, height: 2, background: 'linear-gradient(90deg, var(--primary-line), transparent)', display: 'block' }} />
+                  )}
                 </div>
+                <h3 style={{ fontSize: 16.5, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: 0 }}>{s.title}</h3>
+                <p style={{ fontSize: 14, color: 'var(--ink-2)', marginTop: 8 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -279,60 +247,87 @@ export default function LandingPage({ onGetStarted }: Props) {
       </section>
 
       {/* PRICING */}
-      <section style={{ background: '#fff', padding: '84px 0' }} id="precos">
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.09em', textTransform: 'uppercase', color: blue, marginBottom: 12 }}>Preços</div>
-          <h2 style={{ fontFamily: "Georgia,serif", fontSize: 'clamp(28px,3.5vw,42px)', fontWeight: 700, letterSpacing: '-.01em', color: '#0C1A30', marginBottom: 14 }}>Menos que um café por semana.</h2>
-          <p style={{ fontSize: 16, color: ink2, lineHeight: 1.65, maxWidth: 520, marginBottom: 52 }}>Ambos os planos incluem todas as funcionalidades — sem restrição de pacientes ou recursos.</p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, maxWidth: 660 }}>
-            <div style={{ border: `1px solid ${line}`, borderRadius: 16, padding: 32, display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.07em', textTransform: 'uppercase', color: ink3, marginBottom: 16 }}>Trimestral</div>
-              <div style={{ fontFamily: "Georgia,serif", fontSize: 46, fontWeight: 700, letterSpacing: '-.025em', lineHeight: 1 }}>R$&nbsp;37</div>
-              <div style={{ fontSize: 13, color: ink3, margin: '4px 0 6px' }}>a cada 3 meses</div>
-              <div style={{ fontSize: 12.5, fontWeight: 600, color: blue, marginBottom: 28 }}>R$ 12,33 por mês</div>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10, flex: 1, marginBottom: 28 }}>
-                {['Pacientes ilimitados','Questionário Portage completo','Relatório Word automático','PEI completo','Gráficos de progressão','Comunidade e tutoriais'].map(i => (
-                  <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 13, color: ink2 }}>
-                    <span style={{ width: 17, height: 17, borderRadius: '50%', background: '#DCFCE7', color: '#15803D', display: 'grid', placeItems: 'center', fontSize: 9.5, fontWeight: 900, flexShrink: 0, marginTop: 1 }}>✓</span>
-                    {i}
+      <section id="planos" style={{ padding: '84px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)' }}>
+        <div style={w}>
+          <div style={secHead}>
+            <span style={eyebrow}>Planos</span>
+            <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: '14px 0 0' }}>Escolha e comece hoje</h2>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', marginTop: 16 }}>Acesso completo a todos os recursos em qualquer plano. Sem taxa de adesão.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 380px))', gap: 24, justifyContent: 'center' }}>
+            {/* Trimestral */}
+            <div style={{ position: 'relative', background: 'var(--surface)', border: '1px solid var(--line-2)', borderRadius: 18, padding: '34px 30px' }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary-ink)' }}>Trimestral</div>
+              <div style={{ fontSize: 13.5, color: 'var(--ink-3)', marginTop: 4, minHeight: 38 }}>Ideal para experimentar o IADI na sua rotina clínica.</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, margin: '18px 0 4px' }}>
+                <span style={{ fontSize: 20, fontWeight: 600, color: 'var(--ink-2)' }}>R$</span>
+                <span style={{ fontSize: 52, fontWeight: 700, letterSpacing: '-0.03em' }}>37</span>
+                <span style={{ fontSize: 15, color: 'var(--ink-3)' }}>/trimestre</span>
+              </div>
+              <div style={{ fontSize: 13, color: 'var(--pos)', fontWeight: 600, marginBottom: 22 }}>equivale a R$ 12,33 por mês</div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '22px 0 26px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {['Todos os recursos incluídos','Pacientes e avaliações ilimitados','Relatórios em Word, Excel e PDF','Renovação a cada 3 meses'].map(i => (
+                  <li key={i} style={{ display: 'flex', gap: 10, fontSize: 14.5, color: 'var(--ink-2)', alignItems: 'flex-start' }}>
+                    <span style={{ color: 'var(--pos)', flexShrink: 0, marginTop: 2 }}>{CHECK}</span> {i}
                   </li>
                 ))}
               </ul>
-              <button onClick={onGetStarted} style={{ padding: 13, borderRadius: 10, background: blue, color: '#fff', fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer' }}>Assinar trimestral</button>
+              <button onClick={onGetStarted} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9, fontWeight: 600, fontSize: 15, padding: '13px 24px', borderRadius: 8, border: '1px solid var(--line-2)', cursor: 'pointer', background: 'var(--surface)', color: 'var(--ink)' }}>
+                Assinar trimestral
+              </button>
             </div>
 
-            <div style={{ border: 'none', borderRadius: 16, padding: 32, display: 'flex', flexDirection: 'column', background: navy, position: 'relative' }}>
-              <div style={{ position: 'absolute', top: -13, left: '50%', transform: 'translateX(-50%)', background: amber, color: navy, fontSize: 10, fontWeight: 800, letterSpacing: '.07em', textTransform: 'uppercase', padding: '3px 14px', borderRadius: 99, whiteSpace: 'nowrap' }}>Melhor valor — economize 35%</div>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.07em', textTransform: 'uppercase', color: 'rgba(255,255,255,.45)', marginBottom: 16 }}>Anual</div>
-              <div style={{ fontFamily: "Georgia,serif", fontSize: 46, fontWeight: 700, letterSpacing: '-.025em', lineHeight: 1, color: '#fff' }}>R$&nbsp;87</div>
-              <div style={{ fontSize: 13, color: 'rgba(255,255,255,.45)', margin: '4px 0 6px' }}>por ano</div>
-              <div style={{ fontSize: 12.5, fontWeight: 600, color: amber, marginBottom: 28 }}>R$ 7,25 por mês · menos de R$ 0,25/dia</div>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10, flex: 1, marginBottom: 28 }}>
-                {['Tudo do plano trimestral','Prioridade no suporte','Acesso antecipado a novas funcionalidades','1 mês grátis em relação ao trimestral'].map(i => (
-                  <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 13, color: onDark }}>
-                    <span style={{ width: 17, height: 17, borderRadius: '50%', background: 'rgba(247,168,38,.18)', color: amber, display: 'grid', placeItems: 'center', fontSize: 9.5, fontWeight: 900, flexShrink: 0, marginTop: 1 }}>✓</span>
-                    {i}
+            {/* Anual */}
+            <div style={{ position: 'relative', background: 'var(--surface)', border: '2px solid var(--primary)', borderRadius: 18, padding: '34px 30px', boxShadow: '0 24px 60px hsl(220 35% 25% / .13), 0 8px 20px hsl(220 30% 30% / .06)' }}>
+              <div style={{ position: 'absolute', top: -13, left: '50%', transform: 'translateX(-50%)', background: 'var(--primary)', color: '#fff', fontSize: 11.5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', padding: '5px 14px', borderRadius: 99, whiteSpace: 'nowrap' }}>
+                Mais econômico · economize 35%
+              </div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary-ink)' }}>Anual</div>
+              <div style={{ fontSize: 13.5, color: 'var(--ink-3)', marginTop: 4, minHeight: 38 }}>Melhor custo-benefício para quem já usa o IADI no dia a dia.</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, margin: '18px 0 4px' }}>
+                <span style={{ fontSize: 20, fontWeight: 600, color: 'var(--ink-2)' }}>R$</span>
+                <span style={{ fontSize: 52, fontWeight: 700, letterSpacing: '-0.03em' }}>87</span>
+                <span style={{ fontSize: 15, color: 'var(--ink-3)' }}>/ano</span>
+              </div>
+              <div style={{ fontSize: 13, color: 'var(--pos)', fontWeight: 600, marginBottom: 22 }}>equivale a R$ 7,25 por mês</div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '22px 0 26px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {['Tudo do plano trimestral',<><strong>12 meses</strong> pelo preço de ~7</>,'Menos renovações para gerenciar','Prioridade no suporte'].map((item, idx) => (
+                  <li key={idx} style={{ display: 'flex', gap: 10, fontSize: 14.5, color: 'var(--ink-2)', alignItems: 'flex-start' }}>
+                    <span style={{ color: 'var(--pos)', flexShrink: 0, marginTop: 2 }}>{CHECK}</span> {item}
                   </li>
                 ))}
               </ul>
-              <button onClick={onGetStarted} style={{ padding: 13, borderRadius: 10, background: amber, color: navy, fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer' }}>Assinar anual →</button>
+              <button onClick={onGetStarted} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9, fontWeight: 600, fontSize: 15, padding: '13px 24px', borderRadius: 8, border: 'none', cursor: 'pointer', background: 'var(--primary)', color: '#fff', boxShadow: '0 2px 8px hsl(214 56% 40% / .3)' }}>
+                Assinar anual
+              </button>
             </div>
           </div>
-          <p style={{ fontSize: 13, color: ink3, marginTop: 24 }}>Pagamento seguro via Stripe · Cancele quando quiser · Sem contrato de fidelidade</p>
+          <p style={{ textAlign: 'center', fontSize: 13.5, color: 'var(--ink-3)', marginTop: 30 }}>
+            Pagamento único por período · sem fidelidade · cancele quando quiser.
+          </p>
         </div>
       </section>
 
       {/* FAQ */}
-      <section style={{ background: light, padding: '84px 0' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.09em', textTransform: 'uppercase', color: blue, marginBottom: 12 }}>Dúvidas frequentes</div>
-          <h2 style={{ fontFamily: "Georgia,serif", fontSize: 'clamp(28px,3.5vw,42px)', fontWeight: 700, letterSpacing: '-.01em', color: '#0C1A30', marginBottom: 48 }}>Respostas rápidas.</h2>
-          <div style={{ maxWidth: 660 }}>
-            {FAQS.map(f => (
-              <div key={f.q} style={{ borderBottom: `1px solid ${line}`, padding: '20px 0' }}>
-                <div style={{ fontSize: 15.5, fontWeight: 700, color: '#0C1A30', marginBottom: 10 }}>{f.q}</div>
-                <div style={{ fontSize: 14, color: ink2, lineHeight: 1.7 }}>{f.a}</div>
+      <section id="faq" style={{ padding: '84px 0' }}>
+        <div style={w}>
+          <div style={secHead}>
+            <span style={eyebrow}>Dúvidas frequentes</span>
+            <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: '14px 0 0' }}>Perguntas comuns</h2>
+          </div>
+          <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {FAQS.map((f, i) => (
+              <div key={i} style={{ background: 'var(--surface)', border: `1px solid ${openFaq === i ? 'var(--primary-line)' : 'var(--line)'}`, borderRadius: 12, padding: '4px 22px' }}>
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
+                  style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', padding: '18px 0', fontWeight: 600, fontSize: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, color: 'var(--ink)', textAlign: 'left' }}
+                >
+                  {f.q}
+                  <span style={{ color: 'var(--ink-4)', flexShrink: 0, transform: openFaq === i ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>{CHEV}</span>
+                </button>
+                {openFaq === i && (
+                  <p style={{ fontSize: 14.5, color: 'var(--ink-2)', paddingBottom: 20, margin: 0 }}>{f.a}</p>
+                )}
               </div>
             ))}
           </div>
@@ -340,28 +335,40 @@ export default function LandingPage({ onGetStarted }: Props) {
       </section>
 
       {/* FINAL CTA */}
-      <section style={{ background: navy, padding: '96px 0', textAlign: 'center' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
-          <h2 style={{ fontFamily: "Georgia,serif", fontSize: 'clamp(30px,4vw,50px)', fontWeight: 700, color: '#fff', letterSpacing: '-.015em', marginBottom: 16 }}>
-            Comece a economizar tempo<br />já na próxima avaliação.
-          </h2>
-          <p style={{ fontSize: 16, color: onDark, marginBottom: 42, lineHeight: 1.6 }}>
-            Junte-se a terapeutas e educadores que transformaram sua rotina de avaliação com o IADI.
-          </p>
-          <button onClick={onGetStarted} style={{ fontSize: 16, fontWeight: 700, background: amber, color: navy, border: 'none', cursor: 'pointer', padding: '15px 32px', borderRadius: 12, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-            Criar minha conta gratuitamente →
-          </button>
-          <div style={{ fontSize: 12.5, color: onDark2, marginTop: 16 }}>
-            A partir de R$ 7,25/mês <span style={{ margin: '0 8px', opacity: .3 }}>·</span> Cancele quando quiser <span style={{ margin: '0 8px', opacity: .3 }}>·</span> Sem cartão para começar
+      <section style={{ padding: '30px 0' }}>
+        <div style={w}>
+          <div style={{ position: 'relative', background: 'linear-gradient(155deg, var(--primary-strong), hsl(230 52% 30%))', color: '#fff', borderRadius: 24, padding: '68px 56px', textAlign: 'center', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(600px 300px at 85% -20%, hsl(0 0% 100% / .14), transparent 60%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'relative' }}>
+              <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.12, margin: 0 }}>Ganhe tempo na avaliação e entregue mais valor</h2>
+              <p style={{ fontSize: 18, opacity: 0.9, margin: '16px auto 32px', maxWidth: '46ch' }}>Comece hoje a aplicar, calcular e gerar relatórios do desenvolvimento infantil em um só lugar.</p>
+              <button onClick={onGetStarted} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontWeight: 600, fontSize: 16, padding: '16px 30px', borderRadius: 8, border: 'none', cursor: 'pointer', background: '#fff', color: 'var(--primary-strong)', boxShadow: '0 8px 24px hsl(220 40% 10% / .25)' }}>
+                Assinar o IADI agora {ARROW}
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer style={{ background: '#040E21', padding: '36px 0', borderTop: '1px solid rgba(255,255,255,.05)' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 14 }}>
-          <div style={{ fontSize: 17, fontWeight: 800, color: '#fff', letterSpacing: '-.02em' }}>IA<span style={{ color: blue }}>DI</span></div>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,.28)' }}>© 2025 IADI · Inventário de Avaliação e Desenvolvimento Infantil</div>
+      <footer style={{ padding: '44px 0', borderTop: '1px solid var(--line)', color: 'var(--ink-3)' }}>
+        <div style={{ ...w, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+            <div style={{ width: 30, height: 30, borderRadius: 9, background: 'var(--primary)', color: '#fff', display: 'grid', placeItems: 'center' }}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>IADI</div>
+              <div style={{ fontSize: 11.5 }}>Inventário de Avaliação do Desenvolvimento Infantil</div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 22, fontSize: 13.5 }}>
+            {[['#recursos','Recursos'],['#planos','Planos'],['#faq','Dúvidas']].map(([h,l]) => (
+              <a key={h} href={h} style={{ color: 'var(--ink-3)' }}>{l}</a>
+            ))}
+            <button onClick={onGetStarted} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13.5, color: 'var(--ink-3)', padding: 0 }}>Entrar</button>
+          </div>
+          <div style={{ fontSize: 12.5 }}>© 2026 IADI · Todos os direitos reservados</div>
         </div>
       </footer>
 
