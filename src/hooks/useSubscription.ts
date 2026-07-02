@@ -50,7 +50,7 @@ export function useSubscription(user: User | null) {
   const createCheckout = async (plan: string): Promise<string | null> => {
     const { data: { session } } = await supabase.auth.getSession()
     if (!session?.access_token) return null
-    const res = await supabase.functions.invoke('create-checkout', {
+    const res = await supabase.functions.invoke('rapid-worker', {
       body: { plan },
       headers: { Authorization: `Bearer ${session.access_token}` },
     })
