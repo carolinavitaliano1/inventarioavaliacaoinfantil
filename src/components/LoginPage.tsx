@@ -3,11 +3,11 @@ import { Mail, Lock, Eye, EyeOff, Loader2, Activity } from 'lucide-react'
 import type { useAuth } from '../hooks/useAuth'
 
 type AuthHook = ReturnType<typeof useAuth>
-interface Props { auth: AuthHook }
 type Mode = 'login' | 'signup' | 'reset'
+interface Props { auth: AuthHook; defaultMode?: Mode }
 
-export default function LoginPage({ auth }: Props) {
-  const [mode, setMode] = useState<Mode>('login')
+export default function LoginPage({ auth, defaultMode = 'login' }: Props) {
+  const [mode, setMode] = useState<Mode>(defaultMode)
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
   const [show, setShow] = useState(false)

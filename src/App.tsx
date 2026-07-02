@@ -57,7 +57,7 @@ export default function App() {
   // pendingNav: when setCurrentId() and setView() are called in the same event,
   // hook.current is stale (reflects pre-update state). We defer navigation until
   // the next render when hook.currentId is updated and hook.current is available.
-  const [showLogin, setShowLogin] = useState(false)
+  const [loginMode, setLoginMode] = useState<'login' | 'signup' | null>(null)
   const [pendingNav, setPendingNav] = useState<View | null>(null)
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export default function App() {
   if (!auth.user) {
     return (
       <ErrorBoundary>
-        {showLogin ? <LoginPage auth={auth} /> : <LandingPage onGetStarted={() => setShowLogin(true)} />}
+        {loginMode ? <LoginPage auth={auth} defaultMode={loginMode} /> : <LandingPage onGetStarted={() => setLoginMode('signup')} onLogin={() => setLoginMode('login')} />}
       </ErrorBoundary>
     )
   }

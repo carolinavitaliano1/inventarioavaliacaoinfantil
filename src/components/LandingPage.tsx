@@ -1,4 +1,4 @@
-interface Props { onGetStarted: () => void }
+interface Props { onGetStarted: () => void; onLogin?: () => void }
 
 const CHECK = (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -50,7 +50,7 @@ const secHead: React.CSSProperties = { textAlign: 'center', maxWidth: 640, margi
 
 import { useState } from 'react'
 
-export default function LandingPage({ onGetStarted }: Props) {
+export default function LandingPage({ onGetStarted, onLogin }: Props) {
   const [openFaq, setOpenFaq] = useState(0)
 
   return (
@@ -366,7 +366,7 @@ export default function LandingPage({ onGetStarted }: Props) {
             {[['#recursos','Recursos'],['#planos','Planos'],['#faq','Dúvidas']].map(([h,l]) => (
               <a key={h} href={h} style={{ color: 'var(--ink-3)' }}>{l}</a>
             ))}
-            <button onClick={onGetStarted} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13.5, color: 'var(--ink-3)', padding: 0 }}>Entrar</button>
+            <button onClick={onLogin ?? onGetStarted} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13.5, color: 'var(--ink-3)', padding: 0 }}>Entrar</button>
           </div>
           <div style={{ fontSize: 12.5 }}>© 2026 IADI · Todos os direitos reservados</div>
         </div>
