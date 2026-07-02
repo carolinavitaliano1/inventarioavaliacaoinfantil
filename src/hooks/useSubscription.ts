@@ -47,11 +47,11 @@ export function useSubscription(user: User | null) {
   const isAdmin = !!user?.email && ADMIN_EMAILS.includes(user.email)
   const isActive = isAdmin || subscription?.status === 'active' || subscription?.status === 'trialing'
 
-  const createCheckout = async (priceId: string, plan: string): Promise<string | null> => {
+  const createCheckout = async (plan: string): Promise<string | null> => {
     const { data: { session } } = await supabase.auth.getSession()
     if (!session?.access_token) return null
     const res = await supabase.functions.invoke('create-checkout', {
-      body: { priceId, plan },
+      body: { plan },
       headers: { Authorization: `Bearer ${session.access_token}` },
     })
     return res.data?.url ?? null

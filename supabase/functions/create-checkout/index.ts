@@ -1,22 +1,20 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-import Stripe from 'https://esm.sh/stripe@14?target=deno'
-
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
-  apiVersion: '2024-06-20',
-  httpClient: Stripe.createFetchHttpClient(),
-})
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+const PLANS: Record<string, { amount: number; frequency: number; label: string }> = {
+  trimestral: { amount: 37, frequency: 3, label: 'IADI — Plano Trimestral' },
+  anual:      { amount: 87, frequency: 12, label: 'IADI — Plano Anual' },
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
 
   try {
-    // Verificar autenticação
     const authHeader = req.headers.get('Authorization')
     if (!authHeader) return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders })
 
@@ -29,50 +27,54 @@ serve(async (req) => {
     const { data: { user }, error: authError } = await supabase.auth.getUser(token)
     if (authError || !user) return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders })
 
-    const { priceId, plan } = await req.json()
-    if (!priceId) return new Response(JSON.stringify({ error: 'priceId required' }), { status: 400, headers: corsHeaders })
+    const body = await req.json()
+    const plan = body.plan as string
+    const planConfig = PLANS[plan]
+    if (!planConfig) return new Response(JSON.stringify({ error: 'Plano inválido' }), { status: 400, headers: corsHeaders })
 
     const origin = req.headers.get('origin') || 'https://inventarioavaliacaoinfantil.vercel.app'
+    const mpToken = Deno.env.get('MP_ACCESS_TOKEN')!
 
-    // Criar ou recuperar customer Stripe
-    const supabaseAdmin = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    )
-    const { data: existingSub } = await supabaseAdmin
-      .from('subscriptions')
-      .select('stripe_customer_id')
-      .eq('user_id', user.id)
-      .single()
-
-    let customerId = existingSub?.stripe_customer_id
-    if (!customerId) {
-      const customer = await stripe.customers.create({
-        email: user.email,
-        metadata: { supabase_user_id: user.id },
-      })
-      customerId = customer.id
+    const mpBody = {
+      reason: planConfig.label,
+      auto_recurring: {
+        frequency: planConfig.frequency,
+        frequency_type: 'months',
+        transaction_amount: planConfig.amount,
+        currency_id: 'BRL',
+        free_trial: {
+          frequency: 3,
+          frequency_type: 'days',
+        },
+      },
+      back_url: `${origin}?checkout=success`,
+      payer_email: user.email,
+      external_reference: JSON.stringify({ user_id: user.id, plan }),
     }
 
-    // Criar sessão de checkout
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      payment_method_types: ['card'],
-      line_items: [{ price: priceId, quantity: 1 }],
-      mode: 'subscription',
-      success_url: `${origin}?checkout=success`,
-      cancel_url: `${origin}?checkout=cancel`,
-      subscription_data: {
-        trial_period_days: 3,
-        metadata: { supabase_user_id: user.id, plan },
+    const mpRes = await fetch('https://api.mercadopago.com/preapproval', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${mpToken}`,
+        'Content-Type': 'application/json',
       },
-      locale: 'pt-BR',
+      body: JSON.stringify(mpBody),
     })
 
-    return new Response(JSON.stringify({ url: session.url }), {
+    const mpData = await mpRes.json()
+
+    if (!mpRes.ok || !mpData.init_point) {
+      console.error('MP error:', JSON.stringify(mpData))
+      return new Response(JSON.stringify({ error: mpData.message || 'Erro ao criar assinatura' }), {
+        status: 500, headers: corsHeaders,
+      })
+    }
+
+    return new Response(JSON.stringify({ url: mpData.init_point }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
   } catch (err) {
+    console.error('Unexpected error:', err)
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500, headers: corsHeaders,
     })

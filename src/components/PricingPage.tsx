@@ -3,10 +3,6 @@ import { Check, Loader2, Activity, LogOut } from 'lucide-react'
 import type { useSubscription } from '../hooks/useSubscription'
 import type { useAuth } from '../hooks/useAuth'
 
-// Substitua pelos IDs reais dos preços criados no Stripe Dashboard
-const PRICE_TRIMESTRAL = import.meta.env.VITE_STRIPE_PRICE_TRIMESTRAL as string
-const PRICE_ANUAL = import.meta.env.VITE_STRIPE_PRICE_ANUAL as string
-
 interface Props {
   subHook: ReturnType<typeof useSubscription>
   auth: ReturnType<typeof useAuth>
@@ -27,12 +23,10 @@ export default function PricingPage({ subHook, auth }: Props) {
   const [error, setError] = useState<string | null>(null)
 
   const checkout = async (plan: 'trimestral' | 'anual') => {
-    const priceId = plan === 'trimestral' ? PRICE_TRIMESTRAL : PRICE_ANUAL
-    if (!priceId) { setError('Configuração de pagamento pendente. Entre em contato.'); return }
     setLoading(plan)
     setError(null)
     try {
-      const url = await subHook.createCheckout(priceId, plan)
+      const url = await subHook.createCheckout(plan)
       if (url) window.location.href = url
       else setError('Não foi possível iniciar o pagamento. Tente novamente.')
     } catch {

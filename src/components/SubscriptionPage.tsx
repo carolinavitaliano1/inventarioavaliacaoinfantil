@@ -7,9 +7,7 @@ type AuthHook = ReturnType<typeof useAuth>
 type SubHook = ReturnType<typeof useSubscription>
 interface Props { auth: AuthHook; subHook: SubHook; onBack: () => void }
 
-const PRICE_TRIMESTRAL = import.meta.env.VITE_STRIPE_PRICE_TRIMESTRAL as string
-const PRICE_ANUAL = import.meta.env.VITE_STRIPE_PRICE_ANUAL as string
-const STRIPE_PORTAL_URL = (import.meta.env.VITE_STRIPE_PORTAL_URL as string) || 'https://billing.stripe.com/p/login/test_00000'
+const MP_PORTAL_URL = 'https://www.mercadopago.com.br/subscriptions'
 const ADMIN_EMAIL = 'carolinavitaliano1@gmail.com'
 
 const FEATURES = [
@@ -46,11 +44,9 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
   const [error, setError] = useState<string | null>(null)
 
   const checkout = async (plan: 'trimestral' | 'anual') => {
-    const priceId = plan === 'trimestral' ? PRICE_TRIMESTRAL : PRICE_ANUAL
-    if (!priceId) { setError('Configuração de preço pendente. Entre em contato com suporte.'); return }
     setLoading(plan); setError(null)
     try {
-      const url = await createCheckout(priceId, plan)
+      const url = await createCheckout(plan)
       if (url) window.location.href = url
       else setError('Não foi possível iniciar o pagamento. Tente novamente.')
     } catch { setError('Erro ao conectar com o serviço de pagamento.') }
@@ -114,7 +110,7 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
             )}
             <div style={{ marginTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               <a
-                href={STRIPE_PORTAL_URL}
+                href={MP_PORTAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-ghost btn-sm"
@@ -123,7 +119,7 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
                 <CreditCard size={13} /> Gerenciar assinatura (mudar cartão, dados de cobrança)
               </a>
               <a
-                href={STRIPE_PORTAL_URL}
+                href={MP_PORTAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-sm"
