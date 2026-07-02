@@ -44,7 +44,7 @@ function defaultStrategy(area: string) {
 
 export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   const { current } = hook
-  const [tab, setTab] = useState<'plano' | 'selecionar'>('plano')
+  const [tab, setTab] = useState<'plano' | 'selecionar'>('selecionar')
   const [exportingWord, setExportingWord] = useState(false)
 
   const naoItems = portageItems.filter(i => current?.responses[i.id] === 'nao')
@@ -69,6 +69,8 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   }
   const remove = (id: string) => setPlan(p => p.filter(x => x.id !== id))
   const setStatus = (id: string, status: PEIItem['status']) => setPlan(p => p.map(x => x.id === id ? { ...x, status } : x))
+  const setEstrategias = (id: string, estrategias: string) => setPlan(p => p.map(x => x.id === id ? { ...x, estrategias } : x))
+  const [editingEst, setEditingEst] = useState<string | null>(null)
 
   const grouped: Record<string, PEIItem[]> = { curto: [], medio: [], longo: [] }
   plan.forEach(p => grouped[p.prazo].push(p))
@@ -122,11 +124,11 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
         </div>
 
         <div className="seg" style={{ marginBottom: 20 }}>
-          <button data-on={tab === 'plano'} onClick={() => setTab('plano')}>
-            <Layers size={14} /> Plano <span className="chip" style={{ padding: '1px 7px', marginLeft: 2 }}>{plan.length}</span>
-          </button>
           <button data-on={tab === 'selecionar'} onClick={() => setTab('selecionar')}>
             <Flag size={14} /> Selecionar habilidades
+          </button>
+          <button data-on={tab === 'plano'} onClick={() => setTab('plano')}>
+            <Layers size={14} /> Plano <span className="chip" style={{ padding: '1px 7px', marginLeft: 2 }}>{plan.length}</span>
           </button>
         </div>
 
@@ -161,9 +163,22 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
                           </div>
                           <button onClick={() => remove(item.id)} style={{ background: 'none', border: 'none', color: 'var(--ink-4)', alignSelf: 'flex-start', cursor: 'pointer' }}><Trash2 size={15} /></button>
                         </div>
-                        <div style={{ marginTop: 12, padding: '10px 12px', background: 'var(--surface-2)', border: '1px solid var(--line)', borderRadius: 'var(--r-sm)' }}>
-                          <div className="micro" style={{ marginBottom: 4 }}>Estratégias de intervenção</div>
-                          <p style={{ fontSize: 12.5, color: 'var(--ink-2)', margin: 0, lineHeight: 1.5 }}>{item.estrategias}</p>
+                        <div style={{ marginTop: 12, padding: '10px 12px', background: 'var(--surface-2)', border: '1px solid ' + (editingEst === item.id ? 'var(--primary)' : 'var(--line)'), borderRadius: 'var(--r-sm)', boxShadow: editingEst === item.id ? '0 0 0 3px var(--primary-bg)' : 'none', transition: 'border .14s, box-shadow .14s' }}>
+                          <div className="micro" style={{ marginBottom: 4 }}>Estratégias de intervenção <span style={{ color: 'var(--ink-4)', fontWeight: 400, textTransform: 'none', letterSpacing: 0, fontSize: 10 }}>— clique para editar</span></div>
+                          {editingEst === item.id ? (
+                            <textarea
+                              autoFocus
+                              value={item.estrategias}
+                              onChange={e => setEstrategias(item.id, e.target.value)}
+                              onBlur={() => setEditingEst(null)}
+                              style={{ width: '100%', minHeight: 72, fontSize: 12.5, color: 'var(--ink)', lineHeight: 1.5, background: 'transparent', border: 'none', outline: 'none', resize: 'vertical', padding: 0, fontFamily: 'inherit' }}
+                            />
+                          ) : (
+                            <p
+                              onClick={() => setEditingEst(item.id)}
+                              style={{ fontSize: 12.5, color: 'var(--ink-2)', margin: 0, lineHeight: 1.5, cursor: 'text' }}
+                            >{item.estrategias}</p>
+                          )}
                         </div>
                         <div style={{ display: 'flex', gap: 6, marginTop: 11 }}>
                           {(['pendente', 'em_andamento', 'concluido'] as const).map(s => {
