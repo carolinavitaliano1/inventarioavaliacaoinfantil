@@ -9,6 +9,7 @@ interface Props { auth: AuthHook; subHook: SubHook; onBack: () => void }
 
 const PRICE_TRIMESTRAL = import.meta.env.VITE_STRIPE_PRICE_TRIMESTRAL as string
 const PRICE_ANUAL = import.meta.env.VITE_STRIPE_PRICE_ANUAL as string
+const STRIPE_PORTAL_URL = (import.meta.env.VITE_STRIPE_PORTAL_URL as string) || 'https://billing.stripe.com/p/login/test_00000'
 const ADMIN_EMAIL = 'carolinavitaliano1@gmail.com'
 
 const FEATURES = [
@@ -111,19 +112,26 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
                 <AlertCircle size={15} /> Sua assinatura não está ativa. Renove abaixo para continuar usando o IADI.
               </div>
             )}
-            {isActive && (
-              <div style={{ marginTop: 14 }}>
-                <a
-                  href="https://billing.stripe.com/p/login/test_00000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-ghost btn-sm"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <ExternalLink size={13} /> Gerenciar no Stripe (cancelar, mudar cartão)
-                </a>
-              </div>
-            )}
+            <div style={{ marginTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              <a
+                href={STRIPE_PORTAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-ghost btn-sm"
+                style={{ textDecoration: 'none' }}
+              >
+                <CreditCard size={13} /> Gerenciar assinatura (mudar cartão, dados de cobrança)
+              </a>
+              <a
+                href={STRIPE_PORTAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-sm"
+                style={{ textDecoration: 'none', color: 'var(--neg)', borderColor: 'hsl(6 60% 88%)', background: 'var(--neg-bg)' }}
+              >
+                <XCircle size={13} /> Cancelar assinatura
+              </a>
+            </div>
           </div>
         ) : (
           <div className="card card-pad" style={{ marginBottom: 20, borderLeft: '3px solid var(--neg)' }}>
