@@ -64,9 +64,9 @@ export default function PricingPage({ subHook, auth }: Props) {
       {/* Hero */}
       <div className="text-center pt-12 pb-8 px-4">
         <p className="text-xs font-semibold text-purple-600 uppercase tracking-widest mb-3">Acesso completo</p>
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">Escolha seu plano</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-3">3 dias grátis, sem cobrança</h1>
         <p className="text-gray-500 text-sm max-w-sm mx-auto">
-          Acesso completo ao IADI — avaliação, relatórios e PEI para todos os seus pacientes.
+          Experimente o IADI completo por 3 dias. Nenhum valor é cobrado durante o período de teste — cancele antes e não paga nada.
         </p>
       </div>
 
@@ -81,7 +81,7 @@ export default function PricingPage({ subHook, auth }: Props) {
               <span className="text-4xl font-bold text-gray-900">R$&nbsp;37</span>
               <span className="text-gray-400 text-sm mb-1">/3 meses</span>
             </div>
-            <p className="text-xs text-gray-400 mt-1">R$ 12,33 por mês</p>
+            <p className="text-xs text-gray-400 mt-1">3 dias grátis · depois R$ 12,33/mês</p>
           </div>
 
           <ul className="space-y-2.5 mb-6 flex-1">
@@ -100,7 +100,7 @@ export default function PricingPage({ subHook, auth }: Props) {
             className="w-full flex items-center justify-center gap-2 border-2 border-purple-600 text-purple-700 py-3 rounded-xl font-semibold hover:bg-purple-50 transition disabled:opacity-50"
           >
             {loading === 'trimestral' ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-            Assinar trimestral
+            Testar grátis · trimestral
           </button>
         </div>
 
@@ -116,7 +116,7 @@ export default function PricingPage({ subHook, auth }: Props) {
               <span className="text-4xl font-bold text-white">R$&nbsp;87</span>
               <span className="text-purple-300 text-sm mb-1">/ano</span>
             </div>
-            <p className="text-xs text-purple-300 mt-1">R$ 7,25 por mês · economize 35%</p>
+            <p className="text-xs text-purple-300 mt-1">3 dias grátis · depois R$ 7,25/mês · economize 35%</p>
           </div>
 
           <ul className="space-y-2.5 mb-6 flex-1">
@@ -135,7 +135,7 @@ export default function PricingPage({ subHook, auth }: Props) {
             className="w-full flex items-center justify-center gap-2 bg-white text-purple-700 py-3 rounded-xl font-bold hover:bg-purple-50 transition disabled:opacity-50 shadow"
           >
             {loading === 'anual' ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-            Assinar anual
+            Testar grátis · anual
           </button>
         </div>
       </div>
@@ -145,7 +145,7 @@ export default function PricingPage({ subHook, auth }: Props) {
       )}
 
       <p className="text-center text-xs text-gray-400 pb-8 px-4">
-        Pagamento seguro via Stripe · Cancele quando quiser · Sem taxas ocultas
+        3 dias grátis · sem cobrança durante o trial · Pagamento seguro via Stripe · Cancele quando quiser
       </p>
     </div>
   )
