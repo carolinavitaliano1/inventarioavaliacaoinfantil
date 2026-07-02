@@ -46,10 +46,8 @@ export function useSubscription(user: User | null) {
   const isActive = subscription?.status === 'active' || subscription?.status === 'trialing'
 
   const createCheckout = async (priceId: string, plan: string): Promise<string | null> => {
-    const { data: { session } } = await supabase.auth.getSession()
     const res = await supabase.functions.invoke('create-checkout', {
       body: { priceId, plan },
-      headers: { Authorization: `Bearer ${session?.access_token}` },
     })
     return res.data?.url ?? null
   }
