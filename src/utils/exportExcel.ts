@@ -71,6 +71,6 @@ export function exportExcel(assessment: Assessment, areaResults: AreaDevResult[]
     XLSX.utils.book_append_sheet(wb, wsResp, 'Respostas')
 
     const buf = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-    saveAs(new Blob([buf], { type: 'application/octet-stream' }), `Portage_${studentInfo.name}_${studentInfo.date}.xlsx`)
+    saveAs(new Blob([buf], { type: 'application/octet-stream' }), `Avaliacao_Infantil_${studentInfo.name}_${studentInfo.date}.xlsx`)
   })
 }

@@ -148,7 +148,7 @@ export async function exportWord(assessment: Assessment, areaResults: AreaDevRes
   sections.push(new Paragraph({ text: '' }))
   sections.push(new Paragraph({
     alignment: AlignmentType.CENTER,
-    border: { top: { style: BorderStyle.SINGLE, size: 6, color: LINE, space: 4 } },
+    border: { top: { style: BorderStyle.SINGLE, size: 6, color: '262B33', space: 4 } },
     children: [new TextRun({ text: 'Profissional responsável', bold: true, size: 20 })],
   }))
   sections.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Terapeuta / Registro profissional', size: 16, color: '6C7480' })] }))

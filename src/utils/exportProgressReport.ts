@@ -38,7 +38,7 @@ function cell(
 }
 
 function hCell(text: string, w?: number): TableCell {
-  return cell(text, { bold: true, shade: 'D6BCF7', size: 18, align: AlignmentType.CENTER, w })
+  return cell(text, { bold: true, shade: 'C9DCF1', size: 18, align: AlignmentType.CENTER, w })
 }
 
 function para(text: string, opts: { bold?: boolean; heading?: typeof HeadingLevel[keyof typeof HeadingLevel]; size?: number; align?: typeof AlignmentType[keyof typeof AlignmentType]; space?: number } = {}): Paragraph {
@@ -53,7 +53,7 @@ function para(text: string, opts: { bold?: boolean; heading?: typeof HeadingLeve
 
 function divider(): Paragraph {
   return new Paragraph({
-    border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: 'D6BCF7' } },
+    border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: 'C9DCF1' } },
     children: [],
     spacing: { after: 200 },
   })
@@ -89,7 +89,7 @@ export async function exportProgressReport(patient: Patient, assessments: Assess
   children.push(para('INVENTÁRIO DE AVALIAÇÃO DO DESENVOLVIMENTO INFANTIL', {
     heading: HeadingLevel.HEADING_1, align: AlignmentType.CENTER,
   }))
-  children.push(para('IADI – Escala Portage', { bold: false, size: 22, align: AlignmentType.CENTER }))
+  children.push(para('Inventário de Avaliação Infantil', { bold: false, size: 22, align: AlignmentType.CENTER }))
   children.push(para('', {}))
   children.push(para('RELATÓRIO DE ACOMPANHAMENTO CONTÍNUO', {
     bold: true, size: 28, align: AlignmentType.CENTER,
@@ -103,9 +103,9 @@ export async function exportProgressReport(patient: Patient, assessments: Assess
   // ── SOBRE O INSTRUMENTO ──────────────────────────────────────────────────────
   children.push(para('O QUE É O IADI?', { heading: HeadingLevel.HEADING_2 }))
   children.push(para(
-    'O Inventário de Avaliação do Desenvolvimento Infantil (IADI) é baseado na Escala Portage de Desenvolvimento ' +
-    '(Portage Guide to Early Education, 1976) e em sua adaptação brasileira (Inventário Portage Operacionalizado – IPO). ' +
-    'O instrumento avalia habilidades em 5 áreas do desenvolvimento para crianças de 0 a 6 anos.',
+    'O Inventário de Avaliação do Desenvolvimento Infantil (IADI) avalia habilidades em 5 áreas do ' +
+    'desenvolvimento para crianças de 0 a 6 anos, organizadas por faixa etária, gerando uma idade ' +
+    'desenvolvimental por área e o acompanhamento da evolução entre avaliações.',
     { size: 18 }
   ))
   children.push(para('', {}))
@@ -210,11 +210,11 @@ export async function exportProgressReport(patient: Patient, assessments: Assess
             shade: r.totalAv > 5 ? 'FEF9C3' : undefined }),
         ]})),
         new TableRow({ children: [
-          cell('TOTAL GERAL', { bold: true, shade: 'E9D5FF', w: aw[0] }),
-          cell(`${mediaGeral.toFixed(2)} anos`, { bold: true, shade: 'E9D5FF', w: aw[1], align: AlignmentType.CENTER }),
-          cell(`${pct}%`, { bold: true, shade: 'E9D5FF', w: aw[2], align: AlignmentType.CENTER }),
-          cell(String(totalNao), { bold: true, shade: 'E9D5FF', w: aw[3], align: AlignmentType.CENTER }),
-          cell(String(totalAv), { bold: true, shade: 'E9D5FF', w: aw[4], align: AlignmentType.CENTER }),
+          cell('TOTAL GERAL', { bold: true, shade: 'E4EEF8', w: aw[0] }),
+          cell(`${mediaGeral.toFixed(2)} anos`, { bold: true, shade: 'E4EEF8', w: aw[1], align: AlignmentType.CENTER }),
+          cell(`${pct}%`, { bold: true, shade: 'E4EEF8', w: aw[2], align: AlignmentType.CENTER }),
+          cell(String(totalNao), { bold: true, shade: 'E4EEF8', w: aw[3], align: AlignmentType.CENTER }),
+          cell(String(totalAv), { bold: true, shade: 'E4EEF8', w: aw[4], align: AlignmentType.CENTER }),
         ]}),
       ],
     }))
@@ -263,12 +263,12 @@ export async function exportProgressReport(patient: Patient, assessments: Assess
     ]})
 
     const headerRow2 = new TableRow({ children: [
-      cell('', { shade: 'D6BCF7', w: areaW }),
+      cell('', { shade: 'C9DCF1', w: areaW }),
       ...sorted.flatMap(() => [
-        cell('I.D. calculada', { bold: true, shade: 'E9D5FF', w: avW, align: AlignmentType.CENTER }),
-        cell('Tendência', { bold: true, shade: 'E9D5FF', w: avW, align: AlignmentType.CENTER }),
+        cell('I.D. calculada', { bold: true, shade: 'E4EEF8', w: avW, align: AlignmentType.CENTER }),
+        cell('Tendência', { bold: true, shade: 'E4EEF8', w: avW, align: AlignmentType.CENTER }),
       ]),
-      cell('1ª → última avaliação', { bold: true, shade: 'D6BCF7', w: varW, align: AlignmentType.CENTER }),
+      cell('1ª → última avaliação', { bold: true, shade: 'C9DCF1', w: varW, align: AlignmentType.CENTER }),
     ]})
 
     const dataRows: TableRow[] = []
@@ -304,12 +304,12 @@ export async function exportProgressReport(patient: Patient, assessments: Assess
     const mediaValues = allResults.map(ar => ar.reduce((s, r) => s + r.idadeDesenvAnos, 0) / ar.length)
     const totalMediaVar = mediaValues[mediaValues.length - 1] - mediaValues[0]
     dataRows.push(new TableRow({ children: [
-      cell('MÉDIA GERAL', { bold: true, shade: 'E9D5FF', w: areaW }),
+      cell('MÉDIA GERAL', { bold: true, shade: 'E4EEF8', w: areaW }),
       ...sorted.flatMap((_, i) => {
         const diff = i === 0 ? 0 : mediaValues[i] - mediaValues[i - 1]
         return [
-          cell(`${mediaValues[i].toFixed(2)} anos`, { bold: true, shade: 'E9D5FF', w: avW, align: AlignmentType.CENTER }),
-          trendCell(diff, i === 0, 'E9D5FF'),
+          cell(`${mediaValues[i].toFixed(2)} anos`, { bold: true, shade: 'E4EEF8', w: avW, align: AlignmentType.CENTER }),
+          trendCell(diff, i === 0, 'E4EEF8'),
         ]
       }),
       new TableCell({
@@ -386,7 +386,14 @@ export async function exportProgressReport(patient: Patient, assessments: Assess
   children.push(para('Células em vermelho = 5 ou mais habilidades não adquiridas (alta prioridade de intervenção)', { size: 16 }))
   children.push(para('Células em amarelo = 5 ou mais habilidades em desenvolvimento', { size: 16 }))
   children.push(para('', {}))
-  children.push(para('Instrumento baseado em: Bluma et al. (1976). Portage Guide to Early Education. / Williams & Aiello (2001). Inventário Portage Operacionalizado. São Paulo: Memnon.', { size: 16 }))
+  children.push(para('Referências: Bluma et al. (1976), CESA 12; Williams & Aiello (2001), São Paulo: Memnon.', { size: 16 }))
+
+  // ── ASSINATURA ───────────────────────────────────────────────────────────────
+  children.push(para('', {}))
+  children.push(para('', {}))
+  children.push(divider())
+  children.push(para('Profissional responsável', { bold: true, size: 20, align: AlignmentType.CENTER }))
+  children.push(para('Terapeuta / Registro profissional', { size: 16, align: AlignmentType.CENTER }))
 
   const doc = new Document({ sections: [{ children }] })
   const blob = await Packer.toBlob(doc)
