@@ -75,14 +75,13 @@ export default function PortageHome({ hook, setView, auth }: Props) {
       {showRefs && (
         <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5 mb-6 text-xs text-gray-600 space-y-3">
           <h3 className="font-bold text-gray-800 text-sm">Referências Bibliográficas</h3>
-          <p className="text-gray-500 italic text-[11px]">Este instrumento é baseado no Portage Guide to Early Education e na sua adaptação brasileira (Inventário Portage Operacionalizado – IPO).</p>
+          <p className="text-gray-500 italic text-[11px]">Instrumento de avaliação do desenvolvimento infantil de 0 a 6 anos, organizado em 5 áreas e por faixa etária.</p>
           <ol className="space-y-2 list-decimal list-inside">
-            <li>Bluma, S., Shearer, M., Frohman, A., &amp; Hilliard, J. (1976). <em>Portage guide to early education</em>. Portage, WI: Cooperative Educational Service Agency 12.</li>
-            <li>Shearer, D. E., &amp; Shearer, M. S. (1972). The Portage Project: A model for early childhood intervention. <em>Exceptional Children</em>, <em>36</em>(3), 210–217.</li>
-            <li>Bluma, S., Shearer, M., Frohman, A., &amp; Hilliard, J. (1994). <em>Portage guide to early education: Revised edition</em>. Portage, WI: CESA 5.</li>
-            <li>Williams, L. C. A., &amp; Aiello, A. L. R. (2001). <em>O Inventário Portage Operacionalizado: intervenção com famílias</em>. São Paulo: Memnon.</li>
-            <li>Boyd, R. D. (1989). What a difference a day makes: Age-related discontinuities and the Battelle Developmental Inventory. <em>Journal of Early Intervention</em>, <em>13</em>(2), 114–119.</li>
-            <li>Neisworth, J. T., &amp; Bagnato, S. J. (2004). The mismeasure of young children: The authentic assessment alternative. <em>Infants &amp; Young Children</em>, <em>17</em>(3), 198–212.</li>
+            <li>Bluma, S., Shearer, M., Frohman, A., &amp; Hilliard, J. (1976). Cooperative Educational Service Agency 12, Wisconsin.</li>
+            <li>Shearer, D. E., &amp; Shearer, M. S. (1972). <em>Exceptional Children</em>, <em>36</em>(3), 210–217.</li>
+            <li>Williams, L. C. A., &amp; Aiello, A. L. R. (2001). São Paulo: Memnon.</li>
+            <li>Boyd, R. D. (1989). <em>Journal of Early Intervention</em>, <em>13</em>(2), 114–119.</li>
+            <li>Neisworth, J. T., &amp; Bagnato, S. J. (2004). <em>Infants &amp; Young Children</em>, <em>17</em>(3), 198–212.</li>
           </ol>
         </div>
       )}
