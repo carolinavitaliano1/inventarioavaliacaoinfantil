@@ -1,4 +1,4 @@
-import { useState, Component } from 'react'
+import { useState, useEffect, Component } from 'react'
 import type { ReactNode } from 'react'
 import PortageHome from './components/PortageHome'
 import PortageQuestionnaire from './components/PortageQuestionnaire'
@@ -15,6 +15,8 @@ import PricingPage from './components/PricingPage'
 import { Loader2 } from 'lucide-react'
 
 export type View = 'dashboard' | 'home' | 'patient' | 'questionnaire' | 'results' | 'pei'
+
+const ASSESSMENT_VIEWS: View[] = ['questionnaire', 'results', 'pei']
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null }
@@ -48,9 +50,26 @@ export default function App() {
   const hook = usePortageAssessment(auth.user?.id ?? null)
   const patientsHook = usePatients()
 
+  // pendingNav: when setCurrentId() and setView() are called in the same event,
+  // hook.current is stale (reflects pre-update state). We defer navigation until
+  // the next render when hook.currentId is updated and hook.current is available.
+  const [pendingNav, setPendingNav] = useState<View | null>(null)
+
+  useEffect(() => {
+    if (pendingNav && hook.currentId) {
+      setView(pendingNav)
+      setPendingNav(null)
+    }
+  }, [hook.currentId, pendingNav])
+
   const safeSetView = (v: View) => {
-    if ((v === 'questionnaire' || v === 'results' || v === 'pei') && !hook.current) {
-      setView('dashboard')
+    if (ASSESSMENT_VIEWS.includes(v) && !hook.current) {
+      // currentId may have just been set in the same event batch — defer
+      if (hook.currentId) {
+        setView(v)
+      } else {
+        setPendingNav(v)
+      }
       return
     }
     setView(v)
@@ -104,6 +123,7 @@ export default function App() {
             assessmentHook={hook}
             setView={safeSetView}
             onBack={() => setView('dashboard')}
+            onPatientNotFound={() => setView('dashboard')}
             auth={auth}
           />
         )}

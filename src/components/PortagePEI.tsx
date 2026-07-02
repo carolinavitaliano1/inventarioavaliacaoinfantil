@@ -44,6 +44,7 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   const { current } = hook
   const [tab, setTab] = useState<'plano' | 'selecionar'>('selecionar')
   const [exportingWord, setExportingWord] = useState(false)
+  const [editingEst, setEditingEst] = useState<string | null>(null)
 
   const naoItems = portageItems.filter(i => current?.responses[i.id] === 'nao')
   const avItems = portageItems.filter(i => current?.responses[i.id] === 'as_vezes')
@@ -68,7 +69,6 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   const remove = (id: string) => setPlan(p => p.filter(x => x.id !== id))
   const setStatus = (id: string, status: PEIItem['status']) => setPlan(p => p.map(x => x.id === id ? { ...x, status } : x))
   const setEstrategias = (id: string, estrategias: string) => setPlan(p => p.map(x => x.id === id ? { ...x, estrategias } : x))
-  const [editingEst, setEditingEst] = useState<string | null>(null)
 
   const grouped: Record<string, PEIItem[]> = { curto: [], medio: [], longo: [] }
   plan.forEach(p => grouped[p.prazo].push(p))

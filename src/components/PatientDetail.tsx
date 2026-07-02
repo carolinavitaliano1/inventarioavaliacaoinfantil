@@ -18,6 +18,7 @@ interface Props {
   assessmentHook: AssessmentHook
   setView: (v: View) => void
   onBack: () => void
+  onPatientNotFound?: () => void
   auth?: AuthHook
 }
 
@@ -41,7 +42,7 @@ const AREA_SHORT: Record<string, string> = {
   'V. ÁREA PSICOMOTORA': 'Psicomotora',
 }
 
-export default function PatientDetail({ patientId, patientsHook, assessmentHook, setView, onBack, auth }: Props) {
+export default function PatientDetail({ patientId, patientsHook, assessmentHook, setView, onBack, onPatientNotFound, auth }: Props) {
   const { getPatient, updatePatient } = patientsHook
   const { assessments, createAssessment, reAssess, deleteAssessment, setCurrentId } = assessmentHook
   const [tab, setTab] = useState<'assessments' | 'progress'>('assessments')
@@ -51,7 +52,7 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
   const [photoInput, setPhotoInput] = useState<HTMLInputElement | null>(null)
 
   const patient = getPatient(patientId)
-  if (!patient) return null
+  if (!patient) { onPatientNotFound?.(); return null }
 
   const patientAssessments = assessments
     .filter(a => a.childId === patientId)
@@ -72,6 +73,9 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
     setView('questionnaire')
   }
 
+  // setCurrentId + setView in the same event: state is batched, so hook.current
+  // is still stale when setView runs. App.tsx's safeSetView uses pendingNav to
+  // defer navigation until hook.currentId updates on next render.
   const open = (id: string, v: View) => { setCurrentId(id); setView(v) }
 
   const handleExport = async () => {
@@ -224,7 +228,7 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
                             <button className="btn btn-subtle btn-sm" onClick={() => open(a.id, 'pei')}><BookOpen size={14} /> PEI</button>
                             <button className="btn btn-ghost btn-sm" onClick={() => { reAssess(a.id); setView('questionnaire') }}><RefreshCw size={14} /> Reavaliar</button>
                           </>}
-                          <button className="btn btn-sm" style={{ color: 'var(--neg)', borderColor: 'hsl(6 60% 88%)', background: 'var(--neg-bg)' }} onClick={() => deleteAssessment(a.id)}><Trash2 size={14} /> Excluir</button>
+                          <button className="btn btn-sm" style={{ color: 'var(--neg)', borderColor: 'hsl(6 60% 88%)', background: 'var(--neg-bg)' }} onClick={() => { if (window.confirm('Excluir esta avaliação? Esta ação não pode ser desfeita.')) deleteAssessment(a.id) }}><Trash2 size={14} /> Excluir</button>
                         </div>
                       </div>
                     </div>
