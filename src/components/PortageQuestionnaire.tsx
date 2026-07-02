@@ -1,295 +1,190 @@
-import { useState, useMemo, useEffect } from 'react'
-import { ChevronDown, ChevronRight, ArrowLeft, BarChart3, CheckCircle, XCircle, MinusCircle, Circle, Keyboard, Info } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { ArrowLeft, BarChart3, CheckCircle, XCircle, MinusCircle, Circle, Info } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
-import { AREAS, AREA_COLOR } from '../types'
+import { AREAS } from '../types'
 import type { ResponseType } from '../types'
 import type { View } from '../App'
+import type { useAuth } from '../hooks/useAuth'
 import { formatQuestion } from '../utils/formatQuestion'
 import { getEvaluationTip } from '../utils/getEvaluationTip'
+import { areaVars, AREA_NUM } from '../utils/areaDesign'
+import TopBar from './TopBar'
 
-interface Props { hook: AssessmentHook; setView: (v: View) => void }
+type AuthHook = ReturnType<typeof useAuth>
+interface Props { hook: AssessmentHook; setView: (v: View) => void; auth?: AuthHook; onBack?: () => void }
 
-function ResponseBtn({ value, current, onClick, shortcut }: {
-  value: ResponseType; current: ResponseType; onClick: (e: React.MouseEvent) => void; shortcut: string
-}) {
-  const cfg: Record<string, { label: string; icon: React.ReactNode; on: string }> = {
-    sim:      { label: 'Sim',      icon: <CheckCircle className="w-3.5 h-3.5" />,  on: 'bg-green-500 text-white border-green-500' },
-    nao:      { label: 'Não',      icon: <XCircle className="w-3.5 h-3.5" />,      on: 'bg-red-500 text-white border-red-500' },
-    as_vezes: { label: 'Às vezes', icon: <MinusCircle className="w-3.5 h-3.5" />,  on: 'bg-yellow-500 text-white border-yellow-500' },
-  }
-  const c = cfg[value as string]
-  const active = current === value
-  return (
-    <button type="button"
-      onClick={onClick}
-      className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border transition-all ${active ? c.on : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}`}
-    >
-      {active ? c.icon : <Circle className="w-3 h-3 text-gray-300" />}
-      {c.label}
-      <span className={`ml-0.5 text-[10px] px-1 rounded font-mono ${active ? 'bg-white/20' : 'bg-gray-100 text-gray-400'}`}>{shortcut}</span>
-    </button>
-  )
+const RESP = {
+  sim:      { label: 'Sim',      icon: CheckCircle,  color: 'var(--pos)',  bg: 'var(--pos-bg)' },
+  nao:      { label: 'Não',      icon: XCircle,      color: 'var(--neg)',  bg: 'var(--neg-bg)' },
+  as_vezes: { label: 'Às vezes', icon: MinusCircle,  color: 'var(--part)', bg: 'var(--part-bg)' },
 }
 
-// Mini botões para marcar tudo em um grupo
-function MarkGroupBtns({ onMark }: { onMark: (r: ResponseType) => void }) {
-  return (
-    <div className="flex items-center gap-1 ml-auto">
-      <span className="text-[10px] text-gray-400 mr-0.5">Marcar:</span>
-      {(['sim', 'as_vezes', 'nao'] as ResponseType[]).map(r => {
-        const cfg = {
-          sim:      { label: 'S', cls: 'bg-green-500 hover:bg-green-600' },
-          nao:      { label: 'N', cls: 'bg-red-500 hover:bg-red-600' },
-          as_vezes: { label: 'A', cls: 'bg-yellow-500 hover:bg-yellow-600' },
-        }[r!]!
-        return (
-          <button type="button"
-            key={r}
-            onClick={e => { e.stopPropagation(); onMark(r) }}
-            className={`text-white text-[10px] font-bold px-1.5 py-0.5 rounded transition ${cfg.cls}`}
-            title={r === 'sim' ? 'Marcar todos Sim' : r === 'nao' ? 'Marcar todos Não' : 'Marcar todos Às vezes'}
-          >{cfg.label}</button>
-        )
-      })}
-    </div>
-  )
-}
 
-export default function PortageQuestionnaire({ hook, setView }: Props) {
-  const { current, updateResponse, batchUpdateResponses, getProgress } = hook
-  const [expandedAreas, setExpandedAreas] = useState<Set<string>>(new Set([AREAS[0]]))
-  const [expandedAges, setExpandedAges] = useState<Set<string>>(new Set())
-  const [onlyUnanswered, setOnlyUnanswered] = useState(false)
-  const [focusedItemId, setFocusedItemId] = useState<string | null>(null)
-  const [showShortcuts, setShowShortcuts] = useState(false)
-  const [expandedTips, setExpandedTips] = useState<Set<string>>(new Set())
-  const toggleTip = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation()
-    setExpandedTips(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
+export default function PortageQuestionnaire({ hook, setView, auth, onBack }: Props) {
+  const { current, updateResponse: setResponse } = hook
+  const responses = current?.responses ?? {}
+  const [openAreas, setOpenAreas] = useState<Set<string>>(() => new Set([AREAS[0]]))
+  const [openBands, setOpenBands] = useState<Set<string>>(() => new Set())
+  const [tipFor, setTipFor] = useState<string | null>(null)
+
+  const answered = useMemo(() => Object.values(responses).filter(Boolean).length, [responses])
+  const progress = Math.round((answered / portageItems.length) * 100)
+
+  const toggle = (set: Set<string>, setSet: (s: Set<string>) => void, key: string) => {
+    const n = new Set(set); n.has(key) ? n.delete(key) : n.add(key); setSet(n)
   }
 
-  const grouped = useMemo(() => {
-    const r: Record<string, Record<string, typeof portageItems>> = {}
-    for (const item of portageItems) {
-      if (!r[item.area]) r[item.area] = {}
-      if (!r[item.area][item.age_range]) r[item.area][item.age_range] = []
-      r[item.area][item.age_range].push(item)
-    }
-    return r
-  }, [])
+  const setR = (id: string, v: ResponseType) => {
+    const current_val = responses[id]
+    setResponse(id, current_val === v ? null : v)
+  }
 
+  const markAll = (v: ResponseType) => {
+    portageItems.forEach(item => setResponse(item.id, v))
+  }
 
-  useEffect(() => {
-    if (!current) setView('home')
-  }, [current, setView])
   if (!current) return null
-  const { responses } = current
-  const progress = getProgress()
-
-  const toggleArea = (a: string) => setExpandedAreas(p => { const n = new Set(p); n.has(a) ? n.delete(a) : n.add(a); return n })
-  const toggleAge  = (k: string) => setExpandedAges(p => { const n = new Set(p); n.has(k) ? n.delete(k) : n.add(k); return n })
-
-  // Marcar todos os itens (batch, 1 única operação de estado)
-  const markAll = (resp: ResponseType) => {
-    batchUpdateResponses(portageItems.map(i => i.id), resp)
-  }
-
-  // Marcar todos os itens de uma faixa etária específica
-  const markGroup = (items: typeof portageItems, resp: ResponseType) => {
-    batchUpdateResponses(items.map(i => i.id), resp)
-  }
-
-  // Atalhos de teclado S/N/A + navegação com setas
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
-      if (!focusedItemId) return
-      const key = e.key.toLowerCase()
-      const resp = responses[focusedItemId] ?? null
-      if (key === 's') { e.preventDefault(); updateResponse(focusedItemId, resp === 'sim' ? null : 'sim') }
-      else if (key === 'n') { e.preventDefault(); updateResponse(focusedItemId, resp === 'nao' ? null : 'nao') }
-      else if (key === 'a') { e.preventDefault(); updateResponse(focusedItemId, resp === 'as_vezes' ? null : 'as_vezes') }
-      else if (key === 'arrowdown' || key === 'tab') {
-        e.preventDefault()
-        const allItems = onlyUnanswered ? portageItems.filter(i => !responses[i.id]) : portageItems
-        const idx = allItems.findIndex(i => i.id === focusedItemId)
-        const next = allItems[idx + 1]
-        if (next) {
-          setExpandedAreas(p => new Set([...p, next.area]))
-          setExpandedAges(p => new Set([...p, `${next.area}__${next.age_range}`]))
-          setFocusedItemId(next.id)
-          setTimeout(() => document.getElementById(`item-${next.id}`)?.scrollIntoView({ block: 'nearest' }), 50)
-        }
-      } else if (key === 'arrowup') {
-        e.preventDefault()
-        const allItems = onlyUnanswered ? portageItems.filter(i => !responses[i.id]) : portageItems
-        const idx = allItems.findIndex(i => i.id === focusedItemId)
-        const prev = allItems[idx - 1]
-        if (prev) {
-          setExpandedAreas(p => new Set([...p, prev.area]))
-          setExpandedAges(p => new Set([...p, `${prev.area}__${prev.age_range}`]))
-          setFocusedItemId(prev.id)
-          setTimeout(() => document.getElementById(`item-${prev.id}`)?.scrollIntoView({ block: 'nearest' }), 50)
-        }
-      }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [focusedItemId, responses, updateResponse, onlyUnanswered, setExpandedAreas, setExpandedAges])
 
   return (
-    <div className="max-w-3xl mx-auto p-4 py-6">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <button type="button" onClick={() => setView('home')} className="p-2 rounded-lg hover:bg-white/70 transition">
-          <ArrowLeft className="w-4 h-4" />
+    <div className="shell">
+      {auth && <TopBar auth={auth} onLogoClick={onBack} right={
+        <button className="btn btn-subtle btn-sm" onClick={() => setView('results')}>
+          <BarChart3 size={14} /> Resultados
         </button>
-        <div className="flex-1 min-w-0">
-          <p className="font-bold text-gray-900 truncate">{current.studentInfo.name}</p>
-          <p className="text-xs text-gray-400">{current.studentInfo.diagnosis && `${current.studentInfo.diagnosis} · `}{current.studentInfo.date}</p>
-        </div>
-        <button type="button" onClick={() => setShowShortcuts(s => !s)} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
-          <Keyboard className="w-3.5 h-3.5" /> Atalhos
-        </button>
-        <button type="button" onClick={() => setView('results')} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
-          <BarChart3 className="w-3.5 h-3.5" /> Resultados
-        </button>
-      </div>
+      } />}
 
-      {/* Painel de atalhos */}
-      {showShortcuts && (
-        <div className="bg-gray-800 text-white rounded-2xl p-4 mb-4 text-xs space-y-2">
-          <p className="font-semibold text-gray-300 mb-2">Atalhos de teclado — clique em uma questão primeiro para ativá-la</p>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex items-center gap-2"><kbd className="bg-green-500 px-2 py-0.5 rounded font-mono font-bold">S</kbd><span>Marcar Sim</span></div>
-            <div className="flex items-center gap-2"><kbd className="bg-red-500 px-2 py-0.5 rounded font-mono font-bold">N</kbd><span>Marcar Não</span></div>
-            <div className="flex items-center gap-2"><kbd className="bg-yellow-500 px-2 py-0.5 rounded font-mono font-bold">A</kbd><span>Marcar Às vezes</span></div>
-            <div className="flex items-center gap-2"><kbd className="bg-gray-600 px-2 py-0.5 rounded font-mono">↓ / Tab</kbd><span>Próxima questão</span></div>
-            <div className="flex items-center gap-2"><kbd className="bg-gray-600 px-2 py-0.5 rounded font-mono">↑</kbd><span>Questão anterior</span></div>
+      <div className="app-frame screen" style={{ padding: '20px 24px 64px', maxWidth: 920 }}>
+        <button className="btn btn-ghost btn-sm" style={{ marginBottom: 14 }} onClick={() => onBack ? onBack() : setView('dashboard')}>
+          <ArrowLeft size={14} /> {current.studentInfo.name}
+        </button>
+
+        {/* progress card */}
+        <div className="card card-pad" style={{ marginBottom: 16 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 9 }}>
+            <span style={{ fontWeight: 600, fontSize: 13.5 }}>Progresso da avaliação</span>
+            <span className="mono" style={{ fontWeight: 600, color: 'var(--primary-ink)' }}>{progress}%</span>
+          </div>
+          <div className="bar"><i style={{ width: progress + '%' }} /></div>
+          <div style={{ display: 'flex', gap: 18, marginTop: 12, fontSize: 12.5 }}>
+            {(['sim', 'as_vezes', 'nao'] as ResponseType[]).filter(Boolean).map(k => {
+              const r = RESP[k as keyof typeof RESP]
+              return (
+                <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--ink-2)' }}>
+                  <span style={{ width: 9, height: 9, borderRadius: 3, background: r.color }} />
+                  {r.label}: <b className="mono">{portageItems.filter(i => responses[i.id] === k).length}</b>
+                </span>
+              )
+            })}
           </div>
         </div>
-      )}
 
-      {/* Progresso */}
-      <div className="bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100">
-        <div className="flex justify-between mb-1.5">
-          <span className="text-sm font-medium text-gray-700">Progresso</span>
-          <span className="text-sm font-bold text-purple-600">{progress}%</span>
-        </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div className="h-full bg-purple-500 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
-        </div>
-        <div className="flex gap-4 mt-2 text-xs text-gray-400">
-          <span><span className="text-green-500 font-medium">Sim:</span> {portageItems.filter(i => responses[i.id] === 'sim').length}</span>
-          <span><span className="text-red-500 font-medium">Não:</span> {portageItems.filter(i => responses[i.id] === 'nao').length}</span>
-          <span><span className="text-yellow-500 font-medium">Às vezes:</span> {portageItems.filter(i => responses[i.id] === 'as_vezes').length}</span>
-        </div>
-      </div>
-
-      {/* Filtro + Marcar tudo global */}
-      <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <button type="button" onClick={() => setOnlyUnanswered(false)} className={`text-xs px-3 py-1.5 rounded-lg border transition ${!onlyUnanswered ? 'bg-purple-600 text-white border-purple-600' : 'bg-white border-gray-200 text-gray-500'}`}>Todos</button>
-        <button type="button" onClick={() => setOnlyUnanswered(true)} className={`text-xs px-3 py-1.5 rounded-lg border transition ${onlyUnanswered ? 'bg-purple-600 text-white border-purple-600' : 'bg-white border-gray-200 text-gray-500'}`}>Não respondidos</button>
-        <div className="flex-1" />
-        <span className="text-xs text-gray-400">Marcar tudo:</span>
-        <button type="button" onClick={() => markAll('sim')} className="flex items-center gap-1 text-xs bg-green-500 text-white px-3 py-1.5 rounded-lg hover:bg-green-600 transition font-medium">
-          <CheckCircle className="w-3.5 h-3.5" /> Sim
-        </button>
-        <button type="button" onClick={() => markAll('as_vezes')} className="flex items-center gap-1 text-xs bg-yellow-500 text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600 transition font-medium">
-          <MinusCircle className="w-3.5 h-3.5" /> Às vezes
-        </button>
-        <button type="button" onClick={() => markAll('nao')} className="flex items-center gap-1 text-xs bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition font-medium">
-          <XCircle className="w-3.5 h-3.5" /> Não
-        </button>
-      </div>
-
-      {/* Áreas */}
-      <div className="space-y-3">
-        {AREAS.map(area => {
-          const c = AREA_COLOR[area]
-          const areaItems = portageItems.filter(i => i.area === area)
-          const answered = areaItems.filter(i => responses[i.id]).length
-          const sim = areaItems.filter(i => responses[i.id] === 'sim').length
-          const nao = areaItems.filter(i => responses[i.id] === 'nao').length
-          const av  = areaItems.filter(i => responses[i.id] === 'as_vezes').length
-          const expanded = expandedAreas.has(area)
-          const ages = grouped[area] || {}
-
-          return (
-            <div key={area} className={`rounded-2xl border overflow-hidden shadow-sm ${c.bg}`}>
-              <button type="button" onClick={() => toggleArea(area)} className={`w-full flex items-center justify-between p-4 text-left ${c.header} text-white hover:opacity-90 transition`}>
-                <div>
-                  <p className="font-semibold text-sm">{area}</p>
-                  <p className="text-xs opacity-75 mt-0.5">{answered}/{areaItems.length} · ✓{sim} ✗{nao} ~{av}</p>
-                </div>
-                {expanded ? <ChevronDown className="w-5 h-5 shrink-0" /> : <ChevronRight className="w-5 h-5 shrink-0" />}
+        {/* mark-all toolbar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 12, color: 'var(--ink-3)' }}>Marcar todos:</span>
+          {(['sim', 'as_vezes', 'nao'] as ResponseType[]).filter(Boolean).map(k => {
+            const r = RESP[k as keyof typeof RESP]
+            return (
+              <button key={k} className="btn btn-sm" onClick={() => markAll(k)} style={{ background: r.bg, color: r.color, border: '1px solid transparent' }}>
+                <r.icon size={14} /> {r.label}
               </button>
+            )
+          })}
+        </div>
 
-              {expanded && Object.entries(ages).map(([ageRange, items]) => {
-                const key = `${area}__${ageRange}`
-                const isAgeOpen = expandedAges.has(key)
-                const filtered = onlyUnanswered ? items.filter(i => !responses[i.id]) : items
-                if (filtered.length === 0) return null
-                const ageAnswered = items.filter(i => responses[i.id]).length
+        {/* areas */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {AREAS.map(area => {
+            const av = areaVars(area)
+            const aItems = portageItems.filter(i => i.area === area)
+            const ans = aItems.filter(i => responses[i.id]).length
+            const isOpen = openAreas.has(area)
+            const bands = [...new Set(aItems.map(i => i.age_range))].sort()
+            return (
+              <div key={area} className="card" style={{ ...(av as React.CSSProperties), overflow: 'hidden', borderColor: 'var(--a-line)' }}>
+                <button
+                  onClick={() => toggle(openAreas, setOpenAreas, area)}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '13px 16px', background: 'var(--a-bg)', border: 'none', textAlign: 'left', cursor: 'pointer' }}
+                >
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ width: 26, height: 26, borderRadius: 7, background: 'var(--a-solid)', color: '#fff', display: 'grid', placeItems: 'center', fontSize: 11, fontWeight: 700 }} className="mono">
+                      {AREA_NUM[area] ?? '?'}
+                    </span>
+                    <span>
+                      <span style={{ fontWeight: 600, fontSize: 14, color: 'var(--a-text)' }}>{area}</span>
+                      <span className="mono" style={{ display: 'block', fontSize: 11, color: 'var(--ink-3)' }}>{ans}/{aItems.length} respondidos</span>
+                    </span>
+                  </span>
+                  <span style={{ color: 'var(--a-strong)', fontSize: 18 }}>{isOpen ? '▾' : '▸'}</span>
+                </button>
 
-                return (
-                  <div key={ageRange}>
-                    {/* Cabeçalho da faixa etária com botões de marcar tudo do grupo */}
-                    <div className="flex items-center gap-2 px-4 py-2.5 bg-white/70 hover:bg-white/90 border-t border-white/40">
-                      <button type="button" onClick={() => toggleAge(key)} className="flex items-center gap-2 flex-1 text-left">
-                        <span className="text-xs font-semibold text-gray-700">
-                          {ageRange} <span className="text-gray-400 font-normal">({ageAnswered}/{items.length})</span>
-                        </span>
-                        {isAgeOpen ? <ChevronDown className="w-4 h-4 text-gray-400" /> : <ChevronRight className="w-4 h-4 text-gray-400" />}
+                {isOpen && bands.map(band => {
+                  const bItems = aItems.filter(i => i.age_range === band)
+                  const bKey = area + '__' + band
+                  const bOpen = openBands.has(bKey)
+                  const bAns = bItems.filter(i => responses[i.id]).length
+                  // bandIdx unused
+                  return (
+                    <div key={band}>
+                      <button
+                        onClick={() => toggle(openBands, setOpenBands, bKey)}
+                        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', background: 'var(--surface-2)', border: 'none', borderTop: '1px solid var(--line)', textAlign: 'left', cursor: 'pointer' }}
+                      >
+                        <span style={{ fontSize: 12, color: 'var(--ink-4)' }}>{bOpen ? '▾' : '▸'}</span>
+                        <span style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--ink-2)' }}>{band}</span>
+                        <span className="mono" style={{ fontSize: 11, color: 'var(--ink-4)' }}>({bAns}/{bItems.length})</span>
                       </button>
-                      <MarkGroupBtns onMark={r => markGroup(items, r)} />
-                    </div>
-
-                    {isAgeOpen && filtered.map((item, idx) => {
-                      const isFocused = focusedItemId === item.id
-                      return (
-                        <div
-                          key={item.id}
-                          id={`item-${item.id}`}
-                          onClick={() => setFocusedItemId(item.id)}
-                          className={`px-4 py-3 border-t border-gray-50 cursor-pointer transition-colors ${isFocused ? 'ring-2 ring-inset ring-purple-400 bg-purple-50' : idx % 2 === 0 ? 'bg-white hover:bg-gray-50/50' : 'bg-gray-50/60 hover:bg-gray-50'}`}
-                        >
-                          <p className="text-sm text-gray-800 mb-2 leading-relaxed font-medium">{formatQuestion(item.text)}</p>
-                          <div className="flex gap-2 flex-wrap mb-2">
-                            <ResponseBtn value="sim" current={responses[item.id] ?? null} shortcut="S"
-                              onClick={e => { e.stopPropagation(); updateResponse(item.id, responses[item.id] === 'sim' ? null : 'sim') }} />
-                            <ResponseBtn value="nao" current={responses[item.id] ?? null} shortcut="N"
-                              onClick={e => { e.stopPropagation(); updateResponse(item.id, responses[item.id] === 'nao' ? null : 'nao') }} />
-                            <ResponseBtn value="as_vezes" current={responses[item.id] ?? null} shortcut="A"
-                              onClick={e => { e.stopPropagation(); updateResponse(item.id, responses[item.id] === 'as_vezes' ? null : 'as_vezes') }} />
+                      {bOpen && bItems.map((item, idx) => (
+                        <div key={item.id} style={{ padding: '12px 16px', borderTop: '1px solid var(--line)', background: idx % 2 ? 'var(--surface-2)' : 'var(--surface)' }}>
+                          <p style={{ fontSize: 13.5, margin: '0 0 9px', lineHeight: 1.45 }}>{formatQuestion(item.text)}</p>
+                          <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', alignItems: 'center' }}>
+                            {(['sim', 'as_vezes', 'nao'] as ResponseType[]).filter(Boolean).map(k => {
+                              const r = RESP[k as keyof typeof RESP]
+                              const on = responses[item.id] === k
+                              const Icon = r.icon
+                              return (
+                                <button
+                                  key={k}
+                                  onClick={() => setR(item.id, k)}
+                                  style={{
+                                    display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500,
+                                    padding: '5px 11px', borderRadius: 99, cursor: 'pointer',
+                                    border: '1px solid ' + (on ? r.color : 'var(--line-2)'),
+                                    background: on ? r.color : 'var(--surface)', color: on ? '#fff' : 'var(--ink-3)',
+                                    transition: 'all .12s',
+                                  }}
+                                >
+                                  {on ? <Icon size={13} /> : <Circle size={13} />}
+                                  {r.label}
+                                </button>
+                              )
+                            })}
+                            <button
+                              onClick={() => setTipFor(tipFor === item.id ? null : item.id)}
+                              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11.5, color: 'var(--primary-ink)', background: 'none', border: 'none', cursor: 'pointer' }}
+                            >
+                              <Info size={13} /> Como avaliar
+                            </button>
                           </div>
-                          <button type="button"
-                            onClick={e => toggleTip(item.id, e)}
-                            className="flex items-center gap-1 text-[11px] text-blue-500 hover:text-blue-700 transition mt-0.5"
-                          >
-                            <Info className="w-3 h-3" />
-                            {expandedTips.has(item.id) ? 'Ocultar orientação' : 'Como avaliar este comportamento'}
-                          </button>
-                          {expandedTips.has(item.id) && (
-                            <div className="mt-2 p-2.5 bg-blue-50 border border-blue-100 rounded-xl text-[11px] text-blue-800 leading-relaxed">
-                              {getEvaluationTip(item)}
+                          {tipFor === item.id && (
+                            <div style={{ marginTop: 9, padding: '10px 12px', background: 'var(--primary-bg)', border: '1px solid var(--primary-line)', borderRadius: 'var(--r-sm)', fontSize: 12, color: 'var(--primary-ink)', lineHeight: 1.5 }}>
+                              {getEvaluationTip(item as any)}
                             </div>
                           )}
                         </div>
-                      )
-                    })}
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })}
-      </div>
+                      ))}
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })}
+        </div>
 
-      <button type="button" onClick={() => setView('results')} className="w-full mt-6 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition shadow">
-        Ver Resultados
-      </button>
+        <button className="btn btn-primary" style={{ width: '100%', padding: 13, marginTop: 20 }} onClick={() => setView('results')}>
+          Ver resultados <BarChart3 size={15} />
+        </button>
+      </div>
     </div>
   )
 }

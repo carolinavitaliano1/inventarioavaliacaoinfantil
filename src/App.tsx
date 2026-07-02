@@ -63,8 +63,8 @@ export default function App() {
 
   if (auth.loading || subHook.loadingSub) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50">
-        <Loader2 className="w-8 h-8 text-purple-600 animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
+        <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--primary)' }} />
       </div>
     )
   }
@@ -87,7 +87,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
+      <div>
         {view === 'dashboard' && (
           <Dashboard
             hook={hook}
@@ -104,12 +104,13 @@ export default function App() {
             assessmentHook={hook}
             setView={safeSetView}
             onBack={() => setView('dashboard')}
+            auth={auth}
           />
         )}
         {view === 'home' && <PortageHome hook={hook} setView={safeSetView} auth={auth} />}
-        {view === 'questionnaire' && <PortageQuestionnaire hook={hook} setView={safeSetView} />}
-        {view === 'results' && <PortageResults hook={hook} setView={safeSetView} />}
-        {view === 'pei' && <PortagePEI hook={hook} setView={safeSetView} />}
+        {view === 'questionnaire' && <PortageQuestionnaire hook={hook} setView={safeSetView} auth={auth} onBack={() => setView('patient')} />}
+        {view === 'results' && <PortageResults hook={hook} setView={safeSetView} auth={auth} onBack={() => setView('patient')} />}
+        {view === 'pei' && <PortagePEI hook={hook} setView={safeSetView} auth={auth} onBack={() => setView('patient')} />}
       </div>
     </ErrorBoundary>
   )

@@ -8,7 +8,7 @@ import { formatQuestion } from './formatQuestion'
 // ── paleta clínica (mesma do app) ──
 const HEAD_FILL = '2F64A0'   // azul clínico 600 (fundo de cabeçalho)
 const SUB_FILL  = 'DBE7F5'   // azul clínico 100 (linhas de total)
-const LINE = 'C5CBD4'        // cinza frio para bordas
+// const LINE = 'C5CBD4' -- used in border styling
 
 function cell(text: string, bold = false, shade?: string, color?: string): TableCell {
   return new TableCell({

@@ -1,379 +1,235 @@
 import { useState } from 'react'
-import { ArrowLeft, BarChart3, Plus, Trash2, Save, FileDown, Loader2 } from 'lucide-react'
+import { ArrowLeft, BarChart3, Plus, Trash2, FileDown, Loader2, BookOpen, Layers, Flag } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { View } from '../App'
+import type { useAuth } from '../hooks/useAuth'
 import { formatQuestion } from '../utils/formatQuestion'
-import { Document, Packer, Paragraph, Table, TableRow, TableCell, TextRun, HeadingLevel, WidthType, AlignmentType } from 'docx'
-import { saveAs } from 'file-saver'
+import { areaVars } from '../utils/areaDesign'
+import TopBar from './TopBar'
+import { exportWord } from '../utils/exportWord'
+import { AREAS } from '../types'
+import type { PortageItem, ResponseType } from '../types'
+import { calcAreaDevResult } from '../utils/ageCalc'
 
-interface Props { hook: AssessmentHook; setView: (v: View) => void }
+type AuthHook = ReturnType<typeof useAuth>
+interface Props { hook: AssessmentHook; setView: (v: View) => void; auth?: AuthHook; onBack?: () => void }
 
 interface PEIItem {
   id: string; skill: string; area: string; ageRange: string
   prazo: 'curto' | 'medio' | 'longo'
-  startDate: string; endDate: string; estrategias: string
   status: 'pendente' | 'em_andamento' | 'concluido'
+  estrategias: string
 }
 
-const PRAZO = { curto: 'Curto Prazo (3 meses)', medio: 'Médio Prazo (6 meses)', longo: 'Longo Prazo (9–12 meses)' }
+const PRAZO = { curto: 'Curto prazo · 3 meses', medio: 'Médio prazo · 6 meses', longo: 'Longo prazo · 9–12 meses' }
+const PRAZO_HUE = { curto: 24, medio: 214, longo: 280 }
 const STATUS = { pendente: 'Pendente', em_andamento: 'Em andamento', concluido: 'Concluído' }
-const STATUS_COLOR = {
-  pendente: 'bg-gray-100 text-gray-600',
-  em_andamento: 'bg-blue-100 text-blue-700',
-  concluido: 'bg-green-100 text-green-700',
-}
-const PRAZO_COLOR = {
-  curto: 'bg-orange-100 text-orange-700',
-  medio: 'bg-blue-100 text-blue-700',
-  longo: 'bg-purple-100 text-purple-700',
-}
-const PRAZO_BORDER = {
-  curto: 'border-orange-200',
-  medio: 'border-blue-200',
-  longo: 'border-purple-200',
+const STATUS_STYLE: Record<string, { c: string; b: string }> = {
+  pendente: { c: 'var(--ink-2)', b: 'var(--surface-2)' },
+  em_andamento: { c: 'var(--primary-ink)', b: 'var(--primary-bg)' },
+  concluido: { c: 'var(--pos)', b: 'var(--pos-bg)' },
 }
 
-function loadPEI(id: string): PEIItem[] {
-  try { return JSON.parse(localStorage.getItem(`pei_${id}`) || '[]') } catch { return [] }
-}
-function savePEI(id: string, items: PEIItem[]) {
-  localStorage.setItem(`pei_${id}`, JSON.stringify(items))
-}
-
-function wCell(text: string, bold = false, shade?: string): TableCell {
-  return new TableCell({
-    shading: shade ? { fill: shade, type: 'clear' as any } : undefined,
-    children: [new Paragraph({ children: [new TextRun({ text: String(text || '—'), bold, size: 18 })] })],
-  })
-}
-
-async function exportPEIWord(current: { studentInfo: { name: string; age: string; diagnosis?: string; birthDate: string; date: string }; id: string }, pei: PEIItem[]) {
-  const { studentInfo } = current
-  const sections: any[] = []
-
-  sections.push(new Paragraph({
-    text: 'PLANO DE ENSINO INDIVIDUALIZADO (PEI)',
-    heading: HeadingLevel.HEADING_1,
-    alignment: AlignmentType.CENTER,
-  }))
-  sections.push(new Paragraph({ text: 'Inventário de Avaliação Infantil', alignment: AlignmentType.CENTER }))
-  sections.push(new Paragraph({ text: '' }))
-
-  sections.push(new Table({
-    width: { size: 100, type: WidthType.PERCENTAGE },
-    rows: [
-      new TableRow({ children: [wCell('Aluno', true), wCell(studentInfo.name), wCell('Idade', true), wCell(studentInfo.age)] }),
-      new TableRow({ children: [wCell('Diagnóstico', true), wCell(studentInfo.diagnosis || '—'), wCell('Data da Avaliação', true), wCell(studentInfo.date)] }),
-    ],
-  }))
-  sections.push(new Paragraph({ text: '' }))
-
-  const grouped: Record<PEIItem['prazo'], PEIItem[]> = { curto: [], medio: [], longo: [] }
-  for (const p of pei) grouped[p.prazo].push(p)
-
-  for (const prazo of ['curto', 'medio', 'longo'] as const) {
-    const items = grouped[prazo]
-    if (items.length === 0) continue
-    sections.push(new Paragraph({ text: PRAZO[prazo], heading: HeadingLevel.HEADING_2 }))
-    const rows: TableRow[] = [
-      new TableRow({
-        children: [
-          wCell('Habilidade', true, 'C9DCF1'),
-          wCell('Área', true, 'C9DCF1'),
-          wCell('Status', true, 'C9DCF1'),
-          wCell('Início', true, 'C9DCF1'),
-          wCell('Fim', true, 'C9DCF1'),
-          wCell('Estratégias', true, 'C9DCF1'),
-        ],
-      }),
-    ]
-    for (const item of items) {
-      rows.push(new TableRow({
-        children: [
-          wCell(formatQuestion(item.skill)),
-          wCell(item.area),
-          wCell(STATUS[item.status]),
-          wCell(item.startDate ? new Date(item.startDate + 'T00:00:00').toLocaleDateString('pt-BR') : '—'),
-          wCell(item.endDate ? new Date(item.endDate + 'T00:00:00').toLocaleDateString('pt-BR') : '—'),
-          wCell(item.estrategias || '—'),
-        ],
-      }))
-    }
-    sections.push(new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows }))
-    sections.push(new Paragraph({ text: '' }))
+function defaultStrategy(area: string) {
+  const s: Record<string, string> = {
+    'I – ÁREA SOCIABILIZAÇÃO': 'Utilize situações naturais de brincadeira e rotina para estimular as habilidades sociais. Modele o comportamento esperado e ofereça feedback positivo imediato.',
+    'II - ÁREA LINGUAGEM': 'Crie oportunidades comunicativas ao longo do dia. Use expansão de fala e modele estruturas mais complexas de forma natural e contextualizada.',
+    'III – ÁREA CUIDADOS PRÓPRIOS': 'Divida a tarefa em etapas menores com apoio visual. Reduza gradualmente a ajuda física à medida que a criança ganha independência.',
+    'IV- ÁREA COGNITIVA': 'Utilize materiais concretos e manipulativos. Apresente o conceito em contextos variados e reforce a generalização da habilidade.',
+    'V. ÁREA PSICOMOTORA': 'Pratique em ambientes seguros e motivadores. Aumente gradualmente a complexidade do movimento conforme a criança demonstra domínio.',
   }
-
-  const doc = new Document({ sections: [{ children: sections }] })
-  const blob = await Packer.toBlob(doc)
-  saveAs(blob, `PEI_${studentInfo.name}_${studentInfo.date}.docx`)
+  return s[area] ?? 'Observe a criança em contexto natural. Ofereça apoio gradativo e reforce progressos.'
 }
 
-export default function PortagePEI({ hook, setView }: Props) {
-  const { current, getItemsByResponse } = hook
-  const [pei, setPei] = useState<PEIItem[]>(() => current ? loadPEI(current.id) : [])
-  const [tab, setTab] = useState<'select' | 'plan'>('select')
-  const [editId, setEditId] = useState<string | null>(null)
-  const [editForm, setEditForm] = useState<Partial<PEIItem>>({})
-  const [exporting, setExporting] = useState(false)
+export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
+  const { current } = hook
+  const [tab, setTab] = useState<'plano' | 'selecionar'>('plano')
+  const [exportingWord, setExportingWord] = useState(false)
+
+  const naoItems = portageItems.filter(i => current?.responses[i.id] === 'nao')
+  const avItems = portageItems.filter(i => current?.responses[i.id] === 'as_vezes')
+
+  const [plan, setPlan] = useState<PEIItem[]>(() => {
+    const pick = (arr: PortageItem[], prazo: PEIItem['prazo'], n: number): PEIItem[] =>
+      arr.slice(0, n).map((it, i) => ({
+        id: it.id, skill: it.text, area: it.area, ageRange: it.age_range, prazo,
+        status: i === 0 ? 'em_andamento' : 'pendente' as PEIItem['status'],
+        estrategias: defaultStrategy(it.area),
+      }))
+    return [...pick(naoItems, 'curto', 3), ...pick(avItems, 'medio', 2)]
+  })
 
   if (!current) return null
 
-  const naoItems = getItemsByResponse('nao')
-  const avItems = getItemsByResponse('as_vezes')
-  const allPriority = [...naoItems, ...avItems]
-
-  const inPEI = (text: string) => pei.some(p => p.skill === text)
-
-  const add = (item: typeof portageItems[number]) => {
-    if (inPEI(item.text)) return
-    const newItem: PEIItem = {
-      id: `pei_${Date.now()}`, skill: item.text, area: item.area, ageRange: item.age_range,
-      prazo: naoItems.includes(item) ? 'curto' : 'medio',
-      startDate: '', endDate: '', estrategias: '', status: 'pendente',
-    }
-    const next = [...pei, newItem]; setPei(next); savePEI(current.id, next)
+  const inPlan = (id: string) => plan.some(p => p.id === id)
+  const add = (it: PortageItem, prazo: PEIItem['prazo']) => {
+    if (inPlan(it.id)) return
+    setPlan(p => [...p, { id: it.id, skill: it.text, area: it.area, ageRange: it.age_range, prazo, status: 'pendente', estrategias: defaultStrategy(it.area) }])
   }
+  const remove = (id: string) => setPlan(p => p.filter(x => x.id !== id))
+  const setStatus = (id: string, status: PEIItem['status']) => setPlan(p => p.map(x => x.id === id ? { ...x, status } : x))
 
-  const remove = (id: string) => {
-    const next = pei.filter(p => p.id !== id); setPei(next); savePEI(current.id, next)
-  }
+  const grouped: Record<string, PEIItem[]> = { curto: [], medio: [], longo: [] }
+  plan.forEach(p => grouped[p.prazo].push(p))
+  const done = plan.filter(p => p.status === 'concluido').length
 
-  const saveEdit = () => {
-    const next = pei.map(p => p.id === editId ? { ...p, ...editForm } : p)
-    setPei(next); savePEI(current.id, next); setEditId(null); setEditForm({})
-  }
-
-  const grouped: Record<PEIItem['prazo'], PEIItem[]> = { curto: [], medio: [], longo: [] }
-  for (const p of pei) grouped[p.prazo].push(p)
-
-  const handleExport = async () => {
-    setExporting(true)
-    try { await exportPEIWord(current, pei) } finally { setExporting(false) }
+  const handleExportWord = async () => {
+    setExportingWord(true)
+    const results = AREAS.map(area => {
+      const items = portageItems.filter(i => i.area === area)
+      return calcAreaDevResult(area, items as PortageItem[], current.responses as Record<string, ResponseType>)
+    })
+    const media = results.reduce((s, r) => s + r.idadeDesenvAnos, 0) / results.length
+    try { await exportWord(current, results, media) } finally { setExportingWord(false) }
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 py-6">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <button type="button" onClick={() => setView('home')} className="p-2 rounded-lg hover:bg-white/70 transition">
-          <ArrowLeft className="w-4 h-4" />
-        </button>
-        <div className="flex-1 min-w-0">
-          <p className="font-bold text-gray-900">Plano de Ensino Individualizado</p>
-          <p className="text-xs text-gray-400">{current.studentInfo.name}{current.studentInfo.age ? ` · ${current.studentInfo.age}` : ''}</p>
-        </div>
-        <button type="button" onClick={() => setView('results')} className="flex items-center gap-1 text-xs border border-gray-200 bg-white rounded-lg px-3 py-1.5 hover:bg-gray-50 transition">
-          <BarChart3 className="w-3.5 h-3.5" /> Resultados
-        </button>
-        <button
-          type="button"
-          onClick={handleExport}
-          disabled={exporting || pei.length === 0}
-          className="flex items-center gap-1.5 text-xs bg-purple-600 text-white rounded-lg px-3 py-1.5 hover:bg-purple-700 transition disabled:opacity-50 font-medium"
-        >
-          {exporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileDown className="w-3.5 h-3.5" />}
-          Exportar Word
-        </button>
-      </div>
-
-      {/* Info aluno */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-5 grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div><p className="text-[10px] text-gray-400 uppercase tracking-wide">Aluno</p><p className="text-sm font-semibold text-gray-800 truncate">{current.studentInfo.name}</p></div>
-        <div><p className="text-[10px] text-gray-400 uppercase tracking-wide">Idade</p><p className="text-sm font-semibold text-gray-800">{current.studentInfo.age || '—'}</p></div>
-        <div><p className="text-[10px] text-gray-400 uppercase tracking-wide">Diagnóstico</p><p className="text-sm font-semibold text-gray-800 truncate">{current.studentInfo.diagnosis || '—'}</p></div>
-        <div><p className="text-[10px] text-gray-400 uppercase tracking-wide">Avaliação</p><p className="text-sm font-semibold text-gray-800">{current.studentInfo.date}</p></div>
-      </div>
-
-      {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl mb-5">
-        {[
-          { k: 'select', label: `Selecionar Habilidades`, count: allPriority.length },
-          { k: 'plan', label: `Plano PEI`, count: pei.length },
-        ].map(t => (
-          <button key={t.k} type="button" onClick={() => setTab(t.k as typeof tab)}
-            className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition ${tab === t.k ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
-            {t.label}
-            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${tab === t.k ? 'bg-purple-100 text-purple-700' : 'bg-gray-200 text-gray-500'}`}>{t.count}</span>
+    <div className="shell">
+      {auth && <TopBar auth={auth} onLogoClick={onBack} right={
+        <>
+          <button className="btn btn-ghost btn-sm" onClick={() => setView('results')}><BarChart3 size={14} /> Resultados</button>
+          <button className="btn btn-primary btn-sm" onClick={handleExportWord} disabled={exportingWord}>
+            {exportingWord ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Exportar Word
           </button>
-        ))}
+        </>
+      } />}
+
+      <div className="app-frame screen" style={{ padding: '20px 24px 64px' }}>
+        <button className="btn btn-ghost btn-sm" style={{ marginBottom: 14 }} onClick={() => onBack ? onBack() : setView('dashboard')}>
+          <ArrowLeft size={14} /> {current.studentInfo.name}
+        </button>
+
+        {/* header */}
+        <div className="card card-pad" style={{ marginBottom: 18, display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
+          <div style={{ width: 42, height: 42, borderRadius: 10, background: 'var(--primary-bg)', color: 'var(--primary-ink)', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
+            <BookOpen size={21} />
+          </div>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <h1 style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-0.02em', margin: 0 }}>Plano de Ensino Individualizado</h1>
+            <p style={{ fontSize: 12.5, color: 'var(--ink-3)', margin: '2px 0 0' }}>
+              {current.studentInfo.name} · {current.studentInfo.age} · {current.studentInfo.diagnosis || '—'}
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 22 }}>
+            {[['Habilidades', plan.length, undefined], ['Concluídas', done, 'var(--pos)'], ['Progresso', plan.length ? Math.round(done / plan.length * 100) + '%' : '—', 'var(--primary-ink)']].map(([l, v, accent]) => (
+              <div key={l as string}>
+                <div className="micro" style={{ marginBottom: 4 }}>{l}</div>
+                <div className="mono" style={{ fontSize: 20, fontWeight: 600, color: (accent as string) || 'var(--ink)', lineHeight: 1.1 }}>{String(v)}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="seg" style={{ marginBottom: 20 }}>
+          <button data-on={tab === 'plano'} onClick={() => setTab('plano')}>
+            <Layers size={14} /> Plano <span className="chip" style={{ padding: '1px 7px', marginLeft: 2 }}>{plan.length}</span>
+          </button>
+          <button data-on={tab === 'selecionar'} onClick={() => setTab('selecionar')}>
+            <Flag size={14} /> Selecionar habilidades
+          </button>
+        </div>
+
+        {/* plano tab */}
+        {tab === 'plano' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            {plan.length === 0 && (
+              <div className="card" style={{ padding: 44, textAlign: 'center', color: 'var(--ink-3)' }}>
+                <p style={{ fontSize: 13.5, margin: '0 0 10px' }}>Nenhuma habilidade no plano ainda.</p>
+                <button className="btn btn-subtle btn-sm" onClick={() => setTab('selecionar')}>Selecionar habilidades →</button>
+              </div>
+            )}
+            {(['curto', 'medio', 'longo'] as const).map(prazo => {
+              const items = grouped[prazo]; if (!items.length) return null
+              const h = PRAZO_HUE[prazo]
+              return (
+                <div key={prazo}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 12, padding: '5px 12px', borderRadius: 99, fontSize: 12, fontWeight: 600, color: `hsl(${h} 48% 38%)`, background: `hsl(${h} 55% 96%)`, border: `1px solid hsl(${h} 45% 88%)` }}>
+                    <span style={{ width: 7, height: 7, borderRadius: 99, background: `hsl(${h} 46% 47%)` }} />
+                    {PRAZO[prazo]}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {items.map(item => (
+                      <div key={item.id} className="card card-pad" style={areaVars(item.area) as React.CSSProperties}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 14 }}>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <p style={{ fontSize: 14, fontWeight: 500, margin: '0 0 5px', lineHeight: 1.45 }}>{formatQuestion(item.skill)}</p>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                              <span className="tag" style={{ background: 'var(--a-bg)', color: 'var(--a-text)' }}>{item.area}</span>
+                              <span className="mono" style={{ fontSize: 11, color: 'var(--ink-4)' }}>{item.ageRange}</span>
+                            </div>
+                          </div>
+                          <button onClick={() => remove(item.id)} style={{ background: 'none', border: 'none', color: 'var(--ink-4)', alignSelf: 'flex-start', cursor: 'pointer' }}><Trash2 size={15} /></button>
+                        </div>
+                        <div style={{ marginTop: 12, padding: '10px 12px', background: 'var(--surface-2)', border: '1px solid var(--line)', borderRadius: 'var(--r-sm)' }}>
+                          <div className="micro" style={{ marginBottom: 4 }}>Estratégias de intervenção</div>
+                          <p style={{ fontSize: 12.5, color: 'var(--ink-2)', margin: 0, lineHeight: 1.5 }}>{item.estrategias}</p>
+                        </div>
+                        <div style={{ display: 'flex', gap: 6, marginTop: 11 }}>
+                          {(['pendente', 'em_andamento', 'concluido'] as const).map(s => {
+                            const on = item.status === s; const st = STATUS_STYLE[s]
+                            return (
+                              <button key={s} onClick={() => setStatus(item.id, s)} style={{
+                                fontSize: 11.5, fontWeight: 600, padding: '4px 11px', borderRadius: 99, cursor: 'pointer',
+                                border: '1px solid ' + (on ? st.c : 'var(--line-2)'),
+                                background: on ? st.b : 'var(--surface)', color: on ? st.c : 'var(--ink-4)',
+                              }}>{STATUS[s]}</button>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
+            {plan.length > 0 && (
+              <button className="btn btn-primary" style={{ padding: 13 }} onClick={handleExportWord} disabled={exportingWord}>
+                {exportingWord ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />} Exportar PEI em Word
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* selecionar tab */}
+        {tab === 'selecionar' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+            {[
+              { title: 'Alta prioridade — não adquiridas', items: naoItems, color: 'var(--neg)', prazo: 'curto' as const },
+              { title: 'Em desenvolvimento — às vezes', items: avItems, color: 'var(--part)', prazo: 'medio' as const },
+            ].map(({ title, items, color, prazo }) => {
+              if (!items.length) return null
+              return (
+                <div key={title}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 11 }}>
+                    <span style={{ width: 9, height: 9, borderRadius: 3, background: color }} />
+                    <span className="micro" style={{ color }}>{title} · {items.length}</span>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {items.map(it => {
+                      const added = inPlan(it.id)
+                      return (
+                        <div key={it.id} className="card" style={{ ...(areaVars(it.area) as React.CSSProperties), padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12, borderColor: added ? 'var(--a-line)' : 'var(--line)' }}>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <p style={{ fontSize: 13, margin: '0 0 4px', lineHeight: 1.45 }}>{formatQuestion(it.text)}</p>
+                            <span className="chip" style={{ fontSize: 11 }}>{it.area} · {it.age_range}</span>
+                          </div>
+                          <button
+                            className={added ? 'btn btn-ghost btn-sm' : 'btn btn-subtle btn-sm'}
+                            onClick={() => added ? remove(it.id) : add(it, prazo)}
+                          >
+                            {added ? <><Trash2 size={13} /> Remover</> : <><Plus size={13} /> Adicionar</>}
+                          </button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
-
-      {/* Select tab */}
-      {tab === 'select' && (
-        <div className="space-y-2">
-          {allPriority.length === 0 && (
-            <div className="text-center py-16 text-gray-300">
-              <p className="text-sm">Responda o questionário primeiro para ver as habilidades prioritárias.</p>
-            </div>
-          )}
-          {naoItems.length > 0 && (
-            <div className="mb-2">
-              <p className="text-xs font-semibold text-red-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-red-400 inline-block" /> Alta Prioridade — Não adquiridas
-              </p>
-              <div className="space-y-2">
-                {naoItems.map(item => {
-                  const added = inPEI(item.text)
-                  return (
-                    <div key={item.id} className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-start gap-3">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-800 leading-relaxed">{formatQuestion(item.text)}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">{item.area} · {item.age_range}</p>
-                      </div>
-                      <button type="button"
-                        onClick={() => added ? remove(pei.find(p => p.skill === item.text)!.id) : add(item)}
-                        className={`shrink-0 text-xs px-3 py-1.5 rounded-lg font-medium transition ${added ? 'bg-gray-100 text-gray-400 border border-gray-200' : 'bg-red-500 text-white hover:bg-red-600'}`}
-                      >
-                        {added ? '✓ Adicionado' : <span className="flex items-center gap-1"><Plus className="w-3 h-3" />Adicionar</span>}
-                      </button>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          )}
-          {avItems.length > 0 && (
-            <div>
-              <p className="text-xs font-semibold text-yellow-600 uppercase tracking-wide mb-2 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" /> Em Desenvolvimento — Às vezes
-              </p>
-              <div className="space-y-2">
-                {avItems.map(item => {
-                  const added = inPEI(item.text)
-                  return (
-                    <div key={item.id} className="bg-yellow-50 border border-yellow-100 rounded-xl p-3 flex items-start gap-3">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-800 leading-relaxed">{formatQuestion(item.text)}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">{item.area} · {item.age_range}</p>
-                      </div>
-                      <button type="button"
-                        onClick={() => added ? remove(pei.find(p => p.skill === item.text)!.id) : add(item)}
-                        className={`shrink-0 text-xs px-3 py-1.5 rounded-lg font-medium transition ${added ? 'bg-gray-100 text-gray-400 border border-gray-200' : 'bg-yellow-500 text-white hover:bg-yellow-600'}`}
-                      >
-                        {added ? '✓ Adicionado' : <span className="flex items-center gap-1"><Plus className="w-3 h-3" />Adicionar</span>}
-                      </button>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Plan tab */}
-      {tab === 'plan' && (
-        <div className="space-y-6">
-          {pei.length === 0 && (
-            <div className="text-center py-16 text-gray-300">
-              <p className="text-sm">Nenhuma habilidade no PEI ainda.</p>
-              <button type="button" onClick={() => setTab('select')} className="mt-3 text-xs text-purple-500 hover:text-purple-700">Selecionar habilidades →</button>
-            </div>
-          )}
-          {(['curto', 'medio', 'longo'] as const).map(prazo => {
-            const items = grouped[prazo]
-            if (items.length === 0) return null
-            return (
-              <div key={prazo}>
-                <div className={`inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full text-xs font-semibold border ${PRAZO_COLOR[prazo]} ${PRAZO_BORDER[prazo]}`}>
-                  {PRAZO[prazo]}
-                </div>
-                <div className="space-y-3">
-                  {items.map(item => (
-                    <div key={item.id} className={`bg-white rounded-2xl border shadow-sm overflow-hidden ${PRAZO_BORDER[prazo]}`}>
-                      {editId === item.id ? (
-                        <div className="p-4 space-y-3">
-                          <p className="text-sm font-medium text-gray-800 leading-relaxed">{formatQuestion(item.skill)}</p>
-                          <div className="grid grid-cols-2 gap-3">
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Prazo</label>
-                              <select value={editForm.prazo || item.prazo} onChange={e => setEditForm(f => ({ ...f, prazo: e.target.value as PEIItem['prazo'] }))}
-                                className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-purple-400">
-                                <option value="curto">Curto (3 meses)</option>
-                                <option value="medio">Médio (6 meses)</option>
-                                <option value="longo">Longo (9–12 meses)</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Status</label>
-                              <select value={editForm.status || item.status} onChange={e => setEditForm(f => ({ ...f, status: e.target.value as PEIItem['status'] }))}
-                                className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-purple-400">
-                                <option value="pendente">Pendente</option>
-                                <option value="em_andamento">Em andamento</option>
-                                <option value="concluido">Concluído</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Data Início</label>
-                              <input type="date" value={editForm.startDate ?? item.startDate} onChange={e => setEditForm(f => ({ ...f, startDate: e.target.value }))}
-                                className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-purple-400" />
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Data Fim</label>
-                              <input type="date" value={editForm.endDate ?? item.endDate} onChange={e => setEditForm(f => ({ ...f, endDate: e.target.value }))}
-                                className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-purple-400" />
-                            </div>
-                          </div>
-                          <div>
-                            <label className="text-xs text-gray-500 block mb-1">Estratégias de Intervenção</label>
-                            <textarea rows={3} value={editForm.estrategias ?? item.estrategias} onChange={e => setEditForm(f => ({ ...f, estrategias: e.target.value }))}
-                              placeholder="Descreva as estratégias..."
-                              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none" />
-                          </div>
-                          <div className="flex gap-2">
-                            <button type="button" onClick={saveEdit} className="flex items-center gap-1 text-xs bg-green-600 text-white px-3 py-1.5 rounded-lg hover:bg-green-700 transition">
-                              <Save className="w-3 h-3" /> Salvar
-                            </button>
-                            <button type="button" onClick={() => { setEditId(null); setEditForm({}) }} className="text-xs border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition">Cancelar</button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="p-4">
-                          <div className="flex items-start gap-3">
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm text-gray-800 leading-relaxed font-medium">{formatQuestion(item.skill)}</p>
-                              <p className="text-xs text-gray-400 mt-0.5">{item.area} · {item.ageRange}</p>
-                              <div className="flex flex-wrap gap-2 mt-2">
-                                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_COLOR[item.status]}`}>{STATUS[item.status]}</span>
-                                {item.startDate && <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">Início: {new Date(item.startDate + 'T00:00:00').toLocaleDateString('pt-BR')}</span>}
-                                {item.endDate && <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">Fim: {new Date(item.endDate + 'T00:00:00').toLocaleDateString('pt-BR')}</span>}
-                              </div>
-                              {item.estrategias && (
-                                <div className="mt-3 p-2.5 bg-gray-50 border border-gray-100 rounded-xl">
-                                  <p className="text-[10px] text-gray-400 uppercase tracking-wide mb-1 font-medium">Estratégias</p>
-                                  <p className="text-xs text-gray-600 leading-relaxed">{item.estrategias}</p>
-                                </div>
-                              )}
-                            </div>
-                            <div className="flex flex-col gap-1 shrink-0">
-                              <button type="button" onClick={() => { setEditId(item.id); setEditForm(item) }} className="text-xs border border-gray-200 px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition">Editar</button>
-                              <button type="button" onClick={() => remove(item.id)} className="text-xs text-red-400 px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition flex items-center justify-center gap-1">
-                                <Trash2 className="w-3 h-3" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )
-          })}
-          {pei.length > 0 && (
-            <button
-              type="button"
-              onClick={handleExport}
-              disabled={exporting}
-              className="w-full flex items-center justify-center gap-2 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition shadow disabled:opacity-50"
-            >
-              {exporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileDown className="w-4 h-4" />}
-              Exportar PEI em Word
-            </button>
-          )}
-        </div>
-      )}
     </div>
   )
 }

@@ -1,100 +1,160 @@
-/* ── IADI — tema clínico (remapeia tokens do Tailwind v4) ──────────────────
-   Toda a UI usa classes utilitárias (purple-*, blue-*, rounded-*, etc.).
-   Em vez de reescrever cada componente, redefinimos os tokens do tema aqui,
-   e o novo visual clínico se propaga por todas as telas.                    */
-
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* tipografia clínica */
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-
-  /* raios um pouco mais contidos (menos "lúdico") */
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.625rem;
-  --radius-2xl: 0.75rem;
-
-  /* ── MARCA: "purple" → azul clínico (matiz ~214) ───────────────────────── */
-  --color-purple-50:  #eff4fb;
-  --color-purple-100: #dbe7f5;
-  --color-purple-200: #bdd3ec;
-  --color-purple-300: #93b6de;
-  --color-purple-400: #5d92cb;
-  --color-purple-500: #3a76b8;
-  --color-purple-600: #2f64a0;
-  --color-purple-700: #285485;
-  --color-purple-800: #23466c;
-  --color-purple-900: #1f3b59;
-
-  /* ── SECUNDÁRIA / Linguagem: "blue" → petróleo (matiz ~196) ────────────── */
-  --color-blue-50:  #ecf5f8;
-  --color-blue-100: #d3e9ef;
-  --color-blue-200: #aed6e1;
-  --color-blue-300: #79bccd;
-  --color-blue-400: #449bb1;
-  --color-blue-500: #2c8198;
-  --color-blue-600: #246b80;
-  --color-blue-700: #20596a;
-  --color-blue-800: #1e4a58;
-  --color-blue-900: #1c3e4a;
-
-  /* ── Cuidados Próprios / "Sim": verde clínico mais sóbrio ───────────────── */
-  --color-green-50:  #edf6f0;
-  --color-green-100: #d4ebdb;
-  --color-green-200: #aedabd;
-  --color-green-500: #3f9d6a;
-  --color-green-600: #348a5b;
-  --color-green-700: #2c7350;
-  --color-green-800: #265e43;
-
-  /* ── Cognitiva: âmbar/ocre contido ─────────────────────────────────────── */
-  --color-orange-50:  #fbf2e8;
-  --color-orange-100: #f6e0c9;
-  --color-orange-200: #eecaa1;
-  --color-orange-500: #cc8542;
-  --color-orange-600: #ba7434;
-  --color-orange-700: #99602e;
-
-  /* ── "Às vezes": amarelo → ocre legível ────────────────────────────────── */
-  --color-yellow-50:  #faf3e1;
-  --color-yellow-100: #f4e7c2;
-  --color-yellow-500: #c89a2f;
-  --color-yellow-600: #b1861f;
-  --color-yellow-700: #92701d;
-
-  /* ── Psicomotora / "Não": vermelho-tijolo clínico ──────────────────────── */
-  --color-red-50:  #fceeed;
-  --color-red-100: #f8d9d6;
-  --color-red-200: #f1b8b2;
-  --color-red-300: #e59189;
-  --color-red-400: #d96b61;
-  --color-red-500: #c8554b;
-  --color-red-600: #b3463d;
-  --color-red-700: #943a33;
-
-  /* ── Cinzas com leve viés frio (clínico) ───────────────────────────────── */
-  --color-gray-50:  #f6f7f9;
-  --color-gray-100: #eceef2;
-  --color-gray-200: #dde1e7;
-  --color-gray-300: #c5cbd4;
-  --color-gray-400: #99a1ad;
-  --color-gray-500: #6c7480;
-  --color-gray-600: #4e5560;
-  --color-gray-700: #3a404a;
-  --color-gray-800: #262b33;
-  --color-gray-900: #181c22;
 }
 
-@layer base {
-  body {
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-feature-settings: "tnum" 0;
-  }
-  /* números tabulares onde houver dados/medidas */
-  .font-mono, table, .tabular {
-    font-feature-settings: "tnum" 1;
-  }
+/* ── IADI clinical design system ── */
+:root {
+  --bg: hsl(220 22% 98%);
+  --surface: #ffffff;
+  --surface-2: hsl(220 20% 97.5%);
+  --ink: hsl(222 28% 20%);
+  --ink-2: hsl(220 14% 40%);
+  --ink-3: hsl(220 11% 55%);
+  --ink-4: hsl(220 14% 72%);
+  --line: hsl(220 18% 91%);
+  --line-2: hsl(220 16% 85%);
+
+  --primary-h: 214;
+  --primary: hsl(var(--primary-h) 56% 45%);
+  --primary-strong: hsl(var(--primary-h) 60% 37%);
+  --primary-ink: hsl(var(--primary-h) 54% 40%);
+  --primary-bg: hsl(var(--primary-h) 56% 96%);
+  --primary-line: hsl(var(--primary-h) 46% 87%);
+
+  --pos: hsl(150 48% 37%);
+  --pos-bg: hsl(150 45% 95%);
+  --neg: hsl(6 60% 52%);
+  --neg-bg: hsl(8 66% 96%);
+  --part: hsl(36 78% 44%);
+  --part-bg: hsl(40 85% 94%);
+
+  --r: 10px;
+  --r-sm: 7px;
+  --r-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(30,41,59,.05), 0 1px 1px rgba(30,41,59,.04);
+  --shadow: 0 2px 8px rgba(30,41,59,.06), 0 1px 2px rgba(30,41,59,.05);
+  --shadow-lg: 0 12px 32px rgba(30,41,59,.1), 0 4px 8px rgba(30,41,59,.05);
 }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-feature-settings: 'tnum' 1; }
+::selection { background: var(--primary-bg); }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 99px; border: 3px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-4); }
+
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; font-size: inherit; }
+
+/* shell */
+.shell { min-height: 100vh; display: flex; flex-direction: column; }
+.app-frame { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* topbar */
+.topbar {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner { display: flex; align-items: center; gap: 16px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand-mark {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: var(--primary); color: #fff;
+  display: grid; place-items: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+}
+.brand-name { font-weight: 700; letter-spacing: -0.02em; font-size: 15px; line-height: 1.1; }
+.brand-sub { font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.01em; }
+
+/* card */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow-sm); }
+.card-pad { padding: 18px; }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  font-weight: 500; font-size: 13px; padding: 8px 14px; border-radius: var(--r-sm);
+  border: 1px solid transparent; transition: all .14s ease; white-space: nowrap;
+}
+.btn-primary { background: var(--primary); color: #fff; box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--primary-strong); }
+.btn-ghost { background: var(--surface); color: var(--ink-2); border-color: var(--line-2); }
+.btn-ghost:hover { background: var(--surface-2); color: var(--ink); border-color: var(--ink-4); }
+.btn-subtle { background: var(--primary-bg); color: var(--primary-ink); border-color: var(--primary-line); }
+.btn-subtle:hover { background: hsl(var(--primary-h) 50% 92%); }
+.btn-sm { padding: 6px 10px; font-size: 12px; }
+.btn:disabled { opacity: 0.5; pointer-events: none; }
+
+/* chips / pills */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 500;
+  padding: 3px 9px; border-radius: 99px; border: 1px solid var(--line-2);
+  color: var(--ink-2); background: var(--surface-2);
+}
+.tag {
+  display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 8px; border-radius: 5px;
+}
+
+.label { font-size: 11.5px; font-weight: 600; color: var(--ink-2); letter-spacing: 0.02em; }
+.micro { font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+
+/* inputs */
+.field {
+  width: 100%; border: 1px solid var(--line-2); border-radius: var(--r-sm); padding: 9px 11px;
+  font-size: 13.5px; color: var(--ink); background: var(--surface);
+  transition: border .14s, box-shadow .14s;
+}
+.field::placeholder { color: var(--ink-4); }
+.field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-bg); }
+
+/* data tables */
+table.data { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+table.data th {
+  text-align: center; font-weight: 600; color: var(--ink-2); padding: 9px 8px;
+  background: var(--surface-2); border-bottom: 1px solid var(--line-2); font-size: 11.5px;
+}
+table.data th:first-child, table.data td:first-child { text-align: left; }
+table.data td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: center; color: var(--ink); }
+table.data tr:last-child td { border-bottom: none; }
+
+/* screen fade-in */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.screen { animation: fadeUp .22s ease both; }
+
+/* progress bar */
+.bar { height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.bar > i { display: block; height: 100%; border-radius: 99px; background: var(--primary); transition: width .4s ease; }
+
+/* segmented control */
+.seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 3px; gap: 2px; }
+.seg button {
+  border: none; background: transparent; color: var(--ink-3); font-weight: 500; font-size: 12.5px;
+  padding: 6px 13px; border-radius: 5px; display: inline-flex; align-items: center; gap: 6px; transition: all .14s;
+}
+.seg button[data-on="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-sm); }
+
+.hairline { height: 1px; background: var(--line); border: none; margin: 0; }
+.skel { color: var(--ink-4); }
+
+/* hide-sm for topbar */
+@media (max-width: 580px) { .hide-sm { display: none !important; } }
