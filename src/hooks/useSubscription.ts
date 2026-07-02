@@ -21,7 +21,7 @@ export function useSubscription(user: User | null) {
         .from('subscriptions')
         .select('plan, status, current_period_end')
         .eq('user_id', user.id)
-        .single()
+        .maybeSingle()
       setSubscription(data ?? null)
       setLoadingSub(false)
     }
