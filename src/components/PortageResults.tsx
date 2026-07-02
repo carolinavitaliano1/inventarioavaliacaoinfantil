@@ -121,7 +121,7 @@ export default function PortageResults({ hook, setView }: Props) {
           <ArrowLeft className="w-4 h-4" />
         </button>
         <div className="flex-1">
-          <p className="font-bold text-gray-900">Resultados – IPO</p>
+          <p className="font-bold text-gray-900">Resultados</p>
           <p className="text-xs text-gray-400">{studentInfo.name}</p>
         </div>
         <button onClick={handleExportWord} disabled={exportingWord}
@@ -141,7 +141,7 @@ export default function PortageResults({ hook, setView }: Props) {
       {/* Cabeçalho estilo planilha */}
       <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5 mb-5">
         <h2 className="text-center font-bold text-gray-800 text-sm mb-4 uppercase tracking-wide">
-          Tabela Síntese de Resultados – Inventário Portage Operacionalizado (IPO)
+          Tabela Síntese de Resultados – Inventário de Avaliação Infantil
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
           {[
