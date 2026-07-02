@@ -326,9 +326,9 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient }: P
           <div className="mt-3 bg-white rounded-2xl border border-purple-100 shadow-sm p-5 text-xs text-gray-600 space-y-2 text-left">
             <h3 className="font-bold text-gray-800 text-sm">Referências Bibliográficas</h3>
             <ol className="space-y-1.5 list-decimal list-inside">
-              <li>Bluma, S. et al. (1976). <em>Portage guide to early education</em>. CESA 12.</li>
-              <li>Shearer, D. E., &amp; Shearer, M. S. (1972). The Portage Project. <em>Exceptional Children</em>, 36(3), 210–217.</li>
-              <li>Williams, L. C. A., &amp; Aiello, A. L. R. (2001). <em>O Inventário Portage Operacionalizado</em>. São Paulo: Memnon.</li>
+              <li>Bluma, S. et al. (1976). CESA 12, Wisconsin.</li>
+              <li>Shearer, D. E., &amp; Shearer, M. S. (1972). <em>Exceptional Children</em>, 36(3), 210–217.</li>
+              <li>Williams, L. C. A., &amp; Aiello, A. L. R. (2001). São Paulo: Memnon.</li>
               <li>Neisworth, J. T., &amp; Bagnato, S. J. (2004). <em>Infants &amp; Young Children</em>, 17(3), 198–212.</li>
             </ol>
           </div>
