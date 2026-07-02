@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Plus, Megaphone, Trash2, Loader2, Camera, X, ChevronRight, BookMarked, Search, Users, ClipboardList, TrendingUp, Calendar } from 'lucide-react'
+import { Plus, Megaphone, Trash2, Loader2, Camera, X, ChevronRight, BookMarked, Search, Users, ClipboardList, TrendingUp, Calendar, MessageSquare } from 'lucide-react'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { PatientsHook } from '../hooks/usePatients'
@@ -40,7 +40,7 @@ function formatDevAge(years: number) {
   return `${a}a ${m}m`
 }
 
-export default function Dashboard({ hook, auth, patientsHook, onOpenPatient }: Props) {
+export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, setView }: Props) {
   const { assessments } = hook
   const { patients, createPatient, deletePatient } = patientsHook
   const [showForm, setShowForm] = useState(false)
@@ -117,7 +117,11 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient }: P
 
   return (
     <div className="shell">
-      <TopBar auth={auth} onLogoClick={() => {}} />
+      <TopBar auth={auth} onLogoClick={() => {}} right={
+        <button className="btn btn-ghost btn-sm" onClick={() => setView?.('community')}>
+          <MessageSquare size={14} /> Comunidade
+        </button>
+      } />
 
       <div className="app-frame screen" style={{ padding: '28px 24px 64px' }}>
         {/* page header */}
