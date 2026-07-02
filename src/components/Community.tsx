@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ArrowLeft, Plus, Trash2, Loader2, Send, MessageSquare, PlayCircle, BookOpen, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { ArrowLeft, Plus, Trash2, Loader2, Send, MessageSquare, PlayCircle, BookOpen, ChevronDown, ChevronUp, X, Eye, EyeOff, Globe } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import type { useAuth } from '../hooks/useAuth'
 
@@ -18,6 +18,7 @@ interface Post {
   body: string
   video_url: string | null
   pinned: boolean
+  published: boolean
 }
 
 interface Reply {
@@ -145,7 +146,6 @@ function RepliesSection({ post, currentEmail, currentUserId }: { post: Post; cur
             </div>
           ))}
 
-          {/* reply input */}
           <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
             <Avatar email={currentEmail} />
             <div style={{ flex: 1, display: 'flex', gap: 8 }}>
@@ -172,7 +172,7 @@ function RepliesSection({ post, currentEmail, currentUserId }: { post: Post; cur
 export default function Community({ auth, onBack }: Props) {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
-  const [tab, setTab] = useState<'todos' | 'tutoriais' | 'duvidas'>('todos')
+  const [tab, setTab] = useState<'todos' | 'tutoriais' | 'duvidas' | 'pendentes'>('todos')
   const [showForm, setShowForm] = useState(false)
   const [formType, setFormType] = useState<PostType>('duvida')
   const [formTitle, setFormTitle] = useState('')
@@ -186,19 +186,36 @@ export default function Community({ auth, onBack }: Props) {
   const isAdmin = email === ADMIN_EMAIL
 
   useEffect(() => {
-    supabase.from('community_posts').select('*').order('pinned', { ascending: false }).order('created_at', { ascending: false })
-      .then(({ data }) => { setPosts(data ?? []); setLoading(false) })
-  }, [])
+    let query = supabase.from('community_posts').select('*')
+    if (isAdmin) {
+      // admin sees everything, ordered: pinned first, then by date
+      query = query.order('pinned', { ascending: false }).order('created_at', { ascending: false })
+    } else {
+      // regular users see: published posts OR their own unpublished questions
+      query = query
+        .or(`published.eq.true,and(user_id.eq.${userId},type.eq.duvida)`)
+        .order('pinned', { ascending: false })
+        .order('created_at', { ascending: false })
+    }
+    query.then(({ data }) => { setPosts(data ?? []); setLoading(false) })
+  }, [isAdmin, userId])
+
+  const pendingCount = isAdmin ? posts.filter(p => p.type === 'duvida' && !p.published).length : 0
 
   const filtered = posts.filter(p => {
-    if (tab === 'tutoriais') return p.type === 'tutorial' || p.type === 'video'
-    if (tab === 'duvidas') return p.type === 'duvida'
+    if (tab === 'tutoriais') return (p.type === 'tutorial' || p.type === 'video') && p.published
+    if (tab === 'duvidas') return p.type === 'duvida' && p.published
+    if (tab === 'pendentes') return p.type === 'duvida' && !p.published
+    // todos: published content + own pending questions
+    if (!isAdmin) return p.published || (p.user_id === userId && p.type === 'duvida')
     return true
   })
 
   const handleSubmit = async () => {
     if (!formTitle.trim() || !formBody.trim() || saving) return
     setSaving(true)
+    // dúvidas de usuários comuns começam como não publicadas (precisam de aprovação)
+    const published = isAdmin || formType !== 'duvida'
     const { data, error } = await supabase.from('community_posts').insert({
       user_id: userId,
       user_email: email,
@@ -207,6 +224,7 @@ export default function Community({ auth, onBack }: Props) {
       body: formBody.trim(),
       video_url: formVideo.trim() || null,
       pinned: isAdmin && (formType === 'tutorial' || formType === 'video'),
+      published,
     }).select().single()
     setSaving(false)
     if (!error && data) {
@@ -221,11 +239,16 @@ export default function Community({ auth, onBack }: Props) {
     setPosts(p => p.filter(x => x.id !== id))
   }
 
+  const handleTogglePublish = async (post: Post) => {
+    const newVal = !post.published
+    await supabase.from('community_posts').update({ published: newVal }).eq('id', post.id)
+    setPosts(p => p.map(x => x.id === post.id ? { ...x, published: newVal } : x))
+  }
+
   const openForm = (type: PostType) => { setFormType(type); setShowForm(true); setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 100) }
 
   return (
     <div className="shell">
-      {/* topbar */}
       <div className="topbar">
         <div className="app-frame">
           <div className="topbar-inner">
@@ -239,13 +262,11 @@ export default function Community({ auth, onBack }: Props) {
 
       <div className="app-frame screen" style={{ padding: '28px 24px 80px', maxWidth: 860 }}>
 
-        {/* header */}
         <div style={{ marginBottom: 24 }}>
           <h1 style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em', margin: '0 0 4px' }}>Comunidade</h1>
           <p style={{ color: 'var(--ink-3)', fontSize: 13.5, margin: 0 }}>Tire dúvidas, compartilhe experiências e acesse tutoriais sobre o IADI.</p>
         </div>
 
-        {/* action bar */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 22, flexWrap: 'wrap' }}>
           <button className="btn btn-primary" onClick={() => openForm('duvida')}>
             <MessageSquare size={14} /> Fazer uma pergunta
@@ -262,7 +283,6 @@ export default function Community({ auth, onBack }: Props) {
           )}
         </div>
 
-        {/* new post form */}
         {showForm && (
           <div ref={formRef} className="card card-pad" style={{ marginBottom: 24, borderColor: 'var(--primary-line)', background: 'var(--primary-bg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
@@ -274,6 +294,11 @@ export default function Community({ auth, onBack }: Props) {
               </div>
               <button onClick={() => setShowForm(false)} style={{ background: 'none', border: 'none', color: 'var(--ink-4)', cursor: 'pointer' }}><X size={16} /></button>
             </div>
+            {!isAdmin && formType === 'duvida' && (
+              <div style={{ marginBottom: 12, padding: '9px 12px', background: 'hsl(214 48% 96%)', borderRadius: 'var(--r-sm)', fontSize: 12.5, color: 'hsl(214 45% 38%)', display: 'flex', gap: 7, alignItems: 'center', border: '1px solid hsl(214 42% 88%)' }}>
+                <EyeOff size={13} /> Sua pergunta ficará visível apenas para mim até eu publicar para todos.
+              </div>
+            )}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div>
                 <div className="label" style={{ marginBottom: 5 }}>Título *</div>
@@ -300,14 +325,24 @@ export default function Community({ auth, onBack }: Props) {
           </div>
         )}
 
-        {/* tabs */}
         <div className="seg" style={{ marginBottom: 20 }}>
-          {([['todos', 'Todos'], ['tutoriais', 'Tutoriais & Vídeos'], ['duvidas', 'Dúvidas']] as const).map(([k, l]) => (
+          {([
+            ['todos', 'Todos'],
+            ['tutoriais', 'Tutoriais & Vídeos'],
+            ['duvidas', 'Dúvidas'],
+          ] as const).map(([k, l]) => (
             <button key={k} data-on={tab === k} onClick={() => setTab(k)}>{l}</button>
           ))}
+          {isAdmin && (
+            <button data-on={tab === 'pendentes'} onClick={() => setTab('pendentes')} style={{ position: 'relative' }}>
+              Pendentes
+              {pendingCount > 0 && (
+                <span style={{ marginLeft: 6, background: 'var(--neg)', color: '#fff', fontSize: 10, fontWeight: 700, padding: '1px 6px', borderRadius: 99 }}>{pendingCount}</span>
+              )}
+            </button>
+          )}
         </div>
 
-        {/* feed */}
         {loading && (
           <div style={{ display: 'flex', justifyContent: 'center', padding: 48 }}>
             <Loader2 size={22} className="animate-spin" style={{ color: 'var(--primary)' }} />
@@ -318,10 +353,10 @@ export default function Community({ auth, onBack }: Props) {
           <div className="card" style={{ padding: 48, textAlign: 'center', color: 'var(--ink-3)' }}>
             <MessageSquare size={36} style={{ margin: '0 auto 12px', color: 'var(--ink-4)' }} />
             <p style={{ fontSize: 13.5, margin: '0 0 12px' }}>
-              {tab === 'tutoriais' ? 'Nenhum tutorial publicado ainda.' : tab === 'duvidas' ? 'Nenhuma dúvida ainda. Seja o primeiro!' : 'Nenhuma publicação ainda.'}
+              {tab === 'tutoriais' ? 'Nenhum tutorial publicado ainda.' : tab === 'duvidas' ? 'Nenhuma dúvida publicada ainda.' : tab === 'pendentes' ? 'Nenhuma pergunta aguardando aprovação.' : 'Nenhuma publicação ainda.'}
             </p>
-            {tab !== 'tutoriais' && (
-              <button className="btn btn-primary btn-sm" onClick={() => openForm('duvida')}><Plus size={13} /> Fazer primeira pergunta</button>
+            {tab !== 'tutoriais' && tab !== 'pendentes' && (
+              <button className="btn btn-primary btn-sm" onClick={() => openForm('duvida')}><Plus size={13} /> Fazer uma pergunta</button>
             )}
           </div>
         )}
@@ -331,13 +366,14 @@ export default function Community({ auth, onBack }: Props) {
             const isOwn = post.user_id === userId
             const isAdminPost = post.user_email === ADMIN_EMAIL
             const displayName = isAdminPost ? 'IADI' : post.user_email.split('@')[0]
+            const isPending = !post.published
 
             return (
               <div key={post.id} className="card card-pad" style={{
-                borderLeft: post.pinned ? '3px solid var(--primary)' : undefined,
+                borderLeft: post.pinned ? '3px solid var(--primary)' : isPending ? '3px solid var(--part)' : undefined,
                 boxShadow: post.pinned ? 'var(--shadow)' : 'var(--shadow-sm)',
+                opacity: isPending && !isAdmin ? 0.85 : 1,
               }}>
-                {/* post header */}
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
                   <Avatar email={post.user_email} />
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -348,7 +384,21 @@ export default function Community({ auth, onBack }: Props) {
                       )}
                       <PostTypeTag type={post.type} />
                       {post.pinned && <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--pos)', background: 'var(--pos-bg)', padding: '1px 7px', borderRadius: 99, border: '1px solid hsl(150 40% 84%)' }}>Fixado</span>}
+                      {isPending && (
+                        <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--part)', background: 'var(--part-bg)', padding: '1px 7px', borderRadius: 99, border: '1px solid hsl(36 50% 82%)' }}>
+                          {isAdmin ? 'Aguardando aprovação' : 'Aguardando publicação'}
+                        </span>
+                      )}
                       <span style={{ fontSize: 11.5, color: 'var(--ink-4)', marginLeft: 'auto' }}>{timeAgo(post.created_at)}</span>
+                      {isAdmin && post.type === 'duvida' && (
+                        <button
+                          onClick={() => handleTogglePublish(post)}
+                          title={post.published ? 'Tornar privado' : 'Publicar para todos'}
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: post.published ? 'var(--pos-bg)' : 'var(--primary-bg)', border: `1px solid ${post.published ? 'hsl(150 40% 84%)' : 'var(--primary-line)'}`, color: post.published ? 'var(--pos)' : 'var(--primary-ink)', borderRadius: 6, padding: '3px 8px', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}
+                        >
+                          {post.published ? <><Eye size={11} /> Visível</> : <><Globe size={11} /> Publicar</>}
+                        </button>
+                      )}
                       {(isOwn || isAdmin) && (
                         <button onClick={() => handleDelete(post.id)} style={{ background: 'none', border: 'none', color: 'var(--ink-4)', cursor: 'pointer', padding: 2 }}>
                           <Trash2 size={13} />
@@ -363,7 +413,6 @@ export default function Community({ auth, onBack }: Props) {
                   </div>
                 </div>
 
-                {/* replies */}
                 <RepliesSection post={post} currentEmail={email} currentUserId={userId} />
               </div>
             )

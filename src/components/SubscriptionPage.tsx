@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowLeft, Check, Loader2, CreditCard, AlertCircle, CheckCircle, Clock, XCircle, ExternalLink, RefreshCw } from 'lucide-react'
+import { ArrowLeft, Check, Loader2, CreditCard, AlertCircle, CheckCircle, Clock, XCircle, RefreshCw } from 'lucide-react'
 import type { useAuth } from '../hooks/useAuth'
 import type { useSubscription } from '../hooks/useSubscription'
 
