@@ -52,7 +52,7 @@ export default function App() {
   const [view, setView] = useState<View>('dashboard')
   const [currentPatientId, setCurrentPatientId] = useState<string | null>(null)
   const hook = usePortageAssessment(auth.user?.id ?? null)
-  const patientsHook = usePatients()
+  const patientsHook = usePatients(auth.user?.id)
 
   // pendingNav: when setCurrentId() and setView() are called in the same event,
   // hook.current is stale (reflects pre-update state). We defer navigation until

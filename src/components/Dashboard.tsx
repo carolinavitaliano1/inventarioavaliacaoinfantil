@@ -70,12 +70,15 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
     reader.readAsDataURL(file)
   }
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (!form.name.trim() || creating) return
     setCreating(true)
-    createPatient({ name: form.name.trim(), birthDate: form.birthDate, diagnosis: form.diagnosis.trim(), responsibleName: form.responsibleName.trim(), photoBase64: form.photoBase64 || undefined })
-    setForm(BLANK); setShowForm(false)
-    setTimeout(() => setCreating(false), 500)
+    try {
+      await createPatient({ name: form.name.trim(), birthDate: form.birthDate, diagnosis: form.diagnosis.trim(), responsibleName: form.responsibleName.trim(), photoBase64: form.photoBase64 || undefined })
+      setForm(BLANK); setShowForm(false)
+    } finally {
+      setCreating(false)
+    }
   }
 
   const handleSaveAnn = async () => {

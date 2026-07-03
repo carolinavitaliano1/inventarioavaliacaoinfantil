@@ -5,21 +5,6 @@ import { supabase } from '../lib/supabase'
 
 export const portageItems: PortageItem[] = rawItems as PortageItem[]
 
-const STORAGE_KEY = 'portage_assessments'
-
-function loadLocal(): Assessment[] {
-  try {
-    const data: Assessment[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-    return data.map(a => a.childId ? a : {
-      ...a,
-      childId: `c_${(a.studentInfo.name + a.studentInfo.birthDate).toLowerCase().replace(/\W/g, '_')}`,
-    })
-  } catch { return [] }
-}
-function saveLocal(data: Assessment[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-}
-
 function rowToAssessment(row: Record<string, unknown>): Assessment {
   return {
     id: row.id as string,
@@ -32,25 +17,20 @@ function rowToAssessment(row: Record<string, unknown>): Assessment {
 }
 
 export function usePortageAssessment(userId: string | null) {
-  const [assessments, setAssessments] = useState<Assessment[]>(loadLocal)
+  const [assessments, setAssessments] = useState<Assessment[]>([])
   const [currentId, setCurrentId] = useState<string | null>(null)
   const [synced, setSynced] = useState(false)
 
   useEffect(() => {
-    if (!userId) { setSynced(false); return }
+    if (!userId) { setAssessments([]); setSynced(false); return }
+
     supabase
       .from('assessments')
       .select('*')
       .eq('user_id', userId)
       .order('created_at', { ascending: true })
       .then(({ data }) => {
-        if (!data) return
-        const remote: Assessment[] = data.map(rowToAssessment)
-        const remoteIds = new Set(remote.map(a => a.id))
-        const localOnly = loadLocal().filter(a => !remoteIds.has(a.id))
-        const merged = [...remote, ...localOnly]
-        setAssessments(merged)
-        saveLocal(merged)
+        setAssessments(data ? data.map(rowToAssessment) : [])
         setSynced(true)
       })
   }, [userId])
@@ -65,14 +45,18 @@ export function usePortageAssessment(userId: string | null) {
       user_id: userId,
       student_info: a.studentInfo,
       responses: a.responses,
+      updated_at: new Date().toISOString(),
     })
   }, [userId])
 
   const createAssessment = useCallback((info: StudentInfo, explicitChildId?: string): string => {
     const id = `a_${Date.now()}`
     const childId = explicitChildId ?? `c_${(info.name + info.birthDate).toLowerCase().replace(/\W/g, '_')}`
-    const a: Assessment = { id, childId, studentInfo: info, responses: {}, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
-    setAssessments(prev => { const next = [...prev, a]; saveLocal(next); return next })
+    const a: Assessment = {
+      id, childId, studentInfo: info, responses: {},
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+    }
+    setAssessments(prev => [...prev, a])
     setCurrentId(id)
     upsertRemote(a)
     return id
@@ -84,11 +68,12 @@ export function usePortageAssessment(userId: string | null) {
       const source = prev.find(a => a.id === sourceId)
       if (!source) return prev
       const newInfo: StudentInfo = { ...source.studentInfo, date: new Date().toLocaleDateString('pt-BR') }
-      const a: Assessment = { id, childId: source.childId, studentInfo: newInfo, responses: {}, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
-      const next = [...prev, a]
-      saveLocal(next)
+      const a: Assessment = {
+        id, childId: source.childId, studentInfo: newInfo, responses: {},
+        createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+      }
       upsertRemote(a)
-      return next
+      return [...prev, a]
     })
     setCurrentId(id)
     return id
@@ -96,8 +81,9 @@ export function usePortageAssessment(userId: string | null) {
 
   const updateResponse = useCallback((itemId: string, response: ResponseType) => {
     setAssessments(prev => {
-      const next = prev.map(a => a.id === currentId ? { ...a, responses: { ...a.responses, [itemId]: response }, updatedAt: new Date().toISOString() } : a)
-      saveLocal(next)
+      const next = prev.map(a => a.id === currentId
+        ? { ...a, responses: { ...a.responses, [itemId]: response }, updatedAt: new Date().toISOString() }
+        : a)
       const updated = next.find(a => a.id === currentId)
       if (updated) upsertRemote(updated)
       return next
@@ -112,7 +98,6 @@ export function usePortageAssessment(userId: string | null) {
         for (const id of itemIds) newResponses[id] = response
         return { ...a, responses: newResponses, updatedAt: new Date().toISOString() }
       })
-      saveLocal(next)
       const updated = next.find(a => a.id === currentId)
       if (updated) upsertRemote(updated)
       return next
@@ -120,7 +105,7 @@ export function usePortageAssessment(userId: string | null) {
   }, [currentId, upsertRemote])
 
   const deleteAssessment = useCallback((id: string) => {
-    setAssessments(prev => { const next = prev.filter(a => a.id !== id); saveLocal(next); return next })
+    setAssessments(prev => prev.filter(a => a.id !== id))
     if (currentId === id) setCurrentId(null)
     if (userId) supabase.from('assessments').delete().eq('id', id)
   }, [currentId, userId])
