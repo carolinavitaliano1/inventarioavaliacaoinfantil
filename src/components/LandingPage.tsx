@@ -674,6 +674,49 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
         </div>
       </section>
 
+      {/* ── DEPOIMENTOS ───────────────────────────────────────────────── */}
+      <section style={{ padding: '80px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)' }}>
+        <div style={w}>
+          <div className="lp-reveal" style={{ textAlign: 'center', maxWidth: 520, margin: '0 auto 48px' }}>
+            <span style={eyebrow}>Depoimentos</span>
+            <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.15, margin: 0, textWrap: 'balance' as never }}>Quem já usa o IADI</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20, maxWidth: 860, margin: '0 auto 52px' }}>
+            {[
+              { text: 'Em 20 minutos eu tenho o relatório pronto. Antes levava horas montando tudo no Word manualmente.', name: 'Fernanda R.', role: 'Fonoaudióloga · SP' },
+              { text: 'O PEI integrado economiza muito tempo. Consigo mostrar a evolução da criança para a família de forma visual e clara.', name: 'Carla M.', role: 'Terapeuta Ocupacional · MG' },
+              { text: 'Uso em consultório e em escola. Os gráficos de progressão fizeram diferença nas reuniões com a equipe multidisciplinar.', name: 'Juliana P.', role: 'Psicóloga · RJ' },
+            ].map(t => (
+              <div key={t.name} className="lp-reveal" style={{ background: 'var(--bg)', border: '1px solid var(--line)', borderRadius: 16, padding: '26px 28px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div style={{ display: 'flex', gap: 3 }}>
+                  {[1,2,3,4,5].map(i => <span key={i} style={{ color: '#f59e0b', fontSize: 15 }}>★</span>)}
+                </div>
+                <p style={{ fontSize: 14.5, color: 'var(--ink-2)', lineHeight: 1.65, margin: 0 }}>"{t.text}"</p>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>{t.name}</div>
+                  <div style={{ fontSize: 12.5, color: 'var(--ink-4)' }}>{t.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Selos de segurança */}
+          <div className="lp-reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', borderTop: '1px solid var(--line)', paddingTop: 36 }}>
+            {[
+              { emoji: '🔒', label: 'Pagamento criptografado' },
+              { emoji: '🛡️', label: 'Dados protegidos' },
+              { emoji: '💳', label: 'Mercado Pago' },
+              { emoji: '✅', label: 'Cobrança só após 3 dias' },
+              { emoji: '↩️', label: 'Cancele quando quiser' },
+            ].map(s => (
+              <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 7, background: 'var(--surface)', border: '1px solid var(--line-2)', borderRadius: 99, padding: '7px 16px', fontSize: 13, color: 'var(--ink-2)', fontWeight: 500 }}>
+                <span>{s.emoji}</span>{s.label}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── FAQ ───────────────────────────────────────────────────────── */}
       <section id="faq" style={{ padding: '84px 0', borderTop: '1px solid var(--line)', background: 'var(--surface)' }}>
         <div style={w}>
