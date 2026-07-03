@@ -6,6 +6,7 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isRecovery, setIsRecovery] = useState(false)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -14,9 +15,17 @@ export function useAuth() {
       setLoading(false)
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session)
       setUser(session?.user ?? null)
+      if (event === 'PASSWORD_RECOVERY') {
+        setIsRecovery(true)
+      }
+      if (event === 'USER_UPDATED') {
+        setIsRecovery(false)
+        // Clean hash from URL after password update
+        window.history.replaceState({}, '', window.location.pathname)
+      }
     })
 
     return () => subscription.unsubscribe()
@@ -35,5 +44,7 @@ export function useAuth() {
       redirectTo: 'https://inventarioavaliacaoinfantil.vercel.app',
     })
 
-  return { user, session, loading, signIn, signUp, signOut, resetPassword }
+  const clearRecovery = () => setIsRecovery(false)
+
+  return { user, session, loading, isRecovery, signIn, signUp, signOut, resetPassword, clearRecovery }
 }

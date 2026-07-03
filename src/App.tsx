@@ -61,12 +61,6 @@ export default function App() {
   const [loginMode, setLoginMode] = useState<'login' | 'signup' | null>(null)
   const [pendingNav, setPendingNav] = useState<View | null>(null)
 
-  // Detect password recovery flow (hash from Supabase magic link)
-  const [isRecovery, setIsRecovery] = useState(() => {
-    const hash = window.location.hash
-    return hash.includes('type=recovery')
-  })
-
   // Detect return from Mercado Pago checkout
   const [checkoutSuccess, setCheckoutSuccess] = useState(() => {
     return new URLSearchParams(window.location.search).get('checkout') === 'success'
@@ -114,11 +108,11 @@ export default function App() {
     )
   }
 
-  // Password recovery: user clicked the email link
-  if (isRecovery) {
+  // Password recovery: Supabase fired PASSWORD_RECOVERY event
+  if (auth.isRecovery) {
     return (
       <ErrorBoundary>
-        <ResetPasswordPage onDone={() => { setIsRecovery(false); window.history.replaceState({}, '', '/') }} />
+        <ResetPasswordPage onDone={() => { auth.clearRecovery(); window.history.replaceState({}, '', '/') }} />
       </ErrorBoundary>
     )
   }

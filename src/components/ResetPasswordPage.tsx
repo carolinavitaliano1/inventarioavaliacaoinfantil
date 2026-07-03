@@ -19,7 +19,9 @@ export default function ResetPasswordPage({ onDone }: { onDone: () => void }) {
     setLoading(false)
     if (err) { setError(err.message); return }
     setDone(true)
-    setTimeout(onDone, 2500)
+    // Sign out so the user logs in fresh with the new password
+    await supabase.auth.signOut()
+    setTimeout(onDone, 2000)
   }
 
   return (
@@ -38,7 +40,7 @@ export default function ResetPasswordPage({ onDone }: { onDone: () => void }) {
             <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
               <CheckCircle2 size={44} color="var(--pos)" />
               <h2 style={{ fontSize: 20, fontWeight: 700, margin: 0, color: 'var(--ink)' }}>Senha redefinida!</h2>
-              <p style={{ fontSize: 14, color: 'var(--ink-3)', margin: 0 }}>Redirecionando para o app…</p>
+              <p style={{ fontSize: 14, color: 'var(--ink-3)', margin: 0 }}>Senha salva! Entre com sua nova senha.</p>
             </div>
           ) : (
             <>
