@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { ArrowLeft, ClipboardList, BookOpen, Flag, FileText, Loader2, BarChart2, TrendingUp } from 'lucide-react'
+import { useState, useRef, useCallback } from 'react'
+import { ArrowLeft, ClipboardList, BookOpen, Flag, FileText, Loader2, BarChart2, TrendingUp, Download } from 'lucide-react'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
@@ -48,10 +48,53 @@ function areaShort(area: string) {
   return map[area] ?? area
 }
 
+async function downloadChartPNG(container: HTMLElement | null, filename: string) {
+  if (!container) return
+  const svg = container.querySelector('svg')
+  if (!svg) return
+  const rect = svg.getBoundingClientRect()
+  const W = rect.width || 600
+  const H = rect.height || 300
+  const scale = 2
+  const svgClone = svg.cloneNode(true) as SVGSVGElement
+  svgClone.setAttribute('width', String(W))
+  svgClone.setAttribute('height', String(H))
+  // inline computed styles on text nodes so canvas renders fonts
+  const bg = getComputedStyle(document.documentElement).getPropertyValue('--surface').trim() || '#ffffff'
+  const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" style="background:${bg || '#fff'}">${svgClone.innerHTML}</svg>`
+  const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const img = new Image()
+  img.crossOrigin = 'anonymous'
+  await new Promise<void>(res => { img.onload = () => res(); img.src = url })
+  const canvas = document.createElement('canvas')
+  canvas.width = W * scale
+  canvas.height = H * scale
+  const ctx = canvas.getContext('2d')!
+  ctx.fillStyle = bg || '#ffffff'
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.scale(scale, scale)
+  ctx.drawImage(img, 0, 0)
+  URL.revokeObjectURL(url)
+  const a = document.createElement('a')
+  a.download = filename + '.png'
+  a.href = canvas.toDataURL('image/png')
+  a.click()
+}
+
 export default function PortageResults({ hook, setView, auth, onBack }: Props) {
   const { current, getSiblingAssessments } = hook
   const [tab, setTab] = useState<'sintese' | 'graficos' | 'progressao' | 'prioridades' | 'relatorio'>('sintese')
   const [exportingWord, setExportingWord] = useState(false)
+  const refLine = useRef<HTMLDivElement>(null)
+  const refRadar = useRef<HTMLDivElement>(null)
+  const refBar = useRef<HTMLDivElement>(null)
+  const refProgMedia = useRef<HTMLDivElement>(null)
+  const refProgArea = useRef<HTMLDivElement>(null)
+
+  const dl = useCallback((ref: React.RefObject<HTMLDivElement | null>, name: string) => {
+    downloadChartPNG(ref.current, name)
+  }, [])
 
   if (!current) return null
 
@@ -276,8 +319,11 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
 
             {/* linha: % por faixa etária */}
-            <div className="card card-pad">
-              <h3 style={{ fontSize: 14, fontWeight: 600, margin: '0 0 4px' }}>% de aquisição por faixa etária</h3>
+            <div className="card card-pad" ref={refLine}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>% de aquisição por faixa etária</h3>
+                <button className="btn btn-ghost btn-sm" onClick={() => dl(refLine, `aquisicao-faixa-${current.studentInfo.name}`)}><Download size={13} /> PNG</button>
+              </div>
               <p style={{ fontSize: 11.5, color: 'var(--ink-3)', margin: '0 0 16px' }}>Uma linha por área de desenvolvimento</p>
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={lineData} margin={{ top: 4, right: 16, left: 0, bottom: 0 }}>
@@ -303,8 +349,11 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
               {/* radar: perfil desenvolvimental */}
-              <div className="card card-pad">
-                <h3 style={{ fontSize: 14, fontWeight: 600, margin: '0 0 4px' }}>Perfil desenvolvimental</h3>
+              <div className="card card-pad" ref={refRadar}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>Perfil desenvolvimental</h3>
+                  <button className="btn btn-ghost btn-sm" onClick={() => dl(refRadar, `perfil-${current.studentInfo.name}`)}><Download size={13} /> PNG</button>
+                </div>
                 <p style={{ fontSize: 11.5, color: 'var(--ink-3)', margin: '0 0 12px' }}>Idade desenv. (anos) vs. cronológica</p>
                 <ResponsiveContainer width="100%" height={240}>
                   <RadarChart data={radarData} margin={{ top: 0, right: 24, bottom: 0, left: 24 }}>
@@ -321,8 +370,11 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
               </div>
 
               {/* barras: aquisição % por área */}
-              <div className="card card-pad">
-                <h3 style={{ fontSize: 14, fontWeight: 600, margin: '0 0 4px' }}>Aquisição por área</h3>
+              <div className="card card-pad" ref={refBar}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                  <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>Aquisição por área</h3>
+                  <button className="btn btn-ghost btn-sm" onClick={() => dl(refBar, `aquisicao-area-${current.studentInfo.name}`)}><Download size={13} /> PNG</button>
+                </div>
                 <p style={{ fontSize: 11.5, color: 'var(--ink-3)', margin: '0 0 12px' }}>% de itens adquiridos (Sim)</p>
                 <ResponsiveContainer width="100%" height={240}>
                   <BarChart data={barData} layout="vertical" margin={{ top: 0, right: 40, left: 8, bottom: 0 }}>
@@ -352,8 +404,11 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
             ) : (
               <>
                 {/* linha: média geral ao longo do tempo */}
-                <div className="card card-pad">
-                  <h3 style={{ fontSize: 14, fontWeight: 600, margin: '0 0 4px' }}>Evolução da idade desenvolvimental — média geral</h3>
+                <div className="card card-pad" ref={refProgMedia}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                    <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>Evolução da idade desenvolvimental — média geral</h3>
+                    <button className="btn btn-ghost btn-sm" onClick={() => dl(refProgMedia, `progressao-media-${current.studentInfo.name}`)}><Download size={13} /> PNG</button>
+                  </div>
                   <p style={{ fontSize: 11.5, color: 'var(--ink-3)', margin: '0 0 16px' }}>{allAssessments.length} avaliações</p>
                   <ResponsiveContainer width="100%" height={200}>
                     <LineChart data={progData} margin={{ top: 4, right: 16, left: 0, bottom: 0 }}>
@@ -371,8 +426,11 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
                 </div>
 
                 {/* linha: por área ao longo do tempo */}
-                <div className="card card-pad">
-                  <h3 style={{ fontSize: 14, fontWeight: 600, margin: '0 0 4px' }}>Evolução por área</h3>
+                <div className="card card-pad" ref={refProgArea}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                    <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>Evolução por área</h3>
+                    <button className="btn btn-ghost btn-sm" onClick={() => dl(refProgArea, `progressao-areas-${current.studentInfo.name}`)}><Download size={13} /> PNG</button>
+                  </div>
                   <p style={{ fontSize: 11.5, color: 'var(--ink-3)', margin: '0 0 16px' }}>Idade desenvolvimental (anos) em cada avaliação</p>
                   <ResponsiveContainer width="100%" height={260}>
                     <LineChart data={progData} margin={{ top: 4, right: 16, left: 0, bottom: 0 }}>
