@@ -12,7 +12,7 @@ const ADMIN_EMAIL = 'carolinavitaliano1@gmail.com'
 
 const FEATURES = [
   'Gestão ilimitada de pacientes',
-  'Questionário Portage completo (5 áreas)',
+  'Inventário completo de desenvolvimento (6 áreas)',
   'Relatório Word profissional',
   'PEI — Plano de Ensino Individualizado',
   'Gráficos de progressão e radar',

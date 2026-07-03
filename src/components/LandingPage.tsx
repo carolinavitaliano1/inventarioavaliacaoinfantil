@@ -50,7 +50,7 @@ const SZ = { width: 21, height: 21, fill: 'none' as const, stroke: 'currentColor
 const FEATURES = [
   {
     title: '6 áreas · 589 habilidades',
-    desc: 'Inventário Portage completo — Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados, Cognição e Psicomotora, de 0 a 6 anos.',
+    desc: 'Inventário de Avaliação do Desenvolvimento Infantil completo — Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados, Cognição e Psicomotora, de 0 a 6 anos.',
     icon: <svg {...SZ}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
   },
   {
@@ -101,7 +101,7 @@ const PROFILES = [
   {
     role: 'Fonoaudióloga',
     context: 'Clínica de linguagem · consultório próprio',
-    desc: 'Aplica o Portage a cada avaliação e usa os gráficos de Linguagem Receptiva e Expressiva para mostrar à família a curva de evolução mês a mês. O relatório Word sai em minutos.',
+    desc: 'Aplica o inventário a cada avaliação e usa os gráficos de Linguagem Receptiva e Expressiva para mostrar à família a curva de evolução mês a mês. O relatório Word sai em minutos.',
     color: 'hsl(190 56% 42%)',
     bg: 'hsl(190 55% 96%)',
   },
@@ -122,7 +122,7 @@ const PROFILES = [
 ]
 
 const FAQS = [
-  { q: 'Qual instrumento o IADI usa?', a: 'O Inventário Portage de Desenvolvimento (IPD), com 589 habilidades em 6 áreas: Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados Próprios, Cognição e Psicomotora, do nascimento aos 6 anos.' },
+  { q: 'Qual instrumento o IADI usa?', a: 'O Inventário de Avaliação do Desenvolvimento Infantil, com 589 habilidades em 6 áreas: Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados Próprios, Cognição e Psicomotora, do nascimento aos 6 anos. O instrumento é baseado no Inventário Portage de Desenvolvimento (referência bibliográfica: Bluma et al., 1976; Williams & Aiello, 2001).' },
   { q: 'Para quais profissionais o IADI é indicado?', a: 'Para todos que atuam com desenvolvimento infantil: psicólogos, fonoaudiólogos, terapeutas ocupacionais, fisioterapeutas, pedagogos e psicopedagogos, em consultório, clínica ou escola.' },
   { q: 'Preciso instalar algo?', a: 'Não. Funciona direto no navegador, no computador ou tablet. Acesse com seu login de qualquer lugar.' },
   { q: 'Qual a diferença entre os planos?', a: 'Os recursos são idênticos. O trimestral (R$ 37 a cada 3 meses) é ótimo para começar; o anual (R$ 87 por ano, ~R$ 7,25/mês) sai mais barato e reduz o número de renovações.' },
@@ -370,7 +370,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <div className="lp-hero-h">
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--primary-ink)', background: 'var(--primary-bg)', border: '1px solid var(--primary-line)', borderRadius: 99, padding: '5px 13px', marginBottom: 22 }}>
                 <span style={{ width: 6, height: 6, borderRadius: 99, background: 'var(--primary)', display: 'inline-block' }} />
-                Baseado no Inventário Portage · 0 a 6 anos
+                Inventário de Avaliação do Desenvolvimento Infantil · 0 a 6 anos
               </div>
               <h1 style={{ fontSize: 52, fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.08, margin: 0, color: 'var(--ink)' }}>
                 Do questionário<br />
@@ -378,7 +378,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
               </h1>
             </div>
             <p className="lp-hero-sub" style={{ fontSize: 18, color: 'var(--ink-2)', marginTop: 20, lineHeight: 1.6, maxWidth: '36ch' }}>
-              Aplique o Inventário Portage, veja a idade desenvolvimental por área em segundos e gere um laudo profissional — sem planilhas, sem cálculos manuais.
+              Aplique o inventário, veja a idade desenvolvimental por área em segundos e gere um laudo profissional — sem planilhas, sem cálculos manuais.
             </p>
             <div className="lp-hero-cta" style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap', alignItems: 'center' }}>
               <button onClick={onGetStarted} className="lp-btn-primary lp-btn-primary-lg">
@@ -487,7 +487,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 16px', textWrap: 'balance' as never }}>
               Avaliar desenvolvimento não precisa ser exaustivo
             </h2>
-            <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Aplicar o Portage é só o começo. O que vem depois — calcular, interpretar, documentar — é onde se perde tempo.</p>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Aplicar o inventário é só o começo. O que vem depois — calcular, interpretar, documentar — é onde se perde tempo.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
             {PROBLEMS.map((p, i) => (
@@ -613,9 +613,9 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
         <div style={w}>
           <div className="lp-reveal" style={{ textAlign: 'center', maxWidth: 560, margin: '0 auto 52px' }}>
             <span style={eyebrow}>Planos</span>
-            <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Escolha e comece hoje</h2>
+            <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Conheça nossos planos</h2>
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>
-              3 dias grátis para testar. Acesso completo a todos os recursos em qualquer plano. Sem taxa de adesão, sem fidelidade.
+              Crie sua conta grátis, explore por 3 dias e escolha o plano que faz sentido para você. Sem cartão obrigatório, sem taxa de adesão.
             </p>
           </div>
 
@@ -630,16 +630,13 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                 <span style={{ fontSize: 15, color: 'var(--ink-3)' }}>/trimestre</span>
               </div>
               <div style={{ fontSize: 13, color: 'var(--pos)', fontWeight: 600, marginBottom: 24 }}>≈ R$ 12,33 por mês</div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 26px', display: 'flex', flexDirection: 'column', gap: 11 }}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 11 }}>
                 {['Todos os recursos incluídos','Pacientes e avaliações ilimitados','Relatório Word + PEI Word','Gráficos em PNG','Renovação a cada 3 meses'].map(item => (
                   <li key={item} style={{ display: 'flex', gap: 9, fontSize: 14, color: 'var(--ink-2)', alignItems: 'flex-start' }}>
                     {CHECK} {item}
                   </li>
                 ))}
               </ul>
-              <button onClick={onGetStarted} className="lp-btn-ghost" style={{ width: '100%', justifyContent: 'center', fontSize: 15, padding: '13px 0' }}>
-                Testar grátis · depois R$ 37/tri
-              </button>
             </div>
 
             {/* Anual */}
@@ -655,22 +652,68 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                 <span style={{ fontSize: 15, color: 'var(--ink-3)' }}>/ano</span>
               </div>
               <div style={{ fontSize: 13, color: 'var(--pos)', fontWeight: 600, marginBottom: 24 }}>≈ R$ 7,25 por mês</div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 26px', display: 'flex', flexDirection: 'column', gap: 11 }}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 11 }}>
                 {['Tudo do plano trimestral', <>12 meses pelo preço de ~7</>, 'Menos renovações para gerenciar', 'Suporte prioritário'].map((item, idx) => (
                   <li key={idx} style={{ display: 'flex', gap: 9, fontSize: 14, color: 'var(--ink-2)', alignItems: 'flex-start' }}>
                     {CHECK} {item}
                   </li>
                 ))}
               </ul>
-              <button onClick={onGetStarted} className="lp-btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: 15, padding: '13px 0' }}>
-                Testar grátis · depois R$ 87/ano
-              </button>
             </div>
           </div>
 
-          <p className="lp-reveal" style={{ textAlign: 'center', fontSize: 13, color: 'var(--ink-3)', marginTop: 28 }}>
-            3 dias grátis, sem cobrança durante o teste · cancele quando quiser pela plataforma · pagamento por cartão via Mercado Pago
-          </p>
+          {/* CTA único abaixo dos cards */}
+          <div className="lp-reveal" style={{ textAlign: 'center', marginTop: 40, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+            <button onClick={onGetStarted} className="lp-btn-primary lp-btn-primary-lg" style={{ fontSize: 17, padding: '15px 40px' }}>
+              Teste grátis por 3 dias · faça seu cadastro grátis e escolha seu plano {ARROW}
+            </button>
+            <p style={{ fontSize: 13, color: 'var(--ink-3)', margin: 0 }}>
+              Sem cobrança durante o teste · cancele quando quiser · pagamento via Mercado Pago
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── DEPOIMENTOS ───────────────────────────────────────────────── */}
+      <section style={{ padding: '80px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)' }}>
+        <div style={w}>
+          <div className="lp-reveal" style={{ textAlign: 'center', maxWidth: 520, margin: '0 auto 48px' }}>
+            <span style={eyebrow}>Depoimentos</span>
+            <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.15, margin: 0, textWrap: 'balance' as never }}>Quem já usa o IADI</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20, maxWidth: 860, margin: '0 auto 52px' }}>
+            {[
+              { text: 'Em 20 minutos eu tenho o relatório pronto. Antes levava horas montando tudo no Word manualmente.', name: 'Fernanda R.', role: 'Fonoaudióloga · SP' },
+              { text: 'O PEI integrado economiza muito tempo. Consigo mostrar a evolução da criança para a família de forma visual e clara.', name: 'Carla M.', role: 'Terapeuta Ocupacional · MG' },
+              { text: 'Uso em consultório e em escola. Os gráficos de progressão fizeram diferença nas reuniões com a equipe multidisciplinar.', name: 'Juliana P.', role: 'Psicóloga · RJ' },
+            ].map(t => (
+              <div key={t.name} className="lp-reveal" style={{ background: 'var(--bg)', border: '1px solid var(--line)', borderRadius: 16, padding: '26px 28px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div style={{ display: 'flex', gap: 3 }}>
+                  {[1,2,3,4,5].map(i => <span key={i} style={{ color: '#f59e0b', fontSize: 15 }}>★</span>)}
+                </div>
+                <p style={{ fontSize: 14.5, color: 'var(--ink-2)', lineHeight: 1.65, margin: 0 }}>"{t.text}"</p>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>{t.name}</div>
+                  <div style={{ fontSize: 12.5, color: 'var(--ink-4)' }}>{t.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Selos de segurança */}
+          <div className="lp-reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', borderTop: '1px solid var(--line)', paddingTop: 36 }}>
+            {[
+              { emoji: '🔒', label: 'Pagamento criptografado' },
+              { emoji: '🛡️', label: 'Dados protegidos' },
+              { emoji: '💳', label: 'Mercado Pago' },
+              { emoji: '✅', label: 'Cobrança só após 3 dias' },
+              { emoji: '↩️', label: 'Cancele quando quiser' },
+            ].map(s => (
+              <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 7, background: 'var(--surface)', border: '1px solid var(--line-2)', borderRadius: 99, padding: '7px 16px', fontSize: 13, color: 'var(--ink-2)', fontWeight: 500 }}>
+                <span>{s.emoji}</span>{s.label}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -77,7 +77,7 @@ function tipCuidados(t: string, id: string): string {
     return 'Como avaliar: Observe durante a rotina matinal. Forneça o utensílio e veja se a criança inicia o movimento correto sem demonstração. Registre autonomia e qualidade do movimento.'
   return pick([
     'Como avaliar: Observe a criança durante sua rotina diária (banho, refeição, vestir-se). Não antecipe nem realize o passo pela criança; aguarde e registre o nível de independência funcional.',
-    'Como avaliar: Questione o cuidador principal sobre a ocorrência desse comportamento em casa, com exemplos concretos. A avaliação Portage valoriza o relato familiar como fonte primária para habilidades de autocuidado.',
+    'Como avaliar: Questione o cuidador principal sobre a ocorrência desse comportamento em casa, com exemplos concretos. O inventário valoriza o relato familiar como fonte primária para habilidades de autocuidado.',
     'Como avaliar: Crie a situação descrita no item e observe sem pressa. Registre se a criança inicia espontaneamente, completa a tarefa e a frequência com que isso ocorre na rotina habitual.',
   ], id)
 }

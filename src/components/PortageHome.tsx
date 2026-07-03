@@ -65,7 +65,7 @@ export default function PortageHome({ hook, setView, auth }: Props) {
         <h1 className="text-3xl font-bold text-gray-900">IADI</h1>
         <p className="text-base font-semibold text-purple-700 mt-0.5">Inventário de Avaliação do Desenvolvimento Infantil</p>
         <p className="text-sm text-gray-500 mt-1">Avaliação da Idade Desenvolvimental</p>
-        <p className="text-xs text-gray-400 mt-1">{portageItems.length} habilidades · 5 áreas · 0–6 anos</p>
+        <p className="text-xs text-gray-400 mt-1">{portageItems.length} habilidades · 6 áreas · 0–6 anos</p>
         <button type="button" onClick={() => setShowRefs(r => !r)} className="mt-3 inline-flex items-center gap-1.5 text-xs text-purple-500 hover:text-purple-700 transition">
           <BookMarked className="w-3.5 h-3.5" /> Referências bibliográficas
         </button>

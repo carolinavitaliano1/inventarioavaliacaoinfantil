@@ -50,32 +50,8 @@ function areaShort(area: string) {
 
 async function downloadChartPNG(container: HTMLElement | null, filename: string) {
   if (!container) return
-  const svg = container.querySelector('svg')
-  if (!svg) return
-  const rect = svg.getBoundingClientRect()
-  const W = rect.width || 600
-  const H = rect.height || 300
-  const scale = 2
-  const svgClone = svg.cloneNode(true) as SVGSVGElement
-  svgClone.setAttribute('width', String(W))
-  svgClone.setAttribute('height', String(H))
-  // inline computed styles on text nodes so canvas renders fonts
-  const bg = getComputedStyle(document.documentElement).getPropertyValue('--surface').trim() || '#ffffff'
-  const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" style="background:${bg || '#fff'}">${svgClone.innerHTML}</svg>`
-  const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
-  const img = new Image()
-  img.crossOrigin = 'anonymous'
-  await new Promise<void>(res => { img.onload = () => res(); img.src = url })
-  const canvas = document.createElement('canvas')
-  canvas.width = W * scale
-  canvas.height = H * scale
-  const ctx = canvas.getContext('2d')!
-  ctx.fillStyle = bg || '#ffffff'
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
-  ctx.scale(scale, scale)
-  ctx.drawImage(img, 0, 0)
-  URL.revokeObjectURL(url)
+  const h2c = (await import('html2canvas')).default
+  const canvas = await h2c(container, { scale: 2, useCORS: true, backgroundColor: '#ffffff' })
   const a = document.createElement('a')
   a.download = filename + '.png'
   a.href = canvas.toDataURL('image/png')
