@@ -32,7 +32,7 @@ export function useAuth() {
 
   const resetPassword = (email: string) =>
     supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin,
+      redirectTo: 'https://inventarioavaliacaoinfantil.vercel.app',
     })
 
   return { user, session, loading, signIn, signUp, signOut, resetPassword }
