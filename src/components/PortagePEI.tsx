@@ -69,6 +69,7 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   }
   const remove = (id: string) => setPlan(p => p.filter(x => x.id !== id))
   const setStatus = (id: string, status: PEIItem['status']) => setPlan(p => p.map(x => x.id === id ? { ...x, status } : x))
+  const setPrazo = (id: string, prazo: PEIItem['prazo']) => setPlan(p => p.map(x => x.id === id ? { ...x, prazo } : x))
   const setEstrategias = (id: string, estrategias: string) => setPlan(p => p.map(x => x.id === id ? { ...x, estrategias } : x))
 
   const grouped: Record<string, PEIItem[]> = { curto: [], medio: [], longo: [] }
@@ -174,7 +175,22 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
                             >{item.estrategias}</p>
                           )}
                         </div>
-                        <div style={{ display: 'flex', gap: 6, marginTop: 11 }}>
+                        <div style={{ display: 'flex', gap: 6, marginTop: 11, flexWrap: 'wrap', alignItems: 'center' }}>
+                          <span style={{ fontSize: 10.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--ink-4)', marginRight: 2 }}>Prazo</span>
+                          {(['curto', 'medio', 'longo'] as const).map(p => {
+                            const on = item.prazo === p; const h = PRAZO_HUE[p]
+                            return (
+                              <button key={p} onClick={() => setPrazo(item.id, p)} style={{
+                                fontSize: 11.5, fontWeight: 600, padding: '4px 11px', borderRadius: 99, cursor: 'pointer',
+                                border: `1px solid ${on ? `hsl(${h} 45% 55%)` : 'var(--line-2)'}`,
+                                background: on ? `hsl(${h} 55% 96%)` : 'var(--surface)',
+                                color: on ? `hsl(${h} 48% 38%)` : 'var(--ink-4)',
+                              }}>{p === 'curto' ? '3 meses' : p === 'medio' ? '6 meses' : '9–12 meses'}</button>
+                            )
+                          })}
+                        </div>
+                        <div style={{ display: 'flex', gap: 6, marginTop: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                          <span style={{ fontSize: 10.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--ink-4)', marginRight: 2 }}>Status</span>
                           {(['pendente', 'em_andamento', 'concluido'] as const).map(s => {
                             const on = item.status === s; const st = STATUS_STYLE[s]
                             return (
