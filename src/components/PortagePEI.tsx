@@ -46,8 +46,8 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   const [exportingWord, setExportingWord] = useState(false)
   const [editingEst, setEditingEst] = useState<string | null>(null)
 
-  const naoItems = portageItems.filter(i => current?.responses[i.id] === 'nao')
-  const avItems = portageItems.filter(i => current?.responses[i.id] === 'as_vezes')
+  const naoItems = portageItems.filter(i => current?.responses?.[i.id] === 'nao')
+  const avItems = portageItems.filter(i => current?.responses?.[i.id] === 'as_vezes')
 
   const [plan, setPlan] = useState<PEIItem[]>(() => {
     const pick = (arr: PortageItem[], prazo: PEIItem['prazo'], n: number): PEIItem[] =>

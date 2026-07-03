@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowLeft, Plus, Eye, BarChart3, BookOpen, RefreshCw, Trash2, FileDown, Loader2, TrendingUp, TrendingDown, Minus, Camera, Edit2, Save, X } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
@@ -52,7 +52,8 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
   const [photoInput, setPhotoInput] = useState<HTMLInputElement | null>(null)
 
   const patient = getPatient(patientId)
-  if (!patient) { onPatientNotFound?.(); return null }
+  useEffect(() => { if (!patient) onPatientNotFound?.() }, [patient]) // eslint-disable-line react-hooks/exhaustive-deps
+  if (!patient) return null
 
   const patientAssessments = assessments
     .filter(a => a.childId === patientId)
@@ -90,7 +91,7 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
     reader.readAsDataURL(file)
   }
 
-  const saveEdit = () => { updatePatient(patientId, editForm); setEditMode(false); setEditForm({}) }
+  const saveEdit = async () => { await updatePatient(patientId, editForm); setEditMode(false); setEditForm({}) }
 
   const progressData = patientAssessments.map(a => ({
     assessment: a,

@@ -62,7 +62,7 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
       <div className="topbar">
         <div className="app-frame">
           <div className="topbar-inner">
-            <button className="btn btn-ghost btn-sm" onClick={onBack}><ArrowLeft size={14} /> Painel</button>
+            <button className="btn btn-ghost btn-sm" onClick={onBack}><ArrowLeft size={14} /> Perfil</button>
             <div style={{ flex: 1 }} />
             <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-2)' }}>Assinatura</span>
             <div style={{ flex: 1 }} />
@@ -207,7 +207,7 @@ export default function SubscriptionPage({ auth, subHook, onBack }: Props) {
 
             <p style={{ fontSize: 11.5, color: 'var(--ink-4)', textAlign: 'center', marginTop: 18 }}>
               <CreditCard size={12} style={{ display: 'inline', marginRight: 5 }} />
-              3 dias grátis · sem cobrança durante o trial · Pagamento seguro via Stripe · Cancele quando quiser
+              3 dias grátis · sem cobrança durante o trial · Pagamento seguro via Mercado Pago · Cancele quando quiser
             </p>
           </>
         )}

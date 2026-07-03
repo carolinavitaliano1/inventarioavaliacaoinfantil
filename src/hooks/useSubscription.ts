@@ -35,6 +35,7 @@ export function useSubscription(user: User | null) {
         event: '*', schema: 'public', table: 'subscriptions',
         filter: `user_id=eq.${user.id}`,
       }, (payload) => {
+        if (payload.eventType === 'DELETE') { setSubscription(null); return }
         const d = payload.new as any
         setSubscription({ plan: d.plan, status: d.status, current_period_end: d.current_period_end })
       })

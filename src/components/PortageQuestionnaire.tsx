@@ -41,7 +41,7 @@ export default function PortageQuestionnaire({ hook, setView, auth, onBack }: Pr
   }
 
   const markAll = (v: ResponseType) => {
-    portageItems.forEach(item => setResponse(item.id, v))
+    hook.batchUpdateResponses(portageItems.map(i => i.id), v)
   }
 
   if (!current) return null

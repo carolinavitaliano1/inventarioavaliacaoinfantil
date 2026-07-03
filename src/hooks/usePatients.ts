@@ -52,7 +52,7 @@ export function usePatients(userId?: string | null) {
   }, [userId])
 
   const createPatient = useCallback(async (data: Omit<Patient, 'id' | 'createdAt'>): Promise<Patient> => {
-    const id = `p_${Date.now()}`
+    const id = `p_${crypto.randomUUID()}`
     const { data: row, error } = await supabase
       .from('patients')
       .insert({
@@ -81,7 +81,8 @@ export function usePatients(userId?: string | null) {
     if (data.responsibleName !== undefined) update.responsible_name = data.responsibleName
     if (data.photoBase64 !== undefined) update.photo_base64 = data.photoBase64
 
-    await supabase.from('patients').update(update).eq('id', id)
+    const { error } = await supabase.from('patients').update(update).eq('id', id)
+    if (error) throw error
     setPatients(prev => prev.map(p => p.id === id ? { ...p, ...data } : p))
   }, [])
 

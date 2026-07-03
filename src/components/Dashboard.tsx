@@ -42,7 +42,7 @@ function formatDevAge(years: number) {
 
 export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, setView }: Props) {
   const { assessments } = hook
-  const { patients, createPatient, deletePatient } = patientsHook
+  const { patients, loading: loadingPatients, createPatient, deletePatient } = patientsHook
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState(BLANK)
   const [creating, setCreating] = useState(false)
@@ -255,7 +255,12 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
           </div>
         </div>
 
-        {patients.length === 0 && !showForm ? (
+        {loadingPatients ? (
+          <div className="card" style={{ padding: 48, textAlign: 'center', color: 'var(--ink-3)' }}>
+            <Loader2 size={24} className="animate-spin" style={{ margin: '0 auto 12px', color: 'var(--primary)' }} />
+            <p style={{ fontSize: 13.5, margin: 0 }}>Carregando pacientes…</p>
+          </div>
+        ) : patients.length === 0 && !showForm ? (
           <div className="card" style={{ padding: 48, textAlign: 'center', color: 'var(--ink-3)' }}>
             <Users size={40} style={{ margin: '0 auto 12px', color: 'var(--ink-4)' }} />
             <p style={{ fontSize: 13.5, margin: '0 0 12px' }}>Nenhum paciente cadastrado ainda.</p>
@@ -331,7 +336,7 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
 
                   <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
                     <button
-                      onClick={e => { e.stopPropagation(); if (window.confirm(`Excluir ${p.name}?`)) deletePatient(p.id) }}
+                      onClick={async e => { e.stopPropagation(); if (window.confirm(`Excluir ${p.name}?`)) await deletePatient(p.id) }}
                       style={{ background: 'none', border: 'none', color: 'var(--ink-4)', cursor: 'pointer', padding: 2 }}
                     >
                       <Trash2 size={13} />

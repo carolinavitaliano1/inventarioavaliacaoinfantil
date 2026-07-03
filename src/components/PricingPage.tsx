@@ -14,7 +14,6 @@ const FEATURES = [
   'Relatório Word profissional',
   'PEI — Plano de Ensino Individualizado',
   'Gráficos de progressão e radar',
-  'Exportação Excel',
   'Acesso a todas as atualizações',
 ]
 
@@ -139,7 +138,7 @@ export default function PricingPage({ subHook, auth }: Props) {
       )}
 
       <p className="text-center text-xs text-gray-400 pb-8 px-4">
-        3 dias grátis · sem cobrança durante o trial · Pagamento seguro via Stripe · Cancele quando quiser
+        3 dias grátis · sem cobrança durante o trial · Pagamento seguro via Mercado Pago · Cancele quando quiser
       </p>
     </div>
   )

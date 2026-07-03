@@ -98,7 +98,7 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
 
   // ── progressão: ordenar avaliações por data ──
   const allAssessments = [...siblings].sort((a, b) =>
-    (a.studentInfo.date ?? '').localeCompare(b.studentInfo.date ?? ''))
+    a.createdAt.localeCompare(b.createdAt))
 
   const progData = allAssessments.map(ass => {
     const res = AREAS.map(area => {

@@ -50,7 +50,7 @@ export function usePortageAssessment(userId: string | null) {
   }, [userId])
 
   const createAssessment = useCallback((info: StudentInfo, explicitChildId?: string): string => {
-    const id = `a_${Date.now()}`
+    const id = `a_${crypto.randomUUID()}`
     const childId = explicitChildId ?? `c_${(info.name + info.birthDate).toLowerCase().replace(/\W/g, '_')}`
     const a: Assessment = {
       id, childId, studentInfo: info, responses: {},
@@ -63,7 +63,7 @@ export function usePortageAssessment(userId: string | null) {
   }, [upsertRemote])
 
   const reAssess = useCallback((sourceId: string): string => {
-    const id = `a_${Date.now()}`
+    const id = `a_${crypto.randomUUID()}`
     setAssessments(prev => {
       const source = prev.find(a => a.id === sourceId)
       if (!source) return prev
