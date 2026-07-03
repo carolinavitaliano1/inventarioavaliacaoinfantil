@@ -613,9 +613,9 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
         <div style={w}>
           <div className="lp-reveal" style={{ textAlign: 'center', maxWidth: 560, margin: '0 auto 52px' }}>
             <span style={eyebrow}>Planos</span>
-            <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Escolha e comece hoje</h2>
+            <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Conheça nossos planos</h2>
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>
-              3 dias grátis para testar. Acesso completo a todos os recursos em qualquer plano. Sem taxa de adesão, sem fidelidade.
+              Crie sua conta grátis, explore por 3 dias e escolha o plano que faz sentido para você. Sem cartão obrigatório, sem taxa de adesão.
             </p>
           </div>
 
@@ -630,16 +630,13 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                 <span style={{ fontSize: 15, color: 'var(--ink-3)' }}>/trimestre</span>
               </div>
               <div style={{ fontSize: 13, color: 'var(--pos)', fontWeight: 600, marginBottom: 24 }}>≈ R$ 12,33 por mês</div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 26px', display: 'flex', flexDirection: 'column', gap: 11 }}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 11 }}>
                 {['Todos os recursos incluídos','Pacientes e avaliações ilimitados','Relatório Word + PEI Word','Gráficos em PNG','Renovação a cada 3 meses'].map(item => (
                   <li key={item} style={{ display: 'flex', gap: 9, fontSize: 14, color: 'var(--ink-2)', alignItems: 'flex-start' }}>
                     {CHECK} {item}
                   </li>
                 ))}
               </ul>
-              <button onClick={onGetStarted} className="lp-btn-ghost" style={{ width: '100%', justifyContent: 'center', fontSize: 15, padding: '13px 0' }}>
-                Testar grátis · depois R$ 37/tri
-              </button>
             </div>
 
             {/* Anual */}
@@ -655,22 +652,25 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                 <span style={{ fontSize: 15, color: 'var(--ink-3)' }}>/ano</span>
               </div>
               <div style={{ fontSize: 13, color: 'var(--pos)', fontWeight: 600, marginBottom: 24 }}>≈ R$ 7,25 por mês</div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 26px', display: 'flex', flexDirection: 'column', gap: 11 }}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 11 }}>
                 {['Tudo do plano trimestral', <>12 meses pelo preço de ~7</>, 'Menos renovações para gerenciar', 'Suporte prioritário'].map((item, idx) => (
                   <li key={idx} style={{ display: 'flex', gap: 9, fontSize: 14, color: 'var(--ink-2)', alignItems: 'flex-start' }}>
                     {CHECK} {item}
                   </li>
                 ))}
               </ul>
-              <button onClick={onGetStarted} className="lp-btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: 15, padding: '13px 0' }}>
-                Testar grátis · depois R$ 87/ano
-              </button>
             </div>
           </div>
 
-          <p className="lp-reveal" style={{ textAlign: 'center', fontSize: 13, color: 'var(--ink-3)', marginTop: 28 }}>
-            3 dias grátis, sem cobrança durante o teste · cancele quando quiser pela plataforma · pagamento por cartão via Mercado Pago
-          </p>
+          {/* CTA único abaixo dos cards */}
+          <div className="lp-reveal" style={{ textAlign: 'center', marginTop: 40, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+            <button onClick={onGetStarted} className="lp-btn-primary lp-btn-primary-lg" style={{ fontSize: 17, padding: '15px 40px' }}>
+              Teste grátis por 3 dias · faça seu cadastro grátis e escolha seu plano {ARROW}
+            </button>
+            <p style={{ fontSize: 13, color: 'var(--ink-3)', margin: 0 }}>
+              Sem cobrança durante o teste · cancele quando quiser · pagamento via Mercado Pago
+            </p>
+          </div>
         </div>
       </section>
 
