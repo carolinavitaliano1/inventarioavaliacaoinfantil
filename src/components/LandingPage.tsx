@@ -50,7 +50,7 @@ const SZ = { width: 21, height: 21, fill: 'none' as const, stroke: 'currentColor
 const FEATURES = [
   {
     title: '6 áreas · 589 habilidades',
-    desc: 'Inventário Portage completo — Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados, Cognição e Psicomotora, de 0 a 6 anos.',
+    desc: 'Inventário de Avaliação do Desenvolvimento Infantil completo — Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados, Cognição e Psicomotora, de 0 a 6 anos.',
     icon: <svg {...SZ}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
   },
   {
@@ -101,7 +101,7 @@ const PROFILES = [
   {
     role: 'Fonoaudióloga',
     context: 'Clínica de linguagem · consultório próprio',
-    desc: 'Aplica o Portage a cada avaliação e usa os gráficos de Linguagem Receptiva e Expressiva para mostrar à família a curva de evolução mês a mês. O relatório Word sai em minutos.',
+    desc: 'Aplica o inventário a cada avaliação e usa os gráficos de Linguagem Receptiva e Expressiva para mostrar à família a curva de evolução mês a mês. O relatório Word sai em minutos.',
     color: 'hsl(190 56% 42%)',
     bg: 'hsl(190 55% 96%)',
   },
@@ -122,7 +122,7 @@ const PROFILES = [
 ]
 
 const FAQS = [
-  { q: 'Qual instrumento o IADI usa?', a: 'O Inventário Portage de Desenvolvimento (IPD), com 589 habilidades em 6 áreas: Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados Próprios, Cognição e Psicomotora, do nascimento aos 6 anos.' },
+  { q: 'Qual instrumento o IADI usa?', a: 'O Inventário de Avaliação do Desenvolvimento Infantil, com 589 habilidades em 6 áreas: Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados Próprios, Cognição e Psicomotora, do nascimento aos 6 anos. O instrumento é baseado no Inventário Portage de Desenvolvimento (referência bibliográfica: Bluma et al., 1976; Williams & Aiello, 2001).' },
   { q: 'Para quais profissionais o IADI é indicado?', a: 'Para todos que atuam com desenvolvimento infantil: psicólogos, fonoaudiólogos, terapeutas ocupacionais, fisioterapeutas, pedagogos e psicopedagogos, em consultório, clínica ou escola.' },
   { q: 'Preciso instalar algo?', a: 'Não. Funciona direto no navegador, no computador ou tablet. Acesse com seu login de qualquer lugar.' },
   { q: 'Qual a diferença entre os planos?', a: 'Os recursos são idênticos. O trimestral (R$ 37 a cada 3 meses) é ótimo para começar; o anual (R$ 87 por ano, ~R$ 7,25/mês) sai mais barato e reduz o número de renovações.' },
@@ -370,7 +370,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <div className="lp-hero-h">
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--primary-ink)', background: 'var(--primary-bg)', border: '1px solid var(--primary-line)', borderRadius: 99, padding: '5px 13px', marginBottom: 22 }}>
                 <span style={{ width: 6, height: 6, borderRadius: 99, background: 'var(--primary)', display: 'inline-block' }} />
-                Baseado no Inventário Portage · 0 a 6 anos
+                Inventário de Avaliação do Desenvolvimento Infantil · 0 a 6 anos
               </div>
               <h1 style={{ fontSize: 52, fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.08, margin: 0, color: 'var(--ink)' }}>
                 Do questionário<br />
@@ -378,7 +378,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
               </h1>
             </div>
             <p className="lp-hero-sub" style={{ fontSize: 18, color: 'var(--ink-2)', marginTop: 20, lineHeight: 1.6, maxWidth: '36ch' }}>
-              Aplique o Inventário Portage, veja a idade desenvolvimental por área em segundos e gere um laudo profissional — sem planilhas, sem cálculos manuais.
+              Aplique o inventário, veja a idade desenvolvimental por área em segundos e gere um laudo profissional — sem planilhas, sem cálculos manuais.
             </p>
             <div className="lp-hero-cta" style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap', alignItems: 'center' }}>
               <button onClick={onGetStarted} className="lp-btn-primary lp-btn-primary-lg">
@@ -487,7 +487,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 16px', textWrap: 'balance' as never }}>
               Avaliar desenvolvimento não precisa ser exaustivo
             </h2>
-            <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Aplicar o Portage é só o começo. O que vem depois — calcular, interpretar, documentar — é onde se perde tempo.</p>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Aplicar o inventário é só o começo. O que vem depois — calcular, interpretar, documentar — é onde se perde tempo.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
             {PROBLEMS.map((p, i) => (
