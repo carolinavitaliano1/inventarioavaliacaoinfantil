@@ -50,8 +50,12 @@ function areaShort(area: string) {
 
 async function downloadChartPNG(container: HTMLElement | null, filename: string) {
   if (!container) return
+  // Hide download buttons inside the container before capture
+  const btns = container.querySelectorAll<HTMLElement>('button')
+  btns.forEach(b => { b.style.visibility = 'hidden' })
   const h2c = (await import('html2canvas')).default
   const canvas = await h2c(container, { scale: 2, useCORS: true, backgroundColor: '#ffffff' })
+  btns.forEach(b => { b.style.visibility = '' })
   const a = document.createElement('a')
   a.download = filename + '.png'
   a.href = canvas.toDataURL('image/png')
