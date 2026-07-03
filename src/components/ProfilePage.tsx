@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, User, Mail, Lock, LogOut, CheckCircle, Loader2, AlertCircle, CreditCard } from 'lucide-react'
+import AppFooter from './AppFooter'
 import { supabase } from '../lib/supabase'
 import type { useAuth } from '../hooks/useAuth'
 import type { useSubscription } from '../hooks/useSubscription'
@@ -165,6 +166,7 @@ export default function ProfilePage({ auth, subHook, onBack, onGoSubscription }:
           </div>
         </div>
       </div>
+      <AppFooter />
     </div>
   )
 }

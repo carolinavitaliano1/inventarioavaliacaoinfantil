@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { ArrowLeft, Plus, Trash2, Loader2, Send, MessageSquare, PlayCircle, BookOpen, ChevronDown, ChevronUp, X, Eye, EyeOff, Globe } from 'lucide-react'
+import AppFooter from './AppFooter'
 import { supabase } from '../lib/supabase'
 import type { useAuth } from '../hooks/useAuth'
 
@@ -419,6 +420,7 @@ export default function Community({ auth, onBack }: Props) {
           })}
         </div>
       </div>
+      <AppFooter />
     </div>
   )
 }
