@@ -82,10 +82,10 @@ export default function PricingPage({ subHook, auth }: Props) {
           Acesso completo
         </div>
         <h1 style={{ fontSize: 32, fontWeight: 800, color: '#111', margin: '0 0 14px', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
-          3 dias grátis, sem cobrança
+          3 dias grátis para experimentar
         </h1>
-        <p style={{ color: '#6b7280', fontSize: 15, maxWidth: 420, margin: '0 auto 10px', lineHeight: 1.6 }}>
-          Experimente o IADI completo por 3 dias. <strong style={{ color: '#111' }}>Nenhum valor é cobrado durante o período de teste.</strong><br />Cancele antes e não paga absolutamente nada.
+        <p style={{ color: '#6b7280', fontSize: 15, maxWidth: 440, margin: '0 auto 10px', lineHeight: 1.6 }}>
+          Cadastre sua forma de pagamento e explore o IADI completo por 3 dias. <strong style={{ color: '#111' }}>A cobrança só começa no 4º dia</strong> — se cancelar antes, não paga absolutamente nada.
         </p>
       </div>
 

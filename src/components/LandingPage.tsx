@@ -615,7 +615,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <span style={eyebrow}>Planos</span>
             <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Conheça nossos planos</h2>
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>
-              Crie sua conta grátis, explore por 3 dias e escolha o plano que faz sentido para você. Sem cartão obrigatório, sem taxa de adesão.
+              Crie sua conta, cadastre sua forma de pagamento e explore o IADI completo por 3 dias. Você só é cobrado se decidir continuar — cancele antes e não paga nada.
             </p>
           </div>
 
@@ -668,7 +668,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
               Teste grátis por 3 dias · faça seu cadastro grátis e escolha seu plano {ARROW}
             </button>
             <p style={{ fontSize: 13, color: 'var(--ink-3)', margin: 0 }}>
-              Sem cobrança durante o teste · cancele quando quiser · pagamento via Mercado Pago
+              Cobrança só após os 3 dias de teste · cancele antes e não paga nada · pagamento via Mercado Pago
             </p>
           </div>
         </div>
@@ -760,7 +760,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                 Ganhe horas por semana. Entregue mais para cada paciente.
               </h2>
               <p style={{ fontSize: 17.5, color: 'hsl(214 30% 78%)', margin: '0 auto 36px', maxWidth: '44ch', lineHeight: 1.6 }}>
-                Aplique, calcule e gere relatórios do desenvolvimento infantil em um só lugar. 3 dias grátis, sem cartão exigido de imediato.
+                Aplique, calcule e gere relatórios do desenvolvimento infantil em um só lugar. 3 dias grátis — você só é cobrado se decidir continuar.
               </p>
               <button onClick={onGetStarted} style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'inherit', fontWeight: 700, fontSize: 17, padding: '17px 36px', borderRadius: 11, border: 'none', cursor: 'pointer', background: '#fff', color: 'hsl(214 60% 28%)', boxShadow: '0 8px 28px hsl(220 40% 8% / .28)', transition: 'transform .15s, box-shadow .15s' }}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 12px 36px hsl(220 40% 8% / .36)' }}
@@ -769,7 +769,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                 Testar grátis por 3 dias {ARROW}
               </button>
               <div style={{ marginTop: 18, fontSize: 13, color: 'hsl(214 20% 65%)' }}>
-                Sem cobrança durante o período de teste · cancele quando quiser
+                Cobrança só após os 3 dias · cancele antes e não paga nada
               </div>
             </div>
           </div>
