@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { ArrowLeft, BarChart3, Plus, Trash2, FileDown, Loader2, BookOpen, Layers, Flag } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { ArrowLeft, BarChart3, Plus, Trash2, FileDown, Loader2, BookOpen, Layers, Flag, Save, Check } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { View } from '../App'
@@ -41,16 +41,34 @@ function defaultStrategy(area: string) {
   return s[area] ?? 'Observe a criança em contexto natural. Ofereça apoio gradativo e reforce progressos.'
 }
 
+function storageKey(id: string) { return `iadi_pei_${id}` }
+function savePlan(id: string, plan: PEIItem[]) {
+  try { localStorage.setItem(storageKey(id), JSON.stringify(plan)) } catch {}
+}
+function loadPlan(id: string): PEIItem[] | null {
+  try {
+    const raw = localStorage.getItem(storageKey(id))
+    return raw ? (JSON.parse(raw) as PEIItem[]) : null
+  } catch { return null }
+}
+
 export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   const { current } = hook
   const [tab, setTab] = useState<'plano' | 'selecionar'>('selecionar')
   const [exportingWord, setExportingWord] = useState(false)
   const [editingEst, setEditingEst] = useState<string | null>(null)
+  const [saveStatus, setSaveStatus] = useState<'saved' | 'saving'>('saved')
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const naoItems = portageItems.filter(i => current?.responses?.[i.id] === 'nao')
   const avItems = portageItems.filter(i => current?.responses?.[i.id] === 'as_vezes')
 
   const [plan, setPlan] = useState<PEIItem[]>(() => {
+    // restore from localStorage if available
+    if (current?.id) {
+      const saved = loadPlan(current.id)
+      if (saved) return saved
+    }
     const pick = (arr: PortageItem[], prazo: PEIItem['prazo'], n: number): PEIItem[] =>
       arr.slice(0, n).map((it, i) => ({
         id: it.id, skill: it.text, area: it.area, ageRange: it.age_range, prazo,
@@ -59,6 +77,27 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
       }))
     return [...pick(naoItems, 'curto', 3), ...pick(avItems, 'medio', 2)]
   })
+
+  // auto-save with 800ms debounce whenever plan changes
+  const isFirst = useRef(true)
+  useEffect(() => {
+    if (!current?.id) return
+    if (isFirst.current) { isFirst.current = false; return }
+    setSaveStatus('saving')
+    if (saveTimer.current) clearTimeout(saveTimer.current)
+    saveTimer.current = setTimeout(() => {
+      savePlan(current.id, plan)
+      setSaveStatus('saved')
+    }, 800)
+    return () => { if (saveTimer.current) clearTimeout(saveTimer.current) }
+  }, [plan, current?.id])
+
+  const handleSaveNow = () => {
+    if (!current?.id) return
+    if (saveTimer.current) clearTimeout(saveTimer.current)
+    savePlan(current.id, plan)
+    setSaveStatus('saved')
+  }
 
   if (!current) return null
 
@@ -69,6 +108,7 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   }
   const remove = (id: string) => setPlan(p => p.filter(x => x.id !== id))
   const setStatus = (id: string, status: PEIItem['status']) => setPlan(p => p.map(x => x.id === id ? { ...x, status } : x))
+  const setPrazo = (id: string, prazo: PEIItem['prazo']) => setPlan(p => p.map(x => x.id === id ? { ...x, prazo } : x))
   const setEstrategias = (id: string, estrategias: string) => setPlan(p => p.map(x => x.id === id ? { ...x, estrategias } : x))
 
   const grouped: Record<string, PEIItem[]> = { curto: [], medio: [], longo: [] }
@@ -85,6 +125,14 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
       {auth && <TopBar auth={auth} onLogoClick={onBack} right={
         <>
           <button className="btn btn-ghost btn-sm" onClick={() => setView('results')}><BarChart3 size={14} /> Resultados</button>
+          <button className="btn btn-ghost btn-sm" onClick={handleSaveNow} title="Salvar plano">
+            {saveStatus === 'saving'
+              ? <><Loader2 size={14} className="animate-spin" /> Salvando…</>
+              : <><Check size={14} style={{ color: 'var(--pos)' }} /> Salvo</>}
+          </button>
+          <button className="btn btn-subtle btn-sm" onClick={handleSaveNow}>
+            <Save size={14} /> Salvar plano
+          </button>
           <button className="btn btn-primary btn-sm" onClick={handleExportWord} disabled={exportingWord}>
             {exportingWord ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Exportar Word
           </button>
@@ -174,7 +222,22 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
                             >{item.estrategias}</p>
                           )}
                         </div>
-                        <div style={{ display: 'flex', gap: 6, marginTop: 11 }}>
+                        <div style={{ display: 'flex', gap: 6, marginTop: 11, flexWrap: 'wrap', alignItems: 'center' }}>
+                          <span style={{ fontSize: 10.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--ink-4)', marginRight: 2 }}>Prazo</span>
+                          {(['curto', 'medio', 'longo'] as const).map(p => {
+                            const on = item.prazo === p; const h = PRAZO_HUE[p]
+                            return (
+                              <button key={p} onClick={() => setPrazo(item.id, p)} style={{
+                                fontSize: 11.5, fontWeight: 600, padding: '4px 11px', borderRadius: 99, cursor: 'pointer',
+                                border: `1px solid ${on ? `hsl(${h} 45% 55%)` : 'var(--line-2)'}`,
+                                background: on ? `hsl(${h} 55% 96%)` : 'var(--surface)',
+                                color: on ? `hsl(${h} 48% 38%)` : 'var(--ink-4)',
+                              }}>{p === 'curto' ? '3 meses' : p === 'medio' ? '6 meses' : '9–12 meses'}</button>
+                            )
+                          })}
+                        </div>
+                        <div style={{ display: 'flex', gap: 6, marginTop: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                          <span style={{ fontSize: 10.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--ink-4)', marginRight: 2 }}>Status</span>
                           {(['pendente', 'em_andamento', 'concluido'] as const).map(s => {
                             const on = item.status === s; const st = STATUS_STYLE[s]
                             return (
