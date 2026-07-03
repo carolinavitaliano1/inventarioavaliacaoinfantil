@@ -1,17 +1,19 @@
 export const AREA_HUE: Record<string, number> = {
-  'I – ÁREA SOCIABILIZAÇÃO': 224,
-  'II - ÁREA LINGUAGEM': 190,
+  'I – ÁREA SOCIABILIZAÇÃO':      224,
+  'IIa – LINGUAGEM RECEPTIVA':    190,
+  'IIb – LINGUAGEM EXPRESSIVA':   210,
   'III – ÁREA CUIDADOS PRÓPRIOS': 150,
-  'IV- ÁREA COGNITIVA': 40,
-  'V. ÁREA PSICOMOTORA': 6,
+  'IV- ÁREA COGNITIVA':           40,
+  'V. ÁREA PSICOMOTORA':          6,
 }
 
 export const AREA_NUM: Record<string, string> = {
-  'I – ÁREA SOCIABILIZAÇÃO': 'I',
-  'II - ÁREA LINGUAGEM': 'II',
+  'I – ÁREA SOCIABILIZAÇÃO':      'I',
+  'IIa – LINGUAGEM RECEPTIVA':    'IIa',
+  'IIb – LINGUAGEM EXPRESSIVA':   'IIb',
   'III – ÁREA CUIDADOS PRÓPRIOS': 'III',
-  'IV- ÁREA COGNITIVA': 'IV',
-  'V. ÁREA PSICOMOTORA': 'V',
+  'IV- ÁREA COGNITIVA':           'IV',
+  'V. ÁREA PSICOMOTORA':          'V',
 }
 
 export function areaHue(area: string): number { return AREA_HUE[area] ?? 214 }

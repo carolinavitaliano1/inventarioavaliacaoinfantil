@@ -35,11 +35,12 @@ function formatDevAge(years: number) {
 }
 
 const AREA_SHORT: Record<string, string> = {
-  'I – ÁREA SOCIABILIZAÇÃO': 'Social',
-  'II - ÁREA LINGUAGEM': 'Linguagem',
+  'I – ÁREA SOCIABILIZAÇÃO':      'Social',
+  'IIa – LINGUAGEM RECEPTIVA':    'Ling. Rec.',
+  'IIb – LINGUAGEM EXPRESSIVA':   'Ling. Exp.',
   'III – ÁREA CUIDADOS PRÓPRIOS': 'Cuidados',
-  'IV- ÁREA COGNITIVA': 'Cognitiva',
-  'V. ÁREA PSICOMOTORA': 'Psicomotora',
+  'IV- ÁREA COGNITIVA':           'Cognitiva',
+  'V. ÁREA PSICOMOTORA':          'Psicomotora',
 }
 
 export default function PatientDetail({ patientId, patientsHook, assessmentHook, setView, onBack, onPatientNotFound, auth }: Props) {

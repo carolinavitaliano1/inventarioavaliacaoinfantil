@@ -11,11 +11,12 @@ import { calcAreaDevResult } from './ageCalc'
 
 // Nomes curtos das áreas para tabelas
 const AREA_SHORT: Record<string, string> = {
-  'I – ÁREA SOCIABILIZAÇÃO': 'Sociabilização',
-  'II - ÁREA LINGUAGEM': 'Linguagem',
+  'I – ÁREA SOCIABILIZAÇÃO':      'Sociabilização',
+  'IIa – LINGUAGEM RECEPTIVA':    'Ling. Receptiva',
+  'IIb – LINGUAGEM EXPRESSIVA':   'Ling. Expressiva',
   'III – ÁREA CUIDADOS PRÓPRIOS': 'Cuidados Próprios',
-  'IV- ÁREA COGNITIVA': 'Cognitiva',
-  'V. ÁREA PSICOMOTORA': 'Psicomotora',
+  'IV- ÁREA COGNITIVA':           'Cognitiva',
+  'V. ÁREA PSICOMOTORA':          'Psicomotora',
 }
 function shortArea(area: string) { return AREA_SHORT[area] ?? area }
 

@@ -38,11 +38,12 @@ function areaColor(area: string) {
 // short area label for radar / legend
 function areaShort(area: string) {
   const map: Record<string, string> = {
-    'I – ÁREA SOCIABILIZAÇÃO': 'Socialização',
-    'II - ÁREA LINGUAGEM': 'Linguagem',
+    'I – ÁREA SOCIABILIZAÇÃO':      'Socialização',
+    'IIa – LINGUAGEM RECEPTIVA':    'Ling. Receptiva',
+    'IIb – LINGUAGEM EXPRESSIVA':   'Ling. Expressiva',
     'III – ÁREA CUIDADOS PRÓPRIOS': 'Cuidados Próprios',
-    'IV- ÁREA COGNITIVA': 'Cognição',
-    'V. ÁREA PSICOMOTORA': 'Psicomotora',
+    'IV- ÁREA COGNITIVA':           'Cognição',
+    'V. ÁREA PSICOMOTORA':          'Psicomotora',
   }
   return map[area] ?? area
 }

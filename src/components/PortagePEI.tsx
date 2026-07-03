@@ -32,7 +32,8 @@ const STATUS_STYLE: Record<string, { c: string; b: string }> = {
 function defaultStrategy(area: string) {
   const s: Record<string, string> = {
     'I – ÁREA SOCIABILIZAÇÃO': 'Utilize situações naturais de brincadeira e rotina para estimular as habilidades sociais. Modele o comportamento esperado e ofereça feedback positivo imediato.',
-    'II - ÁREA LINGUAGEM': 'Crie oportunidades comunicativas ao longo do dia. Use expansão de fala e modele estruturas mais complexas de forma natural e contextualizada.',
+    'IIa – LINGUAGEM RECEPTIVA': 'Estimule a compreensão através de instruções simples, apontamento e rotinas previsíveis. Use suporte visual e gestos para facilitar a compreensão.',
+    'IIb – LINGUAGEM EXPRESSIVA': 'Crie oportunidades comunicativas ao longo do dia. Use expansão de fala e modele estruturas mais complexas de forma natural e contextualizada.',
     'III – ÁREA CUIDADOS PRÓPRIOS': 'Divida a tarefa em etapas menores com apoio visual. Reduza gradualmente a ajuda física à medida que a criança ganha independência.',
     'IV- ÁREA COGNITIVA': 'Utilize materiais concretos e manipulativos. Apresente o conceito em contextos variados e reforce a generalização da habilidade.',
     'V. ÁREA PSICOMOTORA': 'Pratique em ambientes seguros e motivadores. Aumente gradualmente a complexidade do movimento conforme a criança demonstra domínio.',
