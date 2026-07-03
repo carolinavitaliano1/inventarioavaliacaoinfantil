@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Check, Loader2, Activity, LogOut, ShieldCheck, Lock, CreditCard, RefreshCcw } from 'lucide-react'
+import AppFooter from './AppFooter'
 import type { useSubscription } from '../hooks/useSubscription'
 import type { useAuth } from '../hooks/useAuth'
 
@@ -187,6 +188,7 @@ export default function PricingPage({ subHook, auth }: Props) {
           ))}
         </div>
       </div>
+      <AppFooter />
     </div>
   )
 }

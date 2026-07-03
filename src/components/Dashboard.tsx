@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Plus, Megaphone, Trash2, Loader2, Camera, X, ChevronRight, BookMarked, Search, Users, ClipboardList, TrendingUp, Calendar, MessageSquare, UserCircle } from 'lucide-react'
+import AppFooter from './AppFooter'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { PatientsHook } from '../hooks/usePatients'
@@ -366,6 +367,7 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
           )}
         </div>
       </div>
+      <AppFooter />
     </div>
   )
 }

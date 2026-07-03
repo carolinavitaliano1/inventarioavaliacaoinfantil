@@ -777,24 +777,47 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
       </section>
 
       {/* ── FOOTER ────────────────────────────────────────────────────── */}
-      <footer style={{ padding: '42px 0', borderTop: '1px solid var(--line)' }}>
-        <div style={{ ...w, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ width: 28, height: 28, borderRadius: 7, background: 'var(--primary)', color: '#fff', display: 'grid', placeItems: 'center' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <footer style={{ padding: '48px 0 36px', borderTop: '1px solid var(--line)' }}>
+        <div style={{ ...w, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 36 }}>
+          {/* Brand */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+              <div style={{ width: 28, height: 28, borderRadius: 7, background: 'var(--primary)', color: '#fff', display: 'grid', placeItems: 'center' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 14 }}>IADI</div>
+                <div style={{ fontSize: 11, color: 'var(--ink-3)' }}>Inventário de Avaliação do Desenvolvimento Infantil</div>
+              </div>
             </div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: 14 }}>IADI</div>
-              <div style={{ fontSize: 11, color: 'var(--ink-3)' }}>Inventário de Avaliação do Desenvolvimento Infantil</div>
+            <p style={{ fontSize: 12.5, color: 'var(--ink-4)', lineHeight: 1.6, margin: 0 }}>© 2026 IADI · Todos os direitos reservados</p>
+          </div>
+
+          {/* Nav */}
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.07em', color: 'var(--ink-3)', marginBottom: 14 }}>Navegação</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {[['#recursos','Recursos'],['#como','Como funciona'],['#planos','Planos'],['#faq','Dúvidas']].map(([h,l]) => (
+                <a key={h} href={h} style={{ color: 'var(--ink-3)', textDecoration: 'none', fontSize: 13.5 }}>{l}</a>
+              ))}
+              <button onClick={onLogin ?? onGetStarted} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13.5, color: 'var(--ink-3)', padding: 0, fontFamily: 'inherit', textAlign: 'left' }}>Entrar</button>
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 22, fontSize: 13.5 }}>
-            {[['#recursos','Recursos'],['#planos','Planos'],['#faq','Dúvidas']].map(([h,l]) => (
-              <a key={h} href={h} style={{ color: 'var(--ink-3)', textDecoration: 'none' }}>{l}</a>
-            ))}
-            <button onClick={onLogin ?? onGetStarted} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13.5, color: 'var(--ink-3)', padding: 0, fontFamily: 'inherit' }}>Entrar</button>
+
+          {/* Contato */}
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.07em', color: 'var(--ink-3)', marginBottom: 14 }}>Contato</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <a href="mailto:prof.carolgurgel@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: 9, color: 'var(--ink-2)', textDecoration: 'none', fontSize: 13.5 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                prof.carolgurgel@gmail.com
+              </a>
+              <a href="https://www.instagram.com/institutoprofcarolgurgel/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 9, color: 'var(--ink-2)', textDecoration: 'none', fontSize: 13.5 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                @institutoprofcarolgurgel
+              </a>
+            </div>
           </div>
-          <div style={{ fontSize: 12, color: 'var(--ink-4)' }}>© 2026 IADI · Todos os direitos reservados</div>
         </div>
       </footer>
     </div>
