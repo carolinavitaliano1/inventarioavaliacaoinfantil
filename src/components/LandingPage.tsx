@@ -45,41 +45,43 @@ const PROBLEMS = [
   },
 ]
 
+const SZ = { width: 21, height: 21, fill: 'none' as const, stroke: 'currentColor', strokeWidth: 2 as const, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, viewBox: '0 0 24 24' }
+
 const FEATURES = [
   {
     title: '6 áreas · 589 habilidades',
     desc: 'Inventário Portage completo — Socialização, Linguagem Receptiva, Linguagem Expressiva, Cuidados, Cognição e Psicomotora, de 0 a 6 anos.',
-    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
+    icon: <svg {...SZ}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
   },
   {
     title: 'Idade desenvolvimental automática',
     desc: 'O sistema calcula a idade de desenvolvimento em cada área com base nas respostas — sem fórmulas manuais, sem planilha.',
-    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18M17 6h6v6"/></svg>,
+    icon: <svg {...SZ}><path d="M23 6l-9.5 9.5-5-5L1 18M17 6h6v6"/></svg>,
   },
   {
     title: 'Evolução entre avaliações',
     desc: 'Compare aplicações ao longo do tempo em gráficos de linha. Mostre em segundos quanto a criança evoluiu desde a última avaliação.',
-    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>,
+    icon: <svg {...SZ}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>,
   },
   {
     title: 'Relatório em Word em 1 clique',
     desc: 'Laudo interpretativo com síntese, detalhamento por área e análise gerado automaticamente. Editável, pronto para entregar.',
-    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg>,
+    icon: <svg {...SZ}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg>,
   },
   {
     title: 'Plano de Ensino Individualizado',
     desc: 'Selecione habilidades prioritárias e gere o PEI com metas por prazo, estratégias de intervenção e acompanhamento de status.',
-    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5z"/></svg>,
+    icon: <svg {...SZ}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5z"/></svg>,
   },
   {
     title: 'Gráficos para download em PNG',
     desc: 'Radar do perfil desenvolvimental, curvas de progressão por área e distribuição de aquisição — baixe em PNG para apresentações.',
-    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18M18 9l-5 5-3-3-3 3"/></svg>,
+    icon: <svg {...SZ}><path d="M3 3v18h18M18 9l-5 5-3-3-3 3"/></svg>,
   },
   {
     title: 'Dados por profissional',
     desc: 'Cada conta acessa apenas os seus pacientes, com histórico completo de avaliações. Privado, organizado, acessível de qualquer navegador.',
-    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+    icon: <svg {...SZ}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
   },
   {
     title: 'Sem instalação, sem configuração',
@@ -545,9 +547,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             {FEATURES.map((f, i) => (
               <div key={f.title} className={`lp-feat-card lp-reveal lp-reveal-d${(i % 3) + 1}`}>
                 <div style={{ width: 42, height: 42, borderRadius: 10, background: 'var(--primary-bg)', color: 'var(--primary-ink)', display: 'grid', placeItems: 'center', marginBottom: 16 }}>
-                  <svg style={{ width: 21, height: 21 }} viewBox={(f.icon as React.ReactElement).props.viewBox} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    {(f.icon as React.ReactElement).props.children}
-                  </svg>
+                  {f.icon}
                 </div>
                 <h3 style={{ fontSize: 15.5, fontWeight: 700, letterSpacing: '-0.02em', margin: '0 0 8px', lineHeight: 1.2 }}>{f.title}</h3>
                 <p style={{ fontSize: 13.5, color: 'var(--ink-2)', margin: 0, lineHeight: 1.58 }}>{f.desc}</p>
