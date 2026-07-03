@@ -16,6 +16,7 @@ import Community from './components/Community'
 import ProfilePage from './components/ProfilePage'
 import SubscriptionPage from './components/SubscriptionPage'
 import LandingPage from './components/LandingPage'
+import ResetPasswordPage from './components/ResetPasswordPage'
 import { Loader2 } from 'lucide-react'
 
 export type View = 'dashboard' | 'home' | 'patient' | 'questionnaire' | 'results' | 'pei' | 'community' | 'profile' | 'subscription'
@@ -60,6 +61,26 @@ export default function App() {
   const [loginMode, setLoginMode] = useState<'login' | 'signup' | null>(null)
   const [pendingNav, setPendingNav] = useState<View | null>(null)
 
+  // Detect password recovery flow (hash from Supabase magic link)
+  const [isRecovery, setIsRecovery] = useState(() => {
+    const hash = window.location.hash
+    return hash.includes('type=recovery')
+  })
+
+  // Detect return from Mercado Pago checkout
+  const [checkoutSuccess, setCheckoutSuccess] = useState(() => {
+    return new URLSearchParams(window.location.search).get('checkout') === 'success'
+  })
+
+  useEffect(() => {
+    if (checkoutSuccess) {
+      // Clean URL without reloading
+      const url = new URL(window.location.href)
+      url.searchParams.delete('checkout')
+      window.history.replaceState({}, '', url.toString())
+    }
+  }, [checkoutSuccess])
+
   useEffect(() => {
     if (pendingNav && hook.currentId) {
       setView(pendingNav)
@@ -93,10 +114,46 @@ export default function App() {
     )
   }
 
+  // Password recovery: user clicked the email link
+  if (isRecovery) {
+    return (
+      <ErrorBoundary>
+        <ResetPasswordPage onDone={() => { setIsRecovery(false); window.history.replaceState({}, '', '/') }} />
+      </ErrorBoundary>
+    )
+  }
+
   if (!auth.user) {
     return (
       <ErrorBoundary>
         {loginMode ? <LoginPage auth={auth} defaultMode={loginMode} /> : <LandingPage onGetStarted={() => setLoginMode('signup')} onLogin={() => setLoginMode('login')} />}
+      </ErrorBoundary>
+    )
+  }
+
+  // Returned from Mercado Pago — show success message and wait for webhook to activate subscription
+  if (checkoutSuccess) {
+    return (
+      <ErrorBoundary>
+        <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', background: 'var(--bg)', padding: 24 }}>
+          <div style={{ textAlign: 'center', maxWidth: 380 }}>
+            <div style={{ fontSize: 52, marginBottom: 16 }}>🎉</div>
+            <h2 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 12px', color: 'var(--ink)' }}>Pagamento recebido!</h2>
+            <p style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.6, margin: '0 0 28px' }}>
+              Seu acesso será ativado em instantes. Aguarde alguns segundos enquanto confirmamos sua assinatura.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 28 }}>
+              <Loader2 size={28} className="animate-spin" style={{ color: 'var(--primary)' }} />
+            </div>
+            <button
+              onClick={() => { setCheckoutSuccess(false); window.location.reload() }}
+              className="btn btn-primary"
+              style={{ padding: '11px 28px', fontSize: 14 }}
+            >
+              Entrar no app agora
+            </button>
+          </div>
+        </div>
       </ErrorBoundary>
     )
   }
