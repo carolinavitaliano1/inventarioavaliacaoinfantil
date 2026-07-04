@@ -581,6 +581,421 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
         </div>
       </section>
 
+      {/* ── GALERIA / SCREENSHOTS ─────────────────────────────────────── */}
+      <section style={{ padding: '88px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div style={w}>
+          <div className="lp-reveal" style={{ textAlign: 'center', maxWidth: 560, margin: '0 auto 56px' }}>
+            <span style={eyebrow}>Veja por dentro</span>
+            <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>O app na prática</h2>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Cada tela foi pensada para economizar tempo e entregar clareza clínica.</p>
+          </div>
+
+          {/* Grade de cards — mockups SVG fiéis ao app */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+
+            {/* Card 1 — Painel clínico */}
+            <div className="lp-reveal" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+                <span style={{ marginLeft: 8, fontSize: 11, color: 'var(--ink-4)', fontFamily: 'monospace' }}>inventarioavaliacaoinfantil.vercel.app</span>
+              </div>
+              <div style={{ padding: 20 }}>
+                {/* Topbar mock */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                  <div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--ink)' }}>Painel clínico</div>
+                    <div style={{ fontSize: 11, color: 'var(--ink-4)' }}>Acompanhe avaliações e a evolução de cada criança.</div>
+                  </div>
+                  <div style={{ background: 'var(--primary)', color: '#fff', fontSize: 11, fontWeight: 600, borderRadius: 8, padding: '5px 10px' }}>+ Novo paciente</div>
+                </div>
+                {/* Stats */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 14 }}>
+                  {[['2','PACIENTES'],['21','AVALIAÇÕES'],['1','ACOMP.'],['7','ESTE MÊS']].map(([n, l]) => (
+                    <div key={l} style={{ border: '1px solid var(--line)', borderRadius: 8, padding: '8px 6px', textAlign: 'center' }}>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink)' }}>{n}</div>
+                      <div style={{ fontSize: 9, color: 'var(--ink-4)', letterSpacing: '0.04em' }}>{l}</div>
+                    </div>
+                  ))}
+                </div>
+                {/* Patient list */}
+                {[['Lucas','4a 8m · TEA','0a 3m','-4.5a'],['Liz','15a 8m · TEA','0a 1m','-15.7a']].map(([name, sub, dev, gap]) => (
+                  <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderBottom: '1px solid var(--line)' }}>
+                    <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--primary)', display: 'grid', placeItems: 'center', color: '#fff', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{name[0]}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink)' }}>{name}</div>
+                      <div style={{ fontSize: 10, color: 'var(--ink-4)' }}>{sub}</div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: 11, color: 'var(--ink-3)' }}>{dev}</div>
+                      <div style={{ fontSize: 10, color: '#e03' }}>{gap}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Painel clínico — visão geral dos pacientes</div>
+            </div>
+
+            {/* Card 2 — Síntese por área */}
+            <div className="lp-reveal lp-reveal-d1" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <div style={{ padding: 20 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 4 }}>Desempenho por área e faixa etária</div>
+                <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 14 }}>% de aquisição · verde ≥ 75% · âmbar 50–74% · vermelho &lt; 50%</div>
+                {[
+                  ['I – Socialização', '#4c7ef3', '0%','0%','0%','0%','0%','0%','0 meses'],
+                  ['IIa – Ling. Receptiva', '#20b8a0', '18%','0%','0%','0%','0%','0%','7 meses'],
+                  ['IIb – Ling. Expressiva', '#7c5cbf', '92%','0%','0%','0%','0%','0%','1 ano'],
+                  ['III – Cuidados', '#2da44e', '0%','0%','0%','0%','0%','0%','0 meses'],
+                  ['IV – Cognitiva', '#e09b00', '0%','0%','0%','0%','0%','0%','0 meses'],
+                  ['V – Psicomotora', '#c0392b', '0%','0%','0%','0%','0%','0%','0 meses'],
+                ].map(([area, color, v1, , , , , , dev]) => (
+                  <div key={area} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 0', borderBottom: '1px solid var(--line)', fontSize: 10 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: 2, background: color, flexShrink: 0 }} />
+                    <div style={{ flex: 1, color: 'var(--ink)', fontWeight: 500 }}>{area}</div>
+                    <div style={{ color: parseFloat(v1) >= 75 ? '#2da44e' : parseFloat(v1) >= 50 ? '#e09b00' : parseFloat(v1) > 0 ? '#c0392b' : 'var(--ink-4)', fontWeight: 600, width: 28, textAlign: 'right' }}>{v1}</div>
+                    <div style={{ color: 'var(--primary)', fontWeight: 600, width: 40, textAlign: 'right' }}>{dev}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Síntese — resultado por área e faixa etária</div>
+            </div>
+
+            {/* Card 3 — Progressão */}
+            <div className="lp-reveal lp-reveal-d2" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <div style={{ padding: 20 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 14 }}>Idade desenvolvimental por área</div>
+                {[
+                  ['Social',         '0a 0m','0a 0m','— +0.00a', 'neutral'],
+                  ['Ling. Rec.',     '0a 3m','0a 7m','↑ +0.35a', 'pos'],
+                  ['Ling. Exp.',     '0a 6m','0a 12m','↑ +0.42a','pos'],
+                  ['Cuidados',       '0a 0m','0a 0m','— +0.00a', 'neutral'],
+                  ['Cognitiva',      '0a 0m','0a 0m','— +0.00a', 'neutral'],
+                  ['Psicomotora',    '0a 0m','0a 0m','— +0.00a', 'neutral'],
+                  ['Média geral',    '0a 2m','0a 3m','↑ +0.13a', 'pos'],
+                ].map(([area, av1, av2, var_, type]) => (
+                  <div key={area} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.2fr', gap: 4, padding: '5px 0', borderBottom: '1px solid var(--line)', fontSize: 10, alignItems: 'center' }}>
+                    <div style={{ color: type === 'pos' ? 'var(--primary)' : 'var(--ink)', fontWeight: type === 'pos' ? 700 : 400 }}>{area}</div>
+                    <div style={{ color: 'var(--ink-3)' }}>{av1}</div>
+                    <div style={{ color: type === 'pos' ? 'var(--primary)' : 'var(--ink-3)' }}>{av2}</div>
+                    <div style={{ color: type === 'pos' ? '#2da44e' : 'var(--ink-4)', fontWeight: 600, textAlign: 'right' }}>{var_}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Progressão — evolução entre avaliações</div>
+            </div>
+
+            {/* Card 4 — Prioridades */}
+            <div className="lp-reveal lp-reveal-d3" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <div style={{ padding: 20 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#e09b00', marginBottom: 10, letterSpacing: '0.06em' }}>EM DESENVOLVIMENTO — ÀS VEZES · 15</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--primary)', padding: '6px 10px', background: 'hsl(214 56% 95%)', borderRadius: 6, marginBottom: 10 }}>IIa – LINGUAGEM RECEPTIVA</div>
+                {[
+                  'A criança arrulha e sussurra quando contente?',
+                  'A criança repete os próprios sons?',
+                  'A criança ri?',
+                  'A criança mostra reconhecimento de seu meio, por meio de sorriso ou parando de chorar?',
+                  'A criança sorri em resposta à atenção dada pelo adulto?',
+                ].map((q, i) => (
+                  <div key={i} style={{ padding: '7px 0', borderBottom: '1px solid var(--line)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--ink)', lineHeight: 1.4 }}>{q}</div>
+                    <div style={{ fontSize: 9, color: 'var(--ink-4)', marginTop: 2, letterSpacing: '0.06em' }}>IDADE 0 A 1 ANO</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Prioridades — habilidades em desenvolvimento</div>
+            </div>
+
+            {/* Card 5 — Gráfico Evolução por área (largo, ocupa 2 colunas) */}
+            <div className="lp-reveal lp-reveal-d1" style={{ gridColumn: 'span 2', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <div style={{ padding: 24, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+                {/* Gráfico 1 — Evolução por área */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Evolução por área</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>Idade desenvolvimental (anos) em cada avaliação</div>
+                  <svg viewBox="0 0 320 160" width="100%" style={{ display: 'block' }}>
+                    {/* Grid lines */}
+                    {[0,40,80,120,160].map((y, i) => (
+                      <g key={y}>
+                        <line x1="40" y1={y + 4} x2="310" y2={y + 4} stroke="var(--line)" strokeDasharray="4 4" strokeWidth="1" />
+                        <text x="36" y={y + 8} fontSize="9" fill="var(--ink-4)" textAnchor="end">{['1a','0.75a','0.5a','0.25a','0a'][i]}</text>
+                      </g>
+                    ))}
+                    {/* X labels */}
+                    <text x="50" y="155" fontSize="9" fill="var(--ink-4)">02/07/2026</text>
+                    <text x="240" y="155" fontSize="9" fill="var(--ink-4)">02/07/2026</text>
+                    {/* Lines — Ling. Expressiva (azul escuro): 0.54a → 0.96a */}
+                    <line x1="50" y1={164 - 0.54*160} x2="300" y2={164 - 0.96*160} stroke="#4c7ef3" strokeWidth="2" />
+                    <circle cx="50" cy={164 - 0.54*160} r="4" fill="#4c7ef3" />
+                    <circle cx="300" cy={164 - 0.96*160} r="4" fill="#4c7ef3" />
+                    {/* Lines — Ling. Receptiva (ciano): 0.24a → 0.59a */}
+                    <line x1="50" y1={164 - 0.24*160} x2="300" y2={164 - 0.59*160} stroke="#20b8a0" strokeWidth="2" />
+                    <circle cx="50" cy={164 - 0.24*160} r="4" fill="#20b8a0" />
+                    <circle cx="300" cy={164 - 0.59*160} r="4" fill="#20b8a0" />
+                    {/* Lines — demais áreas em 0 */}
+                    {['#c0392b','#e09b00','#2da44e','#7c5cbf'].map((color, i) => (
+                      <g key={color}>
+                        <line x1="50" y1="164" x2="300" y2="164" stroke={color} strokeWidth="1.5" opacity="0.5" />
+                        <circle cx="50" cy="164" r="3" fill={color} opacity="0.5" />
+                        <circle cx="300" cy="164" r="3" fill={color} opacity="0.5" />
+                      </g>
+                    ))}
+                  </svg>
+                  {/* Legenda */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px', marginTop: 8 }}>
+                    {[['#4c7ef3','Ling. Expressiva'],['#20b8a0','Ling. Receptiva'],['#c0392b','Psicomotora'],['#e09b00','Cognição'],['#2da44e','Cuidados'],['#7c5cbf','Socialização']].map(([c, l]) => (
+                      <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 9, color: 'var(--ink-3)' }}>
+                        <div style={{ width: 16, height: 2, background: c, borderRadius: 1 }} />
+                        {l}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Gráfico 2 — Média geral vs cronológica */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Evolução da idade desenvolvimental — média geral</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>2 avaliações</div>
+                  <svg viewBox="0 0 320 160" width="100%" style={{ display: 'block' }}>
+                    {[0,32,64,96,128,160].map((y, i) => (
+                      <g key={y}>
+                        <line x1="40" y1={y + 4} x2="310" y2={y + 4} stroke="var(--line)" strokeDasharray="4 4" strokeWidth="1" />
+                        <text x="36" y={y + 8} fontSize="9" fill="var(--ink-4)" textAnchor="end">{['8a','6a','4a','2a','1a','0a'][i]}</text>
+                      </g>
+                    ))}
+                    {/* X labels */}
+                    <text x="50" y="155" fontSize="9" fill="var(--ink-4)">02/07/2026</text>
+                    <text x="240" y="155" fontSize="9" fill="var(--ink-4)">02/07/2026</text>
+                    {/* Cronológica — linha tracejada cinza: 4.75a (escala 0-8a) */}
+                    <line x1="50" y1={164 - (4.75/8)*160} x2="300" y2={164 - (4.75/8)*160} stroke="var(--ink-3)" strokeWidth="1.5" strokeDasharray="5 4" opacity="0.6" />
+                    <circle cx="50" cy={164 - (4.75/8)*160} r="3" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" opacity="0.6" />
+                    <circle cx="300" cy={164 - (4.75/8)*160} r="3" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" opacity="0.6" />
+                    {/* Média geral — azul: 0.2a → 0.25a */}
+                    <line x1="50" y1={164 - (0.2/8)*160} x2="300" y2={164 - (0.25/8)*160} stroke="#4c7ef3" strokeWidth="2" />
+                    <circle cx="50" cy={164 - (0.2/8)*160} r="4" fill="#4c7ef3" />
+                    <circle cx="300" cy={164 - (0.25/8)*160} r="4" fill="#4c7ef3" />
+                  </svg>
+                  <div style={{ display: 'flex', gap: 16, marginTop: 8 }}>
+                    {[['var(--ink-3)','Cronológica',true],['#4c7ef3','Média geral',false]].map(([c, l, dashed]) => (
+                      <div key={l as string} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 9, color: 'var(--ink-3)' }}>
+                        <svg width="18" height="8"><line x1="0" y1="4" x2="18" y2="4" stroke={c as string} strokeWidth="2" strokeDasharray={dashed ? '4 3' : undefined} /></svg>
+                        {l}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Tabela comparativa */}
+              <div style={{ borderTop: '1px solid var(--line)', padding: '16px 24px 20px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--ink)', marginBottom: 10 }}>Comparativo entre avaliações</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 0, fontSize: 10 }}>
+                  <div style={{ color: 'var(--ink-4)', padding: '4px 0', borderBottom: '1px solid var(--line)' }}>Área</div>
+                  <div style={{ color: 'var(--ink-4)', padding: '4px 0', borderBottom: '1px solid var(--line)', textAlign: 'center' }}>02/07/2026</div>
+                  <div style={{ color: 'var(--ink-4)', padding: '4px 0', borderBottom: '1px solid var(--line)', textAlign: 'center' }}>02/07/2026</div>
+                  <div style={{ color: 'var(--ink-4)', padding: '4px 0', borderBottom: '1px solid var(--line)', textAlign: 'right' }}>Δ total</div>
+                  {[
+                    ['Socialização',    '#7c5cbf','0.00a','0.00a','→ 0.00a','neutral'],
+                    ['Ling. Receptiva', '#20b8a0','0.24a','0.59a','↑ 0.35a','pos'],
+                    ['Ling. Expressiva','#4c7ef3','0.54a','0.96a','↑ 0.42a','pos'],
+                    ['Cuidados Próprios','#2da44e','0.00a','0.00a','→ 0.00a','neutral'],
+                    ['Cognição',        '#e09b00','0.00a','0.00a','→ 0.00a','neutral'],
+                    ['Psicomotora',     '#c0392b','0.00a','0.00a','→ 0.00a','neutral'],
+                  ].map(([area, color, v1, v2, delta, type]) => (
+                    <>
+                      <div key={area} style={{ color, fontWeight: 600, padding: '5px 0', borderBottom: '1px solid var(--line)' }}>{area}</div>
+                      <div style={{ color: 'var(--ink-3)', padding: '5px 0', borderBottom: '1px solid var(--line)', textAlign: 'center' }}>{v1}</div>
+                      <div style={{ color: type === 'pos' ? 'var(--primary)' : 'var(--ink-3)', padding: '5px 0', borderBottom: '1px solid var(--line)', textAlign: 'center' }}>{v2}</div>
+                      <div style={{ color: type === 'pos' ? '#2da44e' : 'var(--ink-4)', fontWeight: type === 'pos' ? 700 : 400, padding: '5px 0', borderBottom: '1px solid var(--line)', textAlign: 'right' }}>{delta}</div>
+                    </>
+                  ))}
+                </div>
+              </div>
+              <div style={{ padding: '10px 24px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Progressão — gráficos e comparativo entre avaliações</div>
+            </div>
+
+            {/* Card 6 — Gráficos da aba Gráficos (largo, 3 colunas) */}
+            <div className="lp-reveal lp-reveal-d2" style={{ gridColumn: '1 / -1', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+                <span style={{ marginLeft: 8, fontSize: 11, color: 'var(--ink-4)' }}>Aba: Gráficos</span>
+              </div>
+              <div style={{ padding: 24, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+
+                {/* Radar — Perfil desenvolvimental */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Perfil desenvolvimental</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>Idade desenv. (anos) vs. cronológica</div>
+                  <svg viewBox="0 0 220 210" width="100%" style={{ display: 'block' }}>
+                    {/* Radar hexagonal — 6 áreas, centro 110,105, raio max 80 */}
+                    {(() => {
+                      const cx = 110, cy = 108, R = 78
+                      const angles = [270, 330, 30, 90, 150, 210].map(d => d * Math.PI / 180)
+                      const labels = ['Socialização','Ling. Receptiva','Ling. Expressiva','Cuidados Próprios','Cognição','Psicomotora']
+                      const labelOffsets = [[0,-14],[22,0],[22,0],[0,14],[-22,0],[-22,0]]
+                      // Cronológica: raio proporcional a 4.75/8 = 0.59
+                      const rCron = R * 0.59
+                      // Desenvolvimental: [0, 0.59, 0.96, 0, 0, 0] / 8 * R
+                      const devVals = [0, 0.59/8, 0.96/8, 0, 0, 0]
+                      const rDev = devVals.map(v => v * R * 8)
+                      // Grid rings
+                      const rings = [0.25,0.5,0.75,1].map(f => angles.map(a => [cx + R*f*Math.cos(a), cy + R*f*Math.sin(a)]))
+                      return (
+                        <>
+                          {/* Grid rings */}
+                          {rings.map((pts, ri) => (
+                            <polygon key={ri} points={pts.map(p => p.join(',')).join(' ')} fill="none" stroke="var(--line)" strokeWidth="1" />
+                          ))}
+                          {/* Spokes */}
+                          {angles.map((a, i) => (
+                            <line key={i} x1={cx} y1={cy} x2={cx + R*Math.cos(a)} y2={cy + R*Math.sin(a)} stroke="var(--line)" strokeWidth="1" />
+                          ))}
+                          {/* Ring labels */}
+                          {[2,4,6].map((v, i) => (
+                            <text key={v} x={cx + 3} y={cy - R*(i+1)/4 - 1} fontSize="8" fill="var(--ink-4)">{v}</text>
+                          ))}
+                          {/* Cronológica polygon */}
+                          <polygon points={angles.map(a => [cx + rCron*Math.cos(a), cy + rCron*Math.sin(a)].join(',')).join(' ')} fill="hsl(220 15% 60% / .12)" stroke="hsl(220 15% 60% / .7)" strokeWidth="1.5" strokeDasharray="5 3" />
+                          {/* Desenvolvimental polygon */}
+                          <polygon points={angles.map((a, i) => [cx + rDev[i]*Math.cos(a), cy + rDev[i]*Math.sin(a)].join(',')).join(' ')} fill="hsl(214 56% 50% / .18)" stroke="#4c7ef3" strokeWidth="2" />
+                          {/* Area labels */}
+                          {angles.map((a, i) => (
+                            <text key={i} x={cx + (R+14)*Math.cos(a) + labelOffsets[i][0]} y={cy + (R+14)*Math.sin(a) + labelOffsets[i][1]} fontSize="9" fill="var(--ink-3)" textAnchor="middle">{labels[i]}</text>
+                          ))}
+                        </>
+                      )
+                    })()}
+                  </svg>
+                  <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginTop: 8 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 9, color: 'var(--ink-3)' }}>
+                      <svg width="18" height="8"><line x1="0" y1="4" x2="18" y2="4" stroke="hsl(220 15% 60%)" strokeWidth="1.5" strokeDasharray="4 3" /></svg>
+                      Cronológica
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 9, color: 'var(--ink-3)' }}>
+                      <div style={{ width: 14, height: 10, background: 'hsl(214 56% 50% / .25)', border: '2px solid #4c7ef3', borderRadius: 2 }} />
+                      Idade desenv.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Barras horizontais — Aquisição por área */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Aquisição por área</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 14 }}>% de itens adquiridos (Sim)</div>
+                  <svg viewBox="0 0 260 190" width="100%" style={{ display: 'block' }}>
+                    {/* Grid lines */}
+                    {[0,25,50,75,100].map((pct, i) => {
+                      const x = 70 + (pct / 100) * 180
+                      return (
+                        <g key={pct}>
+                          <line x1={x} y1="0" x2={x} y2="165" stroke="var(--line)" strokeDasharray="4 4" strokeWidth="1" />
+                          <text x={x} y="178" fontSize="9" fill="var(--ink-4)" textAnchor="middle">{pct}%</text>
+                        </g>
+                      )
+                    })}
+                    {/* Bars */}
+                    {[
+                      ['Socialização',   0,     '#7c5cbf'],
+                      ['Ling.\nReceptiva', 18,  '#20b8a0'],
+                      ['Ling.\nExpressiva', 92, '#4c7ef3'],
+                      ['Cuidados\nPróprios', 0, '#2da44e'],
+                      ['Cognição',       0,     '#e09b00'],
+                      ['Psicomotora',    0,     '#c0392b'],
+                    ].map(([label, pct, color], i) => {
+                      const y = i * 27 + 4
+                      const bw = (Number(pct) / 100) * 180
+                      return (
+                        <g key={String(label)}>
+                          <text x="65" y={y + 14} fontSize="9" fill="var(--ink-3)" textAnchor="end">{String(label).split('\n').map((t, j) => <tspan key={j} x="65" dy={j === 0 ? 0 : 10}>{t}</tspan>)}</text>
+                          {bw > 0 && <rect x="70" y={y + 2} width={bw} height="16" rx="3" fill={String(color)} opacity="0.85" />}
+                          {bw === 0 && <line x1="70" y1={y+10} x2="73" y2={y+10} stroke={String(color)} strokeWidth="2" />}
+                          {bw > 2 && <text x={70 + bw + 4} y={y + 13} fontSize="9" fill="var(--ink-3)">{Number(pct) > 0 ? pct : ''}</text>}
+                        </g>
+                      )
+                    })}
+                  </svg>
+                </div>
+
+                {/* Linha — % de aquisição por faixa etária */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>% de aquisição por faixa etária</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>Uma linha por área de desenvolvimento</div>
+                  <svg viewBox="0 0 260 170" width="100%" style={{ display: 'block' }}>
+                    {/* Y grid */}
+                    {[0,25,50,75,100].map((pct, i) => {
+                      const y = 4 + (1 - pct/100) * 130
+                      return (
+                        <g key={pct}>
+                          <line x1="30" y1={y} x2="255" y2={y} stroke="var(--line)" strokeDasharray="4 4" strokeWidth="1" />
+                          <text x="26" y={y + 4} fontSize="8" fill="var(--ink-4)" textAnchor="end">{pct}%</text>
+                        </g>
+                      )
+                    })}
+                    {/* X labels */}
+                    {['0–1a','1–2a','2–3a','3–4a','4–5a','5–6a'].map((l, i) => (
+                      <text key={l} x={30 + i * 45} y="152" fontSize="8" fill="var(--ink-4)" textAnchor="middle">{l}</text>
+                    ))}
+                    {/* Ling. Expressiva: 92% at 0-1a, 0% rest */}
+                    {(() => {
+                      const xs = [30, 75, 120, 165, 210, 255]
+                      const expY = [4 + (1 - 0.92)*130, ...Array(5).fill(4 + 130)]
+                      const recY = [4 + (1 - 0.18)*130, ...Array(5).fill(4 + 130)]
+                      return (
+                        <>
+                          <polyline points={xs.map((x, i) => `${x},${expY[i]}`).join(' ')} fill="none" stroke="#4c7ef3" strokeWidth="2" />
+                          {xs.map((x, i) => <circle key={i} cx={x} cy={expY[i]} r="3" fill="#4c7ef3" />)}
+                          <polyline points={xs.map((x, i) => `${x},${recY[i]}`).join(' ')} fill="none" stroke="#20b8a0" strokeWidth="2" />
+                          {xs.map((x, i) => <circle key={i} cx={x} cy={recY[i]} r="3" fill="#20b8a0" />)}
+                          {/* demais em 0 */}
+                          {['#c0392b','#e09b00','#2da44e','#7c5cbf'].map(color => (
+                            <g key={color}>
+                              <polyline points={xs.map(x => `${x},${4+130}`).join(' ')} fill="none" stroke={color} strokeWidth="1.5" opacity="0.5" />
+                              {xs.map((x, i) => <circle key={i} cx={x} cy={4+130} r="2.5" fill={color} opacity="0.5" />)}
+                            </g>
+                          ))}
+                        </>
+                      )
+                    })()}
+                  </svg>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 10px', marginTop: 4, justifyContent: 'center' }}>
+                    {[['#e09b00','Cognição'],['#2da44e','Cuidados'],['#4c7ef3','Ling. Expressiva'],['#20b8a0','Ling. Receptiva'],['#c0392b','Psicomotora'],['#7c5cbf','Socialização']].map(([c,l]) => (
+                      <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 8, color: 'var(--ink-3)' }}>
+                        <div style={{ width: 14, height: 2, background: c, borderRadius: 1 }} />{l}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+              <div style={{ padding: '10px 24px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Gráficos — radar, barras e % de aquisição por faixa etária</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── PARA QUEM É ───────────────────────────────────────────────── */}
       <section style={{ padding: '84px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
         <div style={w}>
