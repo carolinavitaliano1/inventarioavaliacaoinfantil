@@ -5,77 +5,53 @@ export function downloadHtml(html: string, filename: string) {
   saveAs(blob, filename)
 }
 
-/**
- * Renderiza o HTML num iframe oculto (com head+style completos),
- * captura com html2canvas e baixa como PDF A4 diretamente.
- */
-export async function downloadPdf(html: string, filename: string) {
-  // Cria iframe fora da tela para o browser parsear o HTML completo (head + style + body)
-  const iframe = document.createElement('iframe')
-  iframe.style.cssText = [
-    'position:fixed',
-    'left:-9999px',
-    'top:0',
-    'width:794px',
-    'height:1px',
-    'border:none',
-    'visibility:hidden',
-  ].join(';')
-  document.body.appendChild(iframe)
+// Shared colours
+export const C = {
+  brand:      [47,  100, 160] as [number, number, number],
+  brandLight: [219, 231, 245] as [number, number, number],
+  brandDark:  [26,  54,  93]  as [number, number, number],
+  pos:        [30,  107, 69]  as [number, number, number],
+  neg:        [185, 28,  28]  as [number, number, number],
+  gray:       [113, 128, 150] as [number, number, number],
+  ink:        [26,  32,  44]  as [number, number, number],
+  white:      [255, 255, 255] as [number, number, number],
+  rowAlt:     [247, 250, 255] as [number, number, number],
+}
 
-  await new Promise<void>(resolve => {
-    iframe.onload = () => resolve()
-    iframe.srcdoc = html
-  })
+export type JsPDF = InstanceType<typeof import('jspdf').jsPDF>
 
-  // Aguarda um tick extra para garantir que o CSS foi aplicado
-  await new Promise(r => setTimeout(r, 200))
+/** Draws the standard document header and returns the Y position after it. */
+export function drawHeader(pdf: JsPDF, title: string, subtitle: string): number {
+  const W = pdf.internal.pageSize.getWidth()
+  const emitDate = new Date().toLocaleDateString('pt-BR')
 
-  const doc = iframe.contentDocument!
-  const body = doc.body
+  pdf.setFont('helvetica', 'bold')
+  pdf.setFontSize(13)
+  pdf.setTextColor(...C.brandDark)
+  pdf.text(title.toUpperCase(), 14, 18)
 
-  // Expande o iframe para a altura real do conteúdo
-  const scrollH = body.scrollHeight
-  iframe.style.height = scrollH + 'px'
+  pdf.setFont('helvetica', 'normal')
+  pdf.setFontSize(8)
+  pdf.setTextColor(...C.gray)
+  pdf.text(subtitle, 14, 23)
+  pdf.text(`Emitido em ${emitDate}`, W - 14, 23, { align: 'right' })
 
-  try {
-    const h2c = (await import('html2canvas')).default
-    const canvas = await h2c(body, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      width: 794,
-      windowWidth: 794,
-      scrollX: 0,
-      scrollY: 0,
-      logging: false,
-    })
+  // blue rule
+  pdf.setDrawColor(...C.brand)
+  pdf.setLineWidth(0.8)
+  pdf.line(14, 26, W - 14, 26)
 
-    const { jsPDF } = await import('jspdf')
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-    const pageW = pdf.internal.pageSize.getWidth()
-    const pageH = pdf.internal.pageSize.getHeight()
-    const imgW = pageW
-    const imgH = (canvas.height / canvas.width) * imgW
+  return 32
+}
 
-    let remaining = imgH
-    let srcY = 0
-
-    while (remaining > 0) {
-      const sliceH = Math.min(pageH, remaining)
-      const sc = document.createElement('canvas')
-      sc.width = canvas.width
-      sc.height = Math.round((sliceH / imgH) * canvas.height)
-      const ctx = sc.getContext('2d')!
-      ctx.drawImage(canvas, 0, srcY, canvas.width, sc.height, 0, 0, canvas.width, sc.height)
-      if (remaining < imgH) pdf.addPage()
-      pdf.addImage(sc.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, imgW, sliceH)
-      srcY += sc.height
-      remaining -= sliceH
-    }
-
-    pdf.save(filename)
-  } finally {
-    document.body.removeChild(iframe)
-  }
+/** Section heading bar */
+export function drawSection(pdf: JsPDF, label: string, y: number): number {
+  const W = pdf.internal.pageSize.getWidth()
+  pdf.setFillColor(...C.brandLight)
+  pdf.rect(14, y, W - 28, 7, 'F')
+  pdf.setFont('helvetica', 'bold')
+  pdf.setFontSize(7.5)
+  pdf.setTextColor(...C.brandDark)
+  pdf.text(label.toUpperCase(), 17, y + 5)
+  return y + 11
 }

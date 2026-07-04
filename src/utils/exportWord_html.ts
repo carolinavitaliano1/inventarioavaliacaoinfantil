@@ -2,166 +2,186 @@ import type { Assessment } from '../types'
 import type { AreaDevResult } from './ageCalc'
 import { AGE_RANGE_LABEL, calcAgeMonths, formatDevAge } from './ageCalc'
 import { formatQuestion } from './formatQuestion'
-import { downloadPdf } from './exportHelpers'
+import { C, drawHeader, drawSection } from './exportHelpers'
 
-const BRAND = '#2F64A0'
-const BRAND_LIGHT = '#EBF2FB'
-const BRAND_DARK = '#1A365D'
-const POS = '#1E6B45'
-const NEG = '#B91C1C'
-
-const PRINT_STYLE = `
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;font-size:11px;color:#1A202C;line-height:1.55;padding:40px 48px;background:#fff;width:794px}
-.doc-header{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:3px solid ${BRAND};padding-bottom:10px;margin-bottom:6px}
-.doc-title{font-size:15px;font-weight:700;color:${BRAND_DARK};letter-spacing:.03em;text-transform:uppercase}
-.doc-sub{font-size:10px;color:#718096;margin-top:3px}
-.doc-date{font-size:10px;color:#718096;text-align:right;white-space:nowrap;margin-left:16px}
-h2{font-size:10px;font-weight:700;color:${BRAND_DARK};background:${BRAND_LIGHT};padding:5px 10px;margin:16px 0 8px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em}
-table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:10.5px}
-thead tr{background:${BRAND};color:#fff}
-th{padding:6px 9px;text-align:left;font-weight:600;font-size:10px}
-td{padding:5px 9px;border-bottom:1px solid #E2E8F0;vertical-align:top}
-tr:nth-child(even) td{background:#F7FAFF}
-.label{background:${BRAND_LIGHT};font-weight:600;width:22%;color:${BRAND_DARK}}
-.total td{background:${BRAND_LIGHT};font-weight:700;color:${BRAND_DARK}}
-.num{text-align:center}
-.accent{color:${BRAND};font-weight:700}
-.pos{color:${POS};font-weight:700}
-.neg{color:${NEG};font-weight:700}
-.box{background:#F0F7FF;border-left:3px solid ${BRAND};padding:9px 13px;margin-bottom:9px;font-size:10.5px;line-height:1.7;border-radius:0 4px 4px 0}
-.sig-row{display:flex;gap:32px;margin-top:36px}
-.sig{flex:1;border-top:1.5px solid #4A5568;padding-top:8px;font-size:10px;color:#4A5568}
-`
-
-async function buildHtml(assessment: Assessment, areaResults: AreaDevResult[], mediaGeral: number): Promise<string> {
-  const { studentInfo, responses } = assessment
+export async function exportWordPdf(assessment: Assessment, areaResults: AreaDevResult[], mediaGeral: number) {
+  const { jsPDF } = await import('jspdf')
+  const autoTable = (await import('jspdf-autotable')).default
   const { portageItems } = await import('../hooks/usePortageAssessment')
+
+  const { studentInfo, responses } = assessment
+  const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+
   const chronAnos = studentInfo.birthDate ? calcAgeMonths(studentInfo.birthDate) / 12 : null
   const defasagem = chronAnos !== null ? mediaGeral - chronAnos : null
   const ordered = [...areaResults].sort((a, b) => b.idadeDesenvAnos - a.idadeDesenvAnos)
   const strong = ordered[0], weak = ordered[ordered.length - 1]
   const naoItems = portageItems.filter(i => responses[i.id] === 'nao')
   const avItems  = portageItems.filter(i => responses[i.id] === 'as_vezes')
-  const emitDate = new Date().toLocaleDateString('pt-BR')
 
-  const areaRows = areaResults.map(r => `
-    <tr>
-      <td>${r.area}</td>
-      <td class="num">${r.totalPontos.toFixed(1)}</td>
-      <td class="num">${Math.round((r.totalSim / r.totalItems) * 100)}%</td>
-      <td class="num accent">${r.idadeDesenvLabel}</td>
-    </tr>`).join('')
+  let y = drawHeader(pdf, 'Relatório de Avaliação do Desenvolvimento Infantil',
+    'Inventário de Avaliação do Desenvolvimento Infantil — IADI')
 
-  const detalheAreas = areaResults.map(r => `
-    <h2 style="margin-top:20px">${r.area}</h2>
-    <table>
-      <thead><tr>
-        <th>Faixa Etária</th><th class="num">Total</th><th class="num">Sim</th>
-        <th class="num">Às vezes</th><th class="num">Não</th><th class="num">Pontos</th><th class="num">% Acertos</th>
-      </tr></thead>
-      <tbody>
-        ${r.groups.map(g => `<tr>
-          <td>${AGE_RANGE_LABEL[g.key] ?? g.label}</td>
-          <td class="num">${g.total}</td>
-          <td class="num" style="color:${POS};font-weight:600">${g.sim}</td>
-          <td class="num" style="color:#C05621">${g.asVezes}</td>
-          <td class="num" style="color:${NEG}">${g.nao}</td>
-          <td class="num">${g.pontos.toFixed(1)}</td>
-          <td class="num">${g.pctAcertos}%</td>
-        </tr>`).join('')}
-        <tr class="total">
-          <td colspan="6">Idade Desenvolvimental</td>
-          <td class="num">${r.idadeDesenvLabel}</td>
-        </tr>
-      </tbody>
-    </table>`).join('')
+  // ── Identificação ──────────────────────────────────────────────────────
+  y = drawSection(pdf, 'Identificação', y)
+  autoTable(pdf, {
+    startY: y, margin: { left: 14, right: 14 }, theme: 'plain',
+    styles: { fontSize: 8.5, cellPadding: 2.5, textColor: C.ink },
+    columnStyles: { 0: { fontStyle: 'bold', fillColor: C.brandLight, textColor: C.brandDark, cellWidth: 40 }, 2: { fontStyle: 'bold', fillColor: C.brandLight, textColor: C.brandDark, cellWidth: 40 } },
+    body: [
+      ['Nome', studentInfo.name, 'Diagnóstico', studentInfo.diagnosis || '—'],
+      ['Data de Nascimento', studentInfo.birthDate || '—', 'Idade na avaliação', studentInfo.age || '—'],
+      ['Data da Avaliação', studentInfo.date || '—', 'Instrumento', 'IADI'],
+    ],
+  })
+  y = (pdf as any).lastAutoTable.finalY + 6
 
-  const itemRows = (items: typeof naoItems) => items.map(i => `
-    <tr>
-      <td style="width:28%">${i.area}</td>
-      <td style="width:16%">${i.age_range}</td>
-      <td>${formatQuestion(i.text)}</td>
-    </tr>`).join('')
+  // ── Síntese ────────────────────────────────────────────────────────────
+  y = drawSection(pdf, 'Síntese do Resultado', y)
+  autoTable(pdf, {
+    startY: y, margin: { left: 14, right: 14 }, theme: 'grid',
+    headStyles: { fillColor: C.brand, textColor: C.white, fontSize: 8, fontStyle: 'bold', halign: 'center' },
+    styles: { fontSize: 11, cellPadding: 4, halign: 'center', fontStyle: 'bold' },
+    head: [['Idade desenvolvimental (média)', 'Idade cronológica', 'Defasagem']],
+    body: [[
+      formatDevAge(mediaGeral),
+      chronAnos !== null ? formatDevAge(chronAnos) : '—',
+      defasagem !== null ? `${defasagem >= 0 ? '+' : ''}${defasagem.toFixed(2)} anos` : '—',
+    ]],
+    didParseCell(data) {
+      if (data.section === 'body') {
+        if (data.column.index === 0) data.cell.styles.textColor = C.brand
+        if (data.column.index === 2 && defasagem !== null)
+          data.cell.styles.textColor = defasagem >= 0 ? C.pos : C.neg
+      }
+    },
+  })
+  y = (pdf as any).lastAutoTable.finalY + 6
 
-  const defStyle = defasagem !== null
-    ? (defasagem >= 0 ? `class="pos"` : `class="neg"`)
-    : ''
+  // ── Resultados por área ────────────────────────────────────────────────
+  y = drawSection(pdf, 'Resultados por Área', y)
+  autoTable(pdf, {
+    startY: y, margin: { left: 14, right: 14 }, theme: 'striped',
+    headStyles: { fillColor: C.brand, textColor: C.white, fontSize: 8, fontStyle: 'bold' },
+    styles: { fontSize: 8.5, cellPadding: 2.8, textColor: C.ink },
+    columnStyles: { 1: { halign: 'center' }, 2: { halign: 'center' }, 3: { halign: 'center', fontStyle: 'bold', textColor: C.brand } },
+    head: [['Área', 'Pontos', '% Acertos', 'Idade Desenvolvimental']],
+    body: [
+      ...areaResults.map(r => [r.area, r.totalPontos.toFixed(1), `${Math.round((r.totalSim / r.totalItems) * 100)}%`, r.idadeDesenvLabel]),
+      ['MÉDIA GERAL', '', '', formatDevAge(mediaGeral)],
+    ],
+    didParseCell(data) {
+      if (data.section === 'body' && data.row.index === areaResults.length) {
+        data.cell.styles.fillColor = C.brandLight
+        data.cell.styles.fontStyle = 'bold'
+        data.cell.styles.textColor = C.brandDark
+      }
+    },
+  })
+  y = (pdf as any).lastAutoTable.finalY + 6
 
-  return `<!DOCTYPE html><html lang="pt-BR"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Relatório — ${studentInfo.name}</title>
-  <style>${PRINT_STYLE}</style>
-  </head><body>
+  // ── Detalhamento por área ──────────────────────────────────────────────
+  y = drawSection(pdf, 'Detalhamento por Área e Faixa Etária', y)
 
-  <div class="doc-header">
-    <div>
-      <div class="doc-title">Relatório de Avaliação do Desenvolvimento Infantil</div>
-      <div class="doc-sub">Inventário de Avaliação do Desenvolvimento Infantil — IADI</div>
-    </div>
-    <div class="doc-date">Emitido em ${emitDate}</div>
-  </div>
+  for (const r of areaResults) {
+    if (y > 240) { pdf.addPage(); y = 16 }
+    pdf.setFont('helvetica', 'bold')
+    pdf.setFontSize(8.5)
+    pdf.setTextColor(...C.brand)
+    pdf.text(r.area, 14, y)
+    y += 4
 
-  <h2>Identificação</h2>
-  <table>
-    <tr><td class="label">Nome</td><td>${studentInfo.name}</td><td class="label">Diagnóstico</td><td>${studentInfo.diagnosis || '—'}</td></tr>
-    <tr><td class="label">Data de Nascimento</td><td>${studentInfo.birthDate || '—'}</td><td class="label">Idade na avaliação</td><td>${studentInfo.age || '—'}</td></tr>
-    <tr><td class="label">Data da Avaliação</td><td>${studentInfo.date || '—'}</td><td class="label">Instrumento</td><td>IADI — Inventário de Avaliação Infantil</td></tr>
-  </table>
+    autoTable(pdf, {
+      startY: y, margin: { left: 14, right: 14 }, theme: 'striped',
+      headStyles: { fillColor: C.brand, textColor: C.white, fontSize: 7.5, fontStyle: 'bold' },
+      styles: { fontSize: 7.5, cellPadding: 2, textColor: C.ink },
+      columnStyles: { 1: { halign: 'center' }, 2: { halign: 'center', textColor: C.pos as any }, 3: { halign: 'center', textColor: [192, 86, 33] as any }, 4: { halign: 'center', textColor: C.neg as any }, 5: { halign: 'center' }, 6: { halign: 'center' } },
+      head: [['Faixa Etária', 'Total', 'Sim', 'Às vezes', 'Não', 'Pontos', '% Acertos']],
+      body: [
+        ...r.groups.map(g => [AGE_RANGE_LABEL[g.key] ?? g.label, g.total, g.sim, g.asVezes, g.nao, g.pontos.toFixed(1), `${g.pctAcertos}%`]),
+        [{ content: 'Idade Desenvolvimental', colSpan: 6, styles: { fillColor: C.brandLight, fontStyle: 'bold', textColor: C.brandDark } }, { content: r.idadeDesenvLabel, styles: { fillColor: C.brandLight, fontStyle: 'bold', textColor: C.brandDark, halign: 'center' } }],
+      ],
+    })
+    y = (pdf as any).lastAutoTable.finalY + 5
+  }
 
-  <h2>Síntese do Resultado</h2>
-  <table>
-    <thead><tr><th>Idade desenvolvimental (média)</th><th>Idade cronológica</th><th>Defasagem</th></tr></thead>
-    <tbody><tr>
-      <td class="num" style="font-size:15px;font-weight:700;color:${BRAND}">${formatDevAge(mediaGeral)}</td>
-      <td class="num">${chronAnos !== null ? formatDevAge(chronAnos) : '—'}</td>
-      <td class="num" ${defStyle}>${defasagem !== null ? `${defasagem >= 0 ? '+' : ''}${defasagem.toFixed(2)} anos` : '—'}</td>
-    </tr></tbody>
-  </table>
+  // ── Análise interpretativa ─────────────────────────────────────────────
+  if (y > 230) { pdf.addPage(); y = 16 }
+  y = drawSection(pdf, 'Análise Interpretativa', y)
 
-  <h2>Resultados por Área</h2>
-  <table>
-    <thead><tr><th>Área</th><th class="num">Pontos</th><th class="num">% Acertos</th><th class="num">Idade Desenvolvimental</th></tr></thead>
-    <tbody>
-      ${areaRows}
-      <tr class="total"><td colspan="3">MÉDIA GERAL</td><td class="num">${formatDevAge(mediaGeral)}</td></tr>
-    </tbody>
-  </table>
+  const W = pdf.internal.pageSize.getWidth()
+  const analysis1 = `A avaliação indica idade desenvolvimental média de ${formatDevAge(mediaGeral)}${chronAnos !== null ? `, frente à idade cronológica de ${formatDevAge(chronAnos)}` : ''}. O desempenho mais consolidado observa-se na área de ${strong.area} (${strong.idadeDesenvLabel}), enquanto ${weak.area} (${weak.idadeDesenvLabel}) constitui foco prioritário de intervenção.`
+  const analysis2 = 'Recomenda-se a elaboração de Plano de Ensino Individualizado (PEI) contemplando as habilidades não adquiridas e em desenvolvimento, com reavaliação periódica para monitoramento da progressão.'
 
-  <h2>Detalhamento por Área e Faixa Etária</h2>
-  ${detalheAreas}
+  pdf.setFillColor(...C.brandLight)
+  pdf.setDrawColor(...C.brand)
+  pdf.setLineWidth(0.8)
 
-  <h2 style="margin-top:20px">Análise Interpretativa</h2>
-  <div class="box">
-    A avaliação indica idade desenvolvimental média de <b>${formatDevAge(mediaGeral)}</b>${chronAnos !== null ? `, frente à idade cronológica de <b>${formatDevAge(chronAnos)}</b>` : ''}.
-    O desempenho mais consolidado observa-se na área de <b>${strong.area}</b> (${strong.idadeDesenvLabel}),
-    enquanto <b>${weak.area}</b> (${weak.idadeDesenvLabel}) constitui foco prioritário de intervenção.
-  </div>
-  <div class="box">
-    Recomenda-se a elaboração de Plano de Ensino Individualizado (PEI) contemplando as habilidades não adquiridas e em desenvolvimento,
-    com reavaliação periódica para monitoramento da progressão.
-  </div>
+  const drawBox = (text: string, startY: number) => {
+    const lines = pdf.splitTextToSize(text, W - 34)
+    const bh = lines.length * 4 + 6
+    pdf.rect(14, startY, 1.5, bh, 'F')
+    pdf.setFillColor(240, 247, 255)
+    pdf.rect(15.5, startY, W - 29.5, bh, 'F')
+    pdf.setFont('helvetica', 'normal')
+    pdf.setFontSize(8.5)
+    pdf.setTextColor(...C.ink)
+    pdf.text(lines, 19, startY + 5)
+    return startY + bh + 4
+  }
 
-  <h2>Habilidades Não Adquiridas — Alta Prioridade</h2>
-  ${naoItems.length > 0
-    ? `<table><thead><tr><th>Área</th><th>Faixa Etária</th><th>Habilidade</th></tr></thead><tbody>${itemRows(naoItems)}</tbody></table>`
-    : `<p style="color:#718096;font-size:10.5px;padding:6px 0">Nenhuma habilidade marcada como "Não".</p>`}
+  y = drawBox(analysis1, y)
+  y = drawBox(analysis2, y)
+  y += 2
 
-  <h2>Habilidades em Desenvolvimento</h2>
-  ${avItems.length > 0
-    ? `<table><thead><tr><th>Área</th><th>Faixa Etária</th><th>Habilidade</th></tr></thead><tbody>${itemRows(avItems)}</tbody></table>`
-    : `<p style="color:#718096;font-size:10.5px;padding:6px 0">Nenhuma habilidade marcada como "Às vezes".</p>`}
+  // ── Habilidades não adquiridas ─────────────────────────────────────────
+  if (y > 230) { pdf.addPage(); y = 16 }
+  y = drawSection(pdf, 'Habilidades Não Adquiridas — Alta Prioridade', y)
+  if (naoItems.length > 0) {
+    autoTable(pdf, {
+      startY: y, margin: { left: 14, right: 14 }, theme: 'striped',
+      headStyles: { fillColor: C.brand, textColor: C.white, fontSize: 7.5, fontStyle: 'bold' },
+      styles: { fontSize: 7.5, cellPadding: 2.2, textColor: C.ink, overflow: 'linebreak' },
+      columnStyles: { 0: { cellWidth: 48 }, 1: { cellWidth: 28 } },
+      head: [['Área', 'Faixa Etária', 'Habilidade']],
+      body: naoItems.map(i => [i.area, i.age_range, formatQuestion(i.text)]),
+    })
+    y = (pdf as any).lastAutoTable.finalY + 6
+  } else {
+    pdf.setFont('helvetica', 'normal'); pdf.setFontSize(8); pdf.setTextColor(...C.gray)
+    pdf.text('Nenhuma habilidade marcada como "Não".', 14, y + 4)
+    y += 10
+  }
 
-  <div class="sig-row">
-    <div class="sig"><b>Profissional responsável</b><br>Assinatura / Registro profissional</div>
-    <div class="sig"><b>Data</b><br>&nbsp;</div>
-  </div>
+  // ── Habilidades em desenvolvimento ─────────────────────────────────────
+  if (y > 230) { pdf.addPage(); y = 16 }
+  y = drawSection(pdf, 'Habilidades em Desenvolvimento', y)
+  if (avItems.length > 0) {
+    autoTable(pdf, {
+      startY: y, margin: { left: 14, right: 14 }, theme: 'striped',
+      headStyles: { fillColor: C.brand, textColor: C.white, fontSize: 7.5, fontStyle: 'bold' },
+      styles: { fontSize: 7.5, cellPadding: 2.2, textColor: C.ink, overflow: 'linebreak' },
+      columnStyles: { 0: { cellWidth: 48 }, 1: { cellWidth: 28 } },
+      head: [['Área', 'Faixa Etária', 'Habilidade']],
+      body: avItems.map(i => [i.area, i.age_range, formatQuestion(i.text)]),
+    })
+    y = (pdf as any).lastAutoTable.finalY + 6
+  } else {
+    pdf.setFont('helvetica', 'normal'); pdf.setFontSize(8); pdf.setTextColor(...C.gray)
+    pdf.text('Nenhuma habilidade marcada como "Às vezes".', 14, y + 4)
+    y += 10
+  }
 
-  </body></html>`
-}
+  // ── Assinaturas ────────────────────────────────────────────────────────
+  if (y > 260) { pdf.addPage(); y = 16 }
+  const midX = W / 2
+  pdf.setDrawColor(...C.ink); pdf.setLineWidth(0.4)
+  pdf.line(14, y + 16, midX - 8, y + 16)
+  pdf.line(midX + 8, y + 16, W - 14, y + 16)
+  pdf.setFont('helvetica', 'bold'); pdf.setFontSize(7.5); pdf.setTextColor(...C.ink)
+  pdf.text('Profissional responsável', 14, y + 20)
+  pdf.setFont('helvetica', 'normal'); pdf.setFontSize(7); pdf.setTextColor(...C.gray)
+  pdf.text('Assinatura / Registro profissional', 14, y + 24)
 
-export async function exportWordPdf(assessment: Assessment, areaResults: AreaDevResult[], mediaGeral: number) {
-  const html = await buildHtml(assessment, areaResults, mediaGeral)
-  downloadPdf(html, `Avaliacao_${assessment.studentInfo.name}_${assessment.studentInfo.date}.pdf`)
+  pdf.save(`Avaliacao_${studentInfo.name}_${studentInfo.date}.pdf`)
 }
