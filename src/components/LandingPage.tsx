@@ -581,6 +581,150 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
         </div>
       </section>
 
+      {/* ── GALERIA / SCREENSHOTS ─────────────────────────────────────── */}
+      <section style={{ padding: '88px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div style={w}>
+          <div className="lp-reveal" style={{ textAlign: 'center', maxWidth: 560, margin: '0 auto 56px' }}>
+            <span style={eyebrow}>Veja por dentro</span>
+            <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>O app na prática</h2>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Cada tela foi pensada para economizar tempo e entregar clareza clínica.</p>
+          </div>
+
+          {/* Grade de cards — mockups SVG fiéis ao app */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+
+            {/* Card 1 — Painel clínico */}
+            <div className="lp-reveal" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+                <span style={{ marginLeft: 8, fontSize: 11, color: 'var(--ink-4)', fontFamily: 'monospace' }}>inventarioavaliacaoinfantil.vercel.app</span>
+              </div>
+              <div style={{ padding: 20 }}>
+                {/* Topbar mock */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                  <div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--ink)' }}>Painel clínico</div>
+                    <div style={{ fontSize: 11, color: 'var(--ink-4)' }}>Acompanhe avaliações e a evolução de cada criança.</div>
+                  </div>
+                  <div style={{ background: 'var(--primary)', color: '#fff', fontSize: 11, fontWeight: 600, borderRadius: 8, padding: '5px 10px' }}>+ Novo paciente</div>
+                </div>
+                {/* Stats */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 14 }}>
+                  {[['2','PACIENTES'],['21','AVALIAÇÕES'],['1','ACOMP.'],['7','ESTE MÊS']].map(([n, l]) => (
+                    <div key={l} style={{ border: '1px solid var(--line)', borderRadius: 8, padding: '8px 6px', textAlign: 'center' }}>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink)' }}>{n}</div>
+                      <div style={{ fontSize: 9, color: 'var(--ink-4)', letterSpacing: '0.04em' }}>{l}</div>
+                    </div>
+                  ))}
+                </div>
+                {/* Patient list */}
+                {[['Lucas','4a 8m · TEA','0a 3m','-4.5a'],['Liz','15a 8m · TEA','0a 1m','-15.7a']].map(([name, sub, dev, gap]) => (
+                  <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderBottom: '1px solid var(--line)' }}>
+                    <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--primary)', display: 'grid', placeItems: 'center', color: '#fff', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{name[0]}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink)' }}>{name}</div>
+                      <div style={{ fontSize: 10, color: 'var(--ink-4)' }}>{sub}</div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: 11, color: 'var(--ink-3)' }}>{dev}</div>
+                      <div style={{ fontSize: 10, color: '#e03' }}>{gap}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Painel clínico — visão geral dos pacientes</div>
+            </div>
+
+            {/* Card 2 — Síntese por área */}
+            <div className="lp-reveal lp-reveal-d1" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <div style={{ padding: 20 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 4 }}>Desempenho por área e faixa etária</div>
+                <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 14 }}>% de aquisição · verde ≥ 75% · âmbar 50–74% · vermelho &lt; 50%</div>
+                {[
+                  ['I – Socialização', '#4c7ef3', '0%','0%','0%','0%','0%','0%','0 meses'],
+                  ['IIa – Ling. Receptiva', '#20b8a0', '18%','0%','0%','0%','0%','0%','7 meses'],
+                  ['IIb – Ling. Expressiva', '#7c5cbf', '92%','0%','0%','0%','0%','0%','1 ano'],
+                  ['III – Cuidados', '#2da44e', '0%','0%','0%','0%','0%','0%','0 meses'],
+                  ['IV – Cognitiva', '#e09b00', '0%','0%','0%','0%','0%','0%','0 meses'],
+                  ['V – Psicomotora', '#c0392b', '0%','0%','0%','0%','0%','0%','0 meses'],
+                ].map(([area, color, v1, , , , , , dev]) => (
+                  <div key={area} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 0', borderBottom: '1px solid var(--line)', fontSize: 10 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: 2, background: color, flexShrink: 0 }} />
+                    <div style={{ flex: 1, color: 'var(--ink)', fontWeight: 500 }}>{area}</div>
+                    <div style={{ color: parseFloat(v1) >= 75 ? '#2da44e' : parseFloat(v1) >= 50 ? '#e09b00' : parseFloat(v1) > 0 ? '#c0392b' : 'var(--ink-4)', fontWeight: 600, width: 28, textAlign: 'right' }}>{v1}</div>
+                    <div style={{ color: 'var(--primary)', fontWeight: 600, width: 40, textAlign: 'right' }}>{dev}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Síntese — resultado por área e faixa etária</div>
+            </div>
+
+            {/* Card 3 — Progressão */}
+            <div className="lp-reveal lp-reveal-d2" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <div style={{ padding: 20 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 14 }}>Idade desenvolvimental por área</div>
+                {[
+                  ['Social',         '0a 0m','0a 0m','— +0.00a', 'neutral'],
+                  ['Ling. Rec.',     '0a 3m','0a 7m','↑ +0.35a', 'pos'],
+                  ['Ling. Exp.',     '0a 6m','0a 12m','↑ +0.42a','pos'],
+                  ['Cuidados',       '0a 0m','0a 0m','— +0.00a', 'neutral'],
+                  ['Cognitiva',      '0a 0m','0a 0m','— +0.00a', 'neutral'],
+                  ['Psicomotora',    '0a 0m','0a 0m','— +0.00a', 'neutral'],
+                  ['Média geral',    '0a 2m','0a 3m','↑ +0.13a', 'pos'],
+                ].map(([area, av1, av2, var_, type]) => (
+                  <div key={area} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.2fr', gap: 4, padding: '5px 0', borderBottom: '1px solid var(--line)', fontSize: 10, alignItems: 'center' }}>
+                    <div style={{ color: type === 'pos' ? 'var(--primary)' : 'var(--ink)', fontWeight: type === 'pos' ? 700 : 400 }}>{area}</div>
+                    <div style={{ color: 'var(--ink-3)' }}>{av1}</div>
+                    <div style={{ color: type === 'pos' ? 'var(--primary)' : 'var(--ink-3)' }}>{av2}</div>
+                    <div style={{ color: type === 'pos' ? '#2da44e' : 'var(--ink-4)', fontWeight: 600, textAlign: 'right' }}>{var_}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Progressão — evolução entre avaliações</div>
+            </div>
+
+            {/* Card 4 — Prioridades */}
+            <div className="lp-reveal lp-reveal-d3" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <div style={{ padding: 20 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#e09b00', marginBottom: 10, letterSpacing: '0.06em' }}>EM DESENVOLVIMENTO — ÀS VEZES · 15</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--primary)', padding: '6px 10px', background: 'hsl(214 56% 95%)', borderRadius: 6, marginBottom: 10 }}>IIa – LINGUAGEM RECEPTIVA</div>
+                {[
+                  'A criança arrulha e sussurra quando contente?',
+                  'A criança repete os próprios sons?',
+                  'A criança ri?',
+                  'A criança mostra reconhecimento de seu meio, por meio de sorriso ou parando de chorar?',
+                  'A criança sorri em resposta à atenção dada pelo adulto?',
+                ].map((q, i) => (
+                  <div key={i} style={{ padding: '7px 0', borderBottom: '1px solid var(--line)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--ink)', lineHeight: 1.4 }}>{q}</div>
+                    <div style={{ fontSize: 9, color: 'var(--ink-4)', marginTop: 2, letterSpacing: '0.06em' }}>IDADE 0 A 1 ANO</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Prioridades — habilidades em desenvolvimento</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── PARA QUEM É ───────────────────────────────────────────────── */}
       <section style={{ padding: '84px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
         <div style={w}>
