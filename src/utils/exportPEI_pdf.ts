@@ -33,6 +33,7 @@ const STATUS_COLOR: Record<string, string> = {
 
 const PRINT_STYLE = `
 *{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;font-size:11px;color:#1A202C;line-height:1.55;padding:40px 48px;background:#fff;width:794px}
 .doc-header{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:3px solid ${BRAND};padding-bottom:10px;margin-bottom:6px}
 .doc-title{font-size:15px;font-weight:700;color:${BRAND_DARK};letter-spacing:.03em;text-transform:uppercase}
 .doc-sub{font-size:10px;color:#718096;margin-top:3px}

@@ -5,69 +5,77 @@ export function downloadHtml(html: string, filename: string) {
   saveAs(blob, filename)
 }
 
-/** Renderiza o HTML numa div oculta, captura com html2canvas e baixa como PDF A4 direto. */
+/**
+ * Renderiza o HTML num iframe oculto (com head+style completos),
+ * captura com html2canvas e baixa como PDF A4 diretamente.
+ */
 export async function downloadPdf(html: string, filename: string) {
-  const container = document.createElement('div')
-  container.style.cssText = [
+  // Cria iframe fora da tela para o browser parsear o HTML completo (head + style + body)
+  const iframe = document.createElement('iframe')
+  iframe.style.cssText = [
     'position:fixed',
     'left:-9999px',
     'top:0',
-    'width:794px',          // ~A4 a 96dpi
-    'background:#fff',
-    'z-index:-1',
-    'font-family:Segoe UI,Arial,sans-serif',
-    'font-size:12px',
-    'color:#1A202C',
-    'line-height:1.55',
-    'padding:48px 56px',
-    'box-sizing:border-box',
+    'width:794px',
+    'height:1px',
+    'border:none',
+    'visibility:hidden',
   ].join(';')
+  document.body.appendChild(iframe)
 
-  // extrai estilos do <head> e conteúdo do <body> para injetar juntos
-  const styleMatches = html.match(/<style[^>]*>[\s\S]*?<\/style>/gi) ?? []
-  const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)
-  const bodyContent = bodyMatch ? bodyMatch[1] : html
-  container.innerHTML = styleMatches.join('') + bodyContent
+  await new Promise<void>(resolve => {
+    iframe.onload = () => resolve()
+    iframe.srcdoc = html
+  })
 
-  document.body.appendChild(container)
+  // Aguarda um tick extra para garantir que o CSS foi aplicado
+  await new Promise(r => setTimeout(r, 200))
+
+  const doc = iframe.contentDocument!
+  const body = doc.body
+
+  // Expande o iframe para a altura real do conteúdo
+  const scrollH = body.scrollHeight
+  iframe.style.height = scrollH + 'px'
 
   try {
     const h2c = (await import('html2canvas')).default
-    const canvas = await h2c(container, {
+    const canvas = await h2c(body, {
       scale: 2,
       useCORS: true,
       backgroundColor: '#ffffff',
       width: 794,
       windowWidth: 794,
+      scrollX: 0,
+      scrollY: 0,
       logging: false,
     })
 
     const { jsPDF } = await import('jspdf')
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-    const pageW = pdf.internal.pageSize.getWidth()   // 210mm
-    const pageH = pdf.internal.pageSize.getHeight()  // 297mm
-    const margin = 0
-    const imgW = pageW - margin * 2
+    const pageW = pdf.internal.pageSize.getWidth()
+    const pageH = pdf.internal.pageSize.getHeight()
+    const imgW = pageW
     const imgH = (canvas.height / canvas.width) * imgW
 
     let remaining = imgH
     let srcY = 0
 
     while (remaining > 0) {
-      const sliceH = Math.min(pageH - margin * 2, remaining)
+      const sliceH = Math.min(pageH, remaining)
       const sc = document.createElement('canvas')
       sc.width = canvas.width
       sc.height = Math.round((sliceH / imgH) * canvas.height)
       const ctx = sc.getContext('2d')!
       ctx.drawImage(canvas, 0, srcY, canvas.width, sc.height, 0, 0, canvas.width, sc.height)
       if (remaining < imgH) pdf.addPage()
-      pdf.addImage(sc.toDataURL('image/jpeg', 0.95), 'JPEG', margin, margin, imgW, sliceH)
+      pdf.addImage(sc.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, imgW, sliceH)
       srcY += sc.height
       remaining -= sliceH
     }
 
     pdf.save(filename)
   } finally {
-    document.body.removeChild(container)
+    document.body.removeChild(iframe)
   }
 }
