@@ -261,6 +261,53 @@ const ANIM_CSS = `
     .lp-bar { animation: none; width: var(--bar-w) }
     .lp-hero-h, .lp-hero-sub, .lp-hero-cta, .lp-hero-trust, .lp-mock { animation: none; opacity: 1 }
   }
+
+  /* ── Mobile ─────────────────────────────────────────── */
+  @media (max-width: 860px) {
+    /* nav: hide links */
+    .lp-nav { display: none !important; }
+    /* hero: stack hero columns */
+    .lp-hero-grid { grid-template-columns: 1fr !important; }
+    .lp-hero-mock { display: none !important; }
+    .lp-hero-h { font-size: 38px !important; }
+    /* stats bar: 2 columns */
+    .lp-stats-grid { grid-template-columns: repeat(2,1fr) !important; }
+    /* problems: 1 col */
+    .lp-problems-grid { grid-template-columns: 1fr !important; }
+    /* before/after: stack */
+    .lp-compare-grid { grid-template-columns: 1fr !important; }
+    /* features: 2 col then 1 col */
+    .lp-features-grid { grid-template-columns: repeat(2,1fr) !important; }
+    /* steps: 2 col */
+    .lp-steps-grid { grid-template-columns: repeat(2,1fr) !important; }
+    /* profiles: 1 col */
+    .lp-profiles-grid { grid-template-columns: 1fr !important; }
+    /* pricing: 1 col */
+    .lp-pricing-grid { grid-template-columns: 1fr !important; }
+    /* testimonials: 1 col */
+    .lp-testimonials-grid { grid-template-columns: 1fr !important; }
+    /* gallery: 1 col */
+    .lp-gallery-grid { grid-template-columns: 1fr !important; }
+    .lp-gallery-wide { grid-column: 1 !important; }
+    .lp-gallery-inner { grid-template-columns: 1fr !important; }
+    /* footer: 1 col */
+    .lp-footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    /* section headings */
+    .lp-section-h2 { font-size: 28px !important; }
+    /* price card padding */
+    .lp-price-card { padding: 24px 18px !important; }
+    /* CTA section */
+    .lp-cta-btns { flex-direction: column !important; align-items: stretch !important; }
+    .lp-cta-btns > * { text-align: center; justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    .lp-features-grid { grid-template-columns: 1fr !important; }
+    .lp-steps-grid { grid-template-columns: 1fr !important; }
+    .lp-hero-h { font-size: 32px !important; }
+    .lp-btn-primary { font-size: 14px !important; padding: 12px 20px !important; }
+    .lp-btn-ghost { font-size: 13px !important; padding: 10px 16px !important; }
+  }
 `
 
 /* ── helpers ─────────────────────────────────────────────────────────── */
@@ -344,7 +391,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
               <div style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.02em', lineHeight: 1.2 }}>Desenvolvimento Infantil</div>
             </div>
           </div>
-          <nav style={{ display: 'flex', gap: 26, marginLeft: 16, flex: 1 }}>
+          <nav className="lp-nav" style={{ display: 'flex', gap: 26, marginLeft: 16, flex: 1 }}>
             {[['#recursos','Recursos'],['#como','Como funciona'],['#planos','Planos'],['#faq','Dúvidas']].map(([h,l]) => (
               <a key={h} href={h} className="lp-nav-link">{l}</a>
             ))}
@@ -364,7 +411,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
           <div style={{ position: 'absolute', bottom: '-25%', left: '-10%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, hsl(190 60% 88% / .4) 0%, transparent 65%)', filter: 'blur(2px)' }} />
         </div>
 
-        <div style={{ ...w, position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 52, alignItems: 'center' }}>
+        <div className="lp-hero-grid" style={{ ...w, position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 52, alignItems: 'center' }}>
           {/* copy */}
           <div>
             <div className="lp-hero-h">
@@ -372,7 +419,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                 <span style={{ width: 6, height: 6, borderRadius: 99, background: 'var(--primary)', display: 'inline-block' }} />
                 Inventário de Avaliação do Desenvolvimento Infantil · 0 a 6 anos
               </div>
-              <h1 style={{ fontSize: 52, fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.08, margin: 0, color: 'var(--ink)' }}>
+              <h1 className="lp-hero-h" style={{ fontSize: 52, fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.08, margin: 0, color: 'var(--ink)' }}>
                 Do questionário<br />
                 <span style={{ fontWeight: 700 }}>ao relatório.</span>
               </h1>
@@ -395,7 +442,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
           </div>
 
           {/* mock */}
-          <div style={{ position: 'relative' }} className="lp-mock">
+          <div style={{ position: 'relative' }} className="lp-mock lp-hero-mock">
             <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 18, boxShadow: '0 28px 64px hsl(220 35% 22% / .14), 0 8px 20px hsl(220 30% 30% / .06)', overflow: 'hidden' }}>
               {/* titlebar */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '11px 14px', borderBottom: '1px solid var(--line)', background: 'var(--surface-2)' }}>
@@ -462,7 +509,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
 
       {/* ── STATS STRIP ───────────────────────────────────────────────── */}
       <div ref={statsRef} style={{ borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', background: 'var(--surface)' }}>
-        <div style={{ ...w, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
+        <div className="lp-stats-grid" style={{ ...w, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
           {[
             { n: statVals.r || '—', suffix: '', label: 'áreas de desenvolvimento' },
             { n: '0–6', suffix: '', label: 'anos de idade' },
@@ -489,7 +536,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             </h2>
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Aplicar o inventário é só o começo. O que vem depois — calcular, interpretar, documentar — é onde se perde tempo.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+          <div className="lp-problems-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
             {PROBLEMS.map((p, i) => (
               <div key={p.title} className={`lp-reveal lp-reveal-d${i + 1}`} style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 13, padding: 26 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 11, background: 'hsl(6 60% 96%)', color: 'hsl(6 58% 46%)', display: 'grid', placeItems: 'center', marginBottom: 18 }}>
@@ -502,7 +549,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
           </div>
 
           {/* before / after */}
-          <div className="lp-reveal" style={{ marginTop: 36, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, border: '1px solid var(--line)', borderRadius: 14, overflow: 'hidden' }}>
+          <div className="lp-reveal lp-compare-grid" style={{ marginTop: 36, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, border: '1px solid var(--line)', borderRadius: 14, overflow: 'hidden' }}>
             <div style={{ padding: '28px 30px', background: 'hsl(6 40% 98%)', borderRight: '1px solid var(--line)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
                 <span style={{ width: 8, height: 8, borderRadius: 99, background: 'var(--neg)', display: 'inline-block' }} />
@@ -543,7 +590,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>O que o IADI faz por você</h2>
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Da aplicação ao plano de intervenção — um fluxo pensado para a prática clínica.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+          <div className="lp-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
             {FEATURES.map((f, i) => (
               <div key={f.title} className={`lp-feat-card lp-reveal lp-reveal-d${(i % 3) + 1}`}>
                 <div style={{ width: 42, height: 42, borderRadius: 10, background: 'var(--primary-bg)', color: 'var(--primary-ink)', display: 'grid', placeItems: 'center', marginBottom: 16 }}>
@@ -565,7 +612,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Como funciona</h2>
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Quatro passos entre cadastrar a criança e ter o relatório na mão.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, position: 'relative' }}>
+          <div className="lp-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, position: 'relative' }}>
             {/* connector line */}
             <div aria-hidden style={{ position: 'absolute', top: 20, left: '12.5%', right: '12.5%', height: 1, background: 'linear-gradient(90deg, var(--primary-line), var(--primary-line) 70%, transparent)', zIndex: 0 }} />
             {STEPS.map((s, i) => (
@@ -591,7 +638,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
           </div>
 
           {/* Grade de cards — mockups SVG fiéis ao app */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+          <div className="lp-gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
 
             {/* Card 1 — Painel clínico */}
             <div className="lp-reveal" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
@@ -722,13 +769,13 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             </div>
 
             {/* Card 5 — Gráfico Evolução por área (largo, ocupa 2 colunas) */}
-            <div className="lp-reveal lp-reveal-d1" style={{ gridColumn: 'span 2', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+            <div className="lp-reveal lp-reveal-d1 lp-gallery-wide" style={{ gridColumn: 'span 2', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
               <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
               </div>
-              <div style={{ padding: 24, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+              <div className="lp-gallery-inner" style={{ padding: 24, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
                 {/* Gráfico 1 — Evolução por área */}
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Evolução por área</div>
@@ -835,14 +882,14 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             </div>
 
             {/* Card 6 — Gráficos da aba Gráficos (largo, 3 colunas) */}
-            <div className="lp-reveal lp-reveal-d2" style={{ gridColumn: '1 / -1', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+            <div className="lp-reveal lp-reveal-d2 lp-gallery-wide" style={{ gridColumn: '1 / -1', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
               <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
                 <span style={{ marginLeft: 8, fontSize: 11, color: 'var(--ink-4)' }}>Aba: Gráficos</span>
               </div>
-              <div style={{ padding: 24, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+              <div className="lp-gallery-inner" style={{ padding: 24, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
 
                 {/* Radar — Perfil desenvolvimental */}
                 <div>
@@ -1004,7 +1051,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Feito para profissionais que avaliam desenvolvimento</h2>
             <p style={{ fontSize: 16, color: 'var(--ink-2)', margin: 0 }}>Psicólogos, fonoaudiólogos, terapeutas ocupacionais, fisioterapeutas, pedagogos e psicopedagogos.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+          <div className="lp-profiles-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
             {PROFILES.map((p, i) => (
               <div key={p.role} className={`lp-profile-card lp-reveal lp-reveal-d${i + 1}`}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
@@ -1034,7 +1081,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             </p>
           </div>
 
-          <div className="lp-reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 400px))', gap: 22, justifyContent: 'center' }}>
+          <div className="lp-reveal lp-pricing-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 400px))', gap: 22, justifyContent: 'center' }}>
             {/* Trimestral */}
             <div className="lp-price-card" style={{ background: 'var(--surface)', border: '1px solid var(--line-2)', boxShadow: '0 4px 20px hsl(220 25% 20% / .06)' }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-3)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 6 }}>Trimestral</div>
@@ -1096,7 +1143,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <span style={eyebrow}>Depoimentos</span>
             <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.15, margin: 0, textWrap: 'balance' as never }}>Quem já usa o IADI</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20, maxWidth: 860, margin: '0 auto 52px' }}>
+          <div className="lp-testimonials-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20, maxWidth: 860, margin: '0 auto 52px' }}>
             {[
               { text: 'Em 20 minutos eu tenho o relatório pronto. Antes levava horas montando tudo no Word manualmente.', name: 'Fernanda R.', role: 'Fonoaudióloga · SP' },
               { text: 'O PEI integrado economiza muito tempo. Consigo mostrar a evolução da criança para a família de forma visual e clara.', name: 'Carla M.', role: 'Terapeuta Ocupacional · MG' },
@@ -1193,7 +1240,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
 
       {/* ── FOOTER ────────────────────────────────────────────────────── */}
       <footer style={{ padding: '48px 0 36px', borderTop: '1px solid var(--line)' }}>
-        <div style={{ ...w, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 36 }}>
+        <div className="lp-footer-grid" style={{ ...w, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 36 }}>
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
