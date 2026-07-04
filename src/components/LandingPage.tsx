@@ -296,6 +296,7 @@ const ANIM_CSS = `
     .lp-hero-h { font-size: 38px !important; }
     .lp-stats-grid { grid-template-columns: repeat(2,1fr) !important; }
     .lp-problems-grid { grid-template-columns: 1fr !important; }
+    .lp-app-grid { grid-template-columns: 1fr !important; }
     .lp-compare-grid { grid-template-columns: 1fr !important; }
     .lp-features-grid { grid-template-columns: repeat(2,1fr) !important; }
     .lp-steps-grid { grid-template-columns: repeat(2,1fr) !important; }
@@ -772,7 +773,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             </h2>
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Aplicar o inventário é só o começo. O que vem depois — calcular, interpretar, documentar — é onde se perde tempo.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+          <div className="lp-problems-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
             {PROBLEMS.map((p, i) => (
               <div key={p.title} className={`lp-reveal lp-reveal-d${i + 1}`} style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 13, padding: 26 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 11, background: 'hsl(6 60% 96%)', color: 'hsl(6 58% 46%)', display: 'grid', placeItems: 'center', marginBottom: 18 }}>
@@ -891,7 +892,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
           </div>
 
           {/* Grade de cards — mockups SVG fiéis ao app */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+          <div className="lp-app-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
 
             {/* Card 1 — Painel clínico */}
             <div className="lp-reveal" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
