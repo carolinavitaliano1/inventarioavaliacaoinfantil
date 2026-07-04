@@ -448,8 +448,18 @@ function ReportCarousel() {
 
         {/* carrossel */}
         <div style={{ position: 'relative' }}>
+          {/* setas sobrepostas nas laterais */}
+          <button className="lp-carousel-btn" onClick={prev} aria-label="Anterior"
+            style={{ position: 'absolute', left: -22, top: '50%', transform: 'translateY(-50%)', zIndex: 2 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button className="lp-carousel-btn" onClick={next} aria-label="Próximo"
+            style={{ position: 'absolute', right: -22, top: '50%', transform: 'translateY(-50%)', zIndex: 2 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+
           {/* slide container */}
-          <div style={{ overflow: 'hidden', borderRadius: 18 }}>
+          <div style={{ overflow: 'hidden', borderRadius: 18, margin: '0 12px' }}>
             <div className="lp-carousel-track" style={{ transform: `translateX(-${idx * 100}%)` }}>
               {REPORTS.map((rep, i) => (
                 <div key={i} className="lp-carousel-slide">
@@ -519,19 +529,11 @@ function ReportCarousel() {
             </div>
           </div>
 
-          {/* controles */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 28 }}>
-            <button className="lp-carousel-btn" onClick={prev} aria-label="Anterior">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              {REPORTS.map((_, i) => (
-                <button key={i} className={`lp-carousel-dot${i === idx ? ' active' : ''}`} onClick={() => setIdx(i)} aria-label={`Slide ${i + 1}`} />
-              ))}
-            </div>
-            <button className="lp-carousel-btn" onClick={next} aria-label="Próximo">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
+          {/* controles — apenas pontos */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 20, alignItems: 'center' }}>
+            {REPORTS.map((_, i) => (
+              <button key={i} className={`lp-carousel-dot${i === idx ? ' active' : ''}`} onClick={() => setIdx(i)} aria-label={`Slide ${i + 1}`} />
+            ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: 8, fontSize: 12, color: 'var(--ink-4)' }}>{idx + 1} de {total}</div>
         </div>
@@ -831,8 +833,22 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
         </div>
       </section>
 
+      {/* CTA entre seções */}
+      <div style={{ textAlign: 'center', padding: '32px 24px', borderTop: '1px solid var(--line)' }}>
+        <a href="#planos" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--primary)', color: '#fff', fontWeight: 600, fontSize: 15, padding: '13px 28px', borderRadius: 99, textDecoration: 'none', boxShadow: '0 4px 16px hsl(220 80% 50% / .22)', transition: 'opacity .15s' }} onMouseOver={e => (e.currentTarget.style.opacity='.88')} onMouseOut={e => (e.currentTarget.style.opacity='1')}>
+          Conheça nossos planos →
+        </a>
+      </div>
+
       {/* ── CARROSSEL DE RELATÓRIOS ───────────────────────────────────── */}
       <ReportCarousel />
+
+      {/* CTA após carrossel */}
+      <div style={{ textAlign: 'center', padding: '32px 24px', background: 'var(--surface)', borderTop: '1px solid var(--line)' }}>
+        <a href="#planos" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--primary)', color: '#fff', fontWeight: 600, fontSize: 15, padding: '13px 28px', borderRadius: 99, textDecoration: 'none', boxShadow: '0 4px 16px hsl(220 80% 50% / .22)', transition: 'opacity .15s' }} onMouseOver={e => (e.currentTarget.style.opacity='.88')} onMouseOut={e => (e.currentTarget.style.opacity='1')}>
+          Conheça nossos planos →
+        </a>
+      </div>
 
       {/* ── GALERIA / SCREENSHOTS ─────────────────────────────────────── */}
       <section style={{ padding: '88px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
@@ -1275,6 +1291,13 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
           </div>
         </div>
       </section>
+
+      {/* CTA após "Para quem é" */}
+      <div style={{ textAlign: 'center', padding: '32px 24px', borderTop: '1px solid var(--line)' }}>
+        <a href="#planos" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--primary)', color: '#fff', fontWeight: 600, fontSize: 15, padding: '13px 28px', borderRadius: 99, textDecoration: 'none', boxShadow: '0 4px 16px hsl(220 80% 50% / .22)', transition: 'opacity .15s' }} onMouseOver={e => (e.currentTarget.style.opacity='.88')} onMouseOut={e => (e.currentTarget.style.opacity='1')}>
+          Conheça nossos planos →
+        </a>
+      </div>
 
       {/* ── PRICING ───────────────────────────────────────────────────── */}
       <section id="planos" style={{ padding: '88px 0' }}>
