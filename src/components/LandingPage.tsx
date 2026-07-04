@@ -753,7 +753,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                     <circle cx="50" cy={164 - 0.24*160} r="4" fill="#20b8a0" />
                     <circle cx="300" cy={164 - 0.59*160} r="4" fill="#20b8a0" />
                     {/* Lines — demais áreas em 0 */}
-                    {['#c0392b','#e09b00','#2da44e','#7c5cbf'].map((color, i) => (
+                    {['#c0392b','#e09b00','#2da44e','#7c5cbf'].map((color) => (
                       <g key={color}>
                         <line x1="50" y1="164" x2="300" y2="164" stroke={color} strokeWidth="1.5" opacity="0.5" />
                         <circle cx="50" cy="164" r="3" fill={color} opacity="0.5" />
@@ -906,7 +906,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                   <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 14 }}>% de itens adquiridos (Sim)</div>
                   <svg viewBox="0 0 260 190" width="100%" style={{ display: 'block' }}>
                     {/* Grid lines */}
-                    {[0,25,50,75,100].map((pct, i) => {
+                    {[0,25,50,75,100].map((pct) => {
                       const x = 70 + (pct / 100) * 180
                       return (
                         <g key={pct}>
@@ -944,7 +944,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
                   <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>Uma linha por área de desenvolvimento</div>
                   <svg viewBox="0 0 260 170" width="100%" style={{ display: 'block' }}>
                     {/* Y grid */}
-                    {[0,25,50,75,100].map((pct, i) => {
+                    {[0,25,50,75,100].map((pct) => {
                       const y = 4 + (1 - pct/100) * 130
                       return (
                         <g key={pct}>
