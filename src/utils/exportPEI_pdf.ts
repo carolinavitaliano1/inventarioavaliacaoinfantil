@@ -1,6 +1,6 @@
 import type { Assessment } from '../types'
 import { formatQuestion } from './formatQuestion'
-import { C, drawHeader, drawSection } from './exportHelpers'
+import { safe, BASE_TABLE, drawHeader, drawSection, addPageNumbers, drawSignatures } from './exportHelpers'
 
 interface PEIItem {
   id: string; skill: string; area: string; ageRange: string
@@ -10,20 +10,12 @@ interface PEIItem {
 }
 
 const PRAZO_LABEL: Record<string, string> = {
-  curto: 'Curto prazo (até 3 meses)',
-  medio: 'Médio prazo (até 6 meses)',
-  longo: 'Longo prazo (9–12 meses)',
-}
-const PRAZO_COLOR: Record<string, [number, number, number]> = {
-  curto: [192, 86, 33],
-  medio: C.brand,
-  longo: C.pos,
+  curto: 'Curto prazo (ate 3 meses)',
+  medio: 'Medio prazo (ate 6 meses)',
+  longo: 'Longo prazo (9-12 meses)',
 }
 const STATUS_LABEL: Record<string, string> = {
-  pendente: 'Pendente', em_andamento: 'Em andamento', concluido: 'Concluído',
-}
-const STATUS_COLOR: Record<string, [number, number, number]> = {
-  pendente: C.gray, em_andamento: C.brand, concluido: C.pos,
+  pendente: 'Pendente', em_andamento: 'Em andamento', concluido: 'Concluido',
 }
 
 export async function exportPEIPdf(assessment: Assessment, plan: PEIItem[]) {
@@ -39,47 +31,41 @@ export async function exportPEIPdf(assessment: Assessment, plan: PEIItem[]) {
   const pct = plan.length ? Math.round(done / plan.length * 100) : 0
   const date = studentInfo.date || new Date().toLocaleDateString('pt-BR')
 
-  let y = drawHeader(pdf, 'Plano de Ensino Individualizado — PEI',
-    'Inventário de Avaliação do Desenvolvimento Infantil — IADI')
+  let y = drawHeader(pdf, 'Plano de Ensino Individualizado - PEI',
+    'Inventario de Avaliacao do Desenvolvimento Infantil - IADI')
 
-  // ── Identificação ──────────────────────────────────────────────────────
-  y = drawSection(pdf, 'Identificação', y)
+  // Identificacao
+  y = drawSection(pdf, 'Identificacao', y)
   autoTable(pdf, {
+    ...BASE_TABLE,
     startY: y,
-    margin: { left: 14, right: 14 },
-    theme: 'plain',
-    styles: { fontSize: 8.5, cellPadding: 2.5, textColor: C.ink },
-    columnStyles: { 0: { fontStyle: 'bold', fillColor: C.brandLight, textColor: C.brandDark, cellWidth: 38 }, 2: { fontStyle: 'bold', fillColor: C.brandLight, textColor: C.brandDark, cellWidth: 38 } },
+    columnStyles: {
+      0: { fontStyle: 'bold' as const, cellWidth: 42 },
+      2: { fontStyle: 'bold' as const, cellWidth: 42 },
+    },
     body: [
-      ['Nome do aluno', studentInfo.name, '', ''],
-      ['Data de Nascimento', studentInfo.birthDate || '—', 'Idade', studentInfo.age || '—'],
-      ['Diagnóstico', studentInfo.diagnosis || '—', '', ''],
-      ['Data do PEI', date, 'Profissional', ''],
+      [safe('Nome do aluno'), safe(studentInfo.name), '', ''],
+      [safe('Data de Nascimento'), safe(studentInfo.birthDate), safe('Idade'), safe(studentInfo.age)],
+      [safe('Diagnostico'), safe(studentInfo.diagnosis), '', ''],
+      [safe('Data do PEI'), safe(date), safe('Profissional'), ''],
     ],
   })
   y = (pdf as any).lastAutoTable.finalY + 6
 
-  // ── Síntese ────────────────────────────────────────────────────────────
-  y = drawSection(pdf, 'Síntese do Plano', y)
+  // Sintese
+  y = drawSection(pdf, 'Sintese do Plano', y)
   autoTable(pdf, {
+    ...BASE_TABLE,
     startY: y,
-    margin: { left: 14, right: 14 },
-    theme: 'grid',
-    headStyles: { fillColor: C.brand, textColor: C.white, fontSize: 8, fontStyle: 'bold', halign: 'center' },
-    styles: { fontSize: 11, cellPadding: 4, halign: 'center', fontStyle: 'bold', textColor: C.ink },
-    head: [['Total de habilidades', 'Concluídas', 'Em andamento', 'Progresso']],
+    headStyles: { ...BASE_TABLE.headStyles, halign: 'center' as const },
+    styles: { ...BASE_TABLE.styles, halign: 'center' as const, fontStyle: 'bold' as const, fontSize: 11 },
+    head: [['Total de habilidades', 'Concluidas', 'Em andamento', 'Progresso']],
     body: [[plan.length, done, inProgress, `${pct}%`]],
-    didParseCell(data) {
-      if (data.section === 'body') {
-        if (data.column.index === 1) data.cell.styles.textColor = C.pos
-        if (data.column.index === 2) data.cell.styles.textColor = C.brand
-      }
-    },
   })
   y = (pdf as any).lastAutoTable.finalY + 6
 
-  // ── Habilidades por prazo ──────────────────────────────────────────────
-  y = drawSection(pdf, 'Habilidades e Estratégias de Intervenção', y)
+  // Habilidades por prazo
+  y = drawSection(pdf, 'Habilidades e Estrategias de Intervencao', y)
 
   const grouped: Record<string, PEIItem[]> = { curto: [], medio: [], longo: [] }
   plan.forEach(p => grouped[p.prazo].push(p))
@@ -87,83 +73,65 @@ export async function exportPEIPdf(assessment: Assessment, plan: PEIItem[]) {
   for (const prazo of ['curto', 'medio', 'longo'] as const) {
     if (!grouped[prazo].length) continue
 
-    // prazo sub-header
-    if (y > 260) { pdf.addPage(); y = 16 }
+    if (y > 258) { pdf.addPage(); y = 16 }
     pdf.setFont('helvetica', 'bold')
     pdf.setFontSize(9)
-    pdf.setTextColor(...PRAZO_COLOR[prazo])
-    pdf.text(PRAZO_LABEL[prazo], 14, y)
-    pdf.setDrawColor(...PRAZO_COLOR[prazo])
-    pdf.setLineWidth(0.4)
-    pdf.line(14, y + 1.5, W - 14, y + 1.5)
+    pdf.setTextColor(0, 0, 0)
+    pdf.text(safe(PRAZO_LABEL[prazo]), 20, y)
+    pdf.setDrawColor(180, 180, 180)
+    pdf.setLineWidth(0.3)
+    pdf.line(20, y + 1.5, W - 20, y + 1.5)
     y += 5
 
-    // build body rows: each skill has 2 rows — main + strategy
     const body: any[] = []
     grouped[prazo].forEach(item => {
       body.push([
-        formatQuestion(item.skill),
-        item.area,
-        item.ageRange,
-        STATUS_LABEL[item.status],
+        safe(formatQuestion(item.skill)),
+        safe(item.area),
+        safe(item.ageRange),
+        safe(STATUS_LABEL[item.status]),
       ])
-      body.push([{ content: `Estratégias: ${item.estrategias || '—'}`, colSpan: 4, styles: { fontSize: 7.5, textColor: [74, 85, 104], fillColor: [250, 250, 250], fontStyle: 'italic', cellPadding: { top: 2, bottom: 3, left: 4, right: 4 } } }])
+      body.push([{
+        content: safe(`Estrategias: ${item.estrategias || '-'}`),
+        colSpan: 4,
+        styles: { fontSize: 8, textColor: [80, 80, 80] as [number,number,number], fillColor: [250, 250, 250] as [number,number,number], fontStyle: 'italic' as const, cellPadding: { top: 2, bottom: 3, left: 4, right: 4 } },
+      }])
     })
 
     autoTable(pdf, {
+      ...BASE_TABLE,
       startY: y,
-      margin: { left: 14, right: 14 },
-      theme: 'striped',
-      headStyles: { fillColor: C.brand, textColor: C.white, fontSize: 7.5, fontStyle: 'bold' },
-      styles: { fontSize: 8, cellPadding: 2.8, textColor: C.ink, overflow: 'linebreak' },
       columnStyles: {
-        0: { cellWidth: 65 },
-        1: { cellWidth: 48 },
-        2: { cellWidth: 30 },
-        3: { cellWidth: 25 },
+        0: { cellWidth: 68 },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 28 },
+        3: { cellWidth: 24 },
       },
-      head: [['Habilidade', 'Área', 'Faixa etária', 'Status']],
+      head: [['Habilidade', 'Area', 'Faixa etaria', 'Status']],
       body,
-      didParseCell(data) {
-        if (data.section === 'body' && data.column.index === 3 && data.row.index % 2 === 0) {
-          const status = grouped[prazo][Math.floor(data.row.index / 2)]?.status
-          if (status) data.cell.styles.textColor = STATUS_COLOR[status]
-          data.cell.styles.fontStyle = 'bold'
-        }
-      },
     })
     y = (pdf as any).lastAutoTable.finalY + 8
   }
 
-  // ── Observações ────────────────────────────────────────────────────────
+  // Observacoes
   if (y > 250) { pdf.addPage(); y = 16 }
-  y = drawSection(pdf, 'Observações / Metas Gerais', y)
-  pdf.setDrawColor(203, 213, 224)
+  y = drawSection(pdf, 'Observacoes / Metas Gerais', y)
+  pdf.setDrawColor(180, 180, 180)
   pdf.setLineWidth(0.3)
-  pdf.rect(14, y, W - 28, 18)
+  pdf.rect(20, y, W - 40, 20)
   pdf.setFont('helvetica', 'normal')
-  pdf.setFontSize(7.5)
-  pdf.setTextColor(...C.gray)
-  pdf.text('Espaço para anotações do profissional…', 17, y + 6)
-  y += 24
+  pdf.setFontSize(8)
+  pdf.setTextColor(150, 150, 150)
+  pdf.text('Espaco para anotacoes do profissional...', 24, y + 7)
+  y += 26
 
-  // ── Assinaturas ────────────────────────────────────────────────────────
-  if (y > 260) { pdf.addPage(); y = 16 }
-  const midX = W / 2
-  pdf.setDrawColor(...C.ink)
-  pdf.setLineWidth(0.4)
-  pdf.line(14, y + 16, midX - 8, y + 16)
-  pdf.line(midX + 8, y + 16, W - 14, y + 16)
-  pdf.setFont('helvetica', 'bold')
-  pdf.setFontSize(7.5)
-  pdf.setTextColor(...C.ink)
-  pdf.text('Profissional responsável', 14, y + 20)
-  pdf.text('Responsável pelo aluno', midX + 8, y + 20)
-  pdf.setFont('helvetica', 'normal')
-  pdf.setFontSize(7)
-  pdf.setTextColor(...C.gray)
-  pdf.text('Assinatura / Registro', 14, y + 24)
-  pdf.text('Assinatura', midX + 8, y + 24)
+  // Assinaturas
+  if (y > 255) { pdf.addPage(); y = 16 }
+  drawSignatures(pdf, y,
+    { label: 'Profissional responsavel', sub: 'Assinatura / Registro' },
+    { label: 'Responsavel pelo aluno', sub: 'Assinatura' },
+  )
 
-  pdf.save(`PEI_${studentInfo.name}_${date}.pdf`)
+  addPageNumbers(pdf)
+  pdf.save(`PEI_${safe(studentInfo.name)}_${safe(date)}.pdf`)
 }
