@@ -158,3 +158,46 @@ table.data tr:last-child td { border-bottom: none; }
 
 /* hide-sm for topbar */
 @media (max-width: 580px) { .hide-sm { display: none !important; } }
+
+/* ── Mobile responsiveness ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* app frame padding */
+  .app-frame { padding-left: 14px !important; padding-right: 14px !important; }
+
+  /* stat cards: 2 columns on mobile */
+  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* patient list: stack on mobile */
+  .patient-row { grid-template-columns: 1fr auto !important; }
+  .patient-row .col-hidden { display: none !important; }
+
+  /* results headline strip: stack vertically */
+  .result-strip { grid-template-columns: 1fr !important; }
+  .result-strip > div { border-left: none !important; border-top: 1px solid var(--line); }
+  .result-strip > div:first-child { border-top: none; }
+
+  /* charts: stack side-by-side pairs */
+  .chart-pair { grid-template-columns: 1fr !important; }
+
+  /* PEI topbar buttons: wrap and shrink */
+  .topbar-actions { flex-wrap: wrap !important; gap: 4px !important; }
+  .topbar-actions .btn { font-size: 12px !important; padding: 5px 8px !important; }
+
+  /* tabs: allow wrap */
+  .seg { flex-wrap: wrap !important; }
+  .seg button { flex: 1 1 auto !important; min-width: 80px !important; font-size: 12px !important; }
+
+  /* form grids: single column */
+  .form-grid-2 { grid-template-columns: 1fr !important; }
+
+  /* search bar: full width */
+  .search-bar { width: 100% !important; max-width: 100% !important; }
+
+  /* touch targets */
+  .btn { min-height: 38px; }
+  .btn-sm { min-height: 34px; padding: 6px 10px !important; }
+
+  /* topbar: shrink padding */
+  .topbar { padding: 0 12px !important; }
+  .topbar-logo span { display: none; }
+}

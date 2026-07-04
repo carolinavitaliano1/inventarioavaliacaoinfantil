@@ -125,7 +125,7 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
                   {displayPhoto ? <img src={displayPhoto} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <Camera size={20} style={{ color: 'var(--ink-4)' }} />}
                 </div>
                 <input type="file" accept="image/*" style={{ display: 'none' }} ref={el => setPhotoInput(el)} onChange={handlePhotoChange} />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, flex: 1 }}>
+                <div className="form-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, flex: 1 }}>
                   {[['Nome', 'name', patient.name], ['Responsável', 'responsibleName', patient.responsibleName ?? ''], ['Diagnóstico', 'diagnosis', patient.diagnosis ?? '']].map(([l, k, ph]) => (
                     <div key={k}>
                       <div className="label" style={{ marginBottom: 4 }}>{l}</div>

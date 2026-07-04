@@ -148,7 +148,7 @@ export default function PortageQuestionnaire({ hook, setView, auth, onBack }: Pr
                                   onClick={() => setR(item.id, k)}
                                   style={{
                                     display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500,
-                                    padding: '5px 11px', borderRadius: 99, cursor: 'pointer',
+                                    padding: '8px 13px', borderRadius: 99, cursor: 'pointer', minHeight: 36,
                                     border: '1px solid ' + (on ? r.color : 'var(--line-2)'),
                                     background: on ? r.color : 'var(--surface)', color: on ? '#fff' : 'var(--ink-3)',
                                     transition: 'all .12s',
@@ -161,7 +161,7 @@ export default function PortageQuestionnaire({ hook, setView, auth, onBack }: Pr
                             })}
                             <button
                               onClick={() => setTipFor(tipFor === item.id ? null : item.id)}
-                              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11.5, color: 'var(--primary-ink)', background: 'none', border: 'none', cursor: 'pointer' }}
+                              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11.5, color: 'var(--primary-ink)', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 4px', minHeight: 36 }}
                             >
                               <Info size={13} /> Como avaliar
                             </button>

@@ -145,7 +145,7 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
         </div>
 
         {/* stat cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 22 }}>
+        <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 22 }}>
           {[
             { l: 'Pacientes ativos', v: patients.length, Icon: Users },
             { l: 'Avaliações registradas', v: assessments.length, Icon: ClipboardList },
@@ -250,7 +250,7 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
             Pacientes <span className="chip" style={{ marginLeft: 4 }}>{patients.length}</span>
           </h2>
           <div style={{ flex: 1 }} />
-          <div style={{ position: 'relative', width: 260, maxWidth: '46vw' }}>
+          <div className="search-bar" style={{ position: 'relative', width: 260, maxWidth: '46vw' }}>
             <span style={{ position: 'absolute', left: 11, top: '50%', transform: 'translateY(-50%)', color: 'var(--ink-4)', display: 'flex' }}><Search size={15} /></span>
             <input className="field" style={{ paddingLeft: 33 }} placeholder="Buscar paciente…" value={search} onChange={e => setSearch(e.target.value)} />
           </div>
@@ -269,7 +269,8 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
           </div>
         ) : (
           <div className="card" style={{ overflow: 'hidden' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1fr 0.9fr 40px', gap: 12, padding: '11px 18px', borderBottom: '1px solid var(--line)', background: 'var(--surface-2)' }}>
+            <div style={{ overflowX: 'auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1fr 0.9fr 40px', gap: 12, padding: '11px 18px', borderBottom: '1px solid var(--line)', background: 'var(--surface-2)', minWidth: 520 }}>
               {['Paciente', 'Idade desenv. (média)', 'Última avaliação', 'Avaliações', ''].map((h, i) => (
                 <div key={i} className="micro" style={{ textAlign: i >= 3 ? 'center' : 'left' }}>{h}</div>
               ))}
@@ -297,7 +298,7 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
                   style={{
                     display: 'grid', gridTemplateColumns: '2.2fr 1fr 1fr 0.9fr 40px', gap: 12, padding: '14px 18px',
                     alignItems: 'center', cursor: 'pointer', borderBottom: idx < filtered.length - 1 ? '1px solid var(--line)' : 'none',
-                    transition: 'background .1s',
+                    transition: 'background .1s', minWidth: 520,
                   }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'var(--surface-2)')}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}
@@ -347,6 +348,7 @@ export default function Dashboard({ hook, auth, patientsHook, onOpenPatient, set
                 </div>
               )
             })}
+            </div>{/* end overflow-x auto */}
           </div>
         )}
 

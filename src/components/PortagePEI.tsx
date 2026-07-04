@@ -123,7 +123,7 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   return (
     <div className="shell">
       {auth && <TopBar auth={auth} onLogoClick={onBack} right={
-        <>
+        <div className="topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button className="btn btn-ghost btn-sm" onClick={() => setView('results')}><BarChart3 size={14} /> Resultados</button>
           <button className="btn btn-ghost btn-sm" onClick={handleSaveNow} title="Salvar plano">
             {saveStatus === 'saving'
@@ -136,7 +136,7 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
           <button className="btn btn-primary btn-sm" onClick={handleExportWord} disabled={exportingWord}>
             {exportingWord ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Exportar Word
           </button>
-        </>
+        </div>
       } />}
 
       <div className="app-frame screen" style={{ padding: '20px 24px 64px' }}>

@@ -159,7 +159,7 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
 
         {/* headline strip */}
         <div className="card" style={{ overflow: 'hidden', marginBottom: 18 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 0 }}>
+          <div className="result-strip" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 0 }}>
             <div style={{ background: 'var(--primary)', color: '#fff', padding: '18px 22px' }}>
               <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', opacity: 0.8, fontWeight: 600 }}>Idade desenvolvimental · média</div>
               <div className="mono" style={{ fontSize: 34, fontWeight: 600, lineHeight: 1.1, marginTop: 4 }}>
@@ -327,7 +327,7 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
               </ResponsiveContainer>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+            <div className="chart-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
               {/* radar: perfil desenvolvimental */}
               <div className="card card-pad" ref={refRadar}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
