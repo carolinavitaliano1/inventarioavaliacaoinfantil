@@ -721,6 +721,119 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
               <div style={{ padding: '10px 20px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Prioridades — habilidades em desenvolvimento</div>
             </div>
 
+            {/* Card 5 — Gráfico Evolução por área (largo, ocupa 2 colunas) */}
+            <div className="lp-reveal lp-reveal-d1" style={{ gridColumn: 'span 2', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <div style={{ padding: 24, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+                {/* Gráfico 1 — Evolução por área */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Evolução por área</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>Idade desenvolvimental (anos) em cada avaliação</div>
+                  <svg viewBox="0 0 320 160" width="100%" style={{ display: 'block' }}>
+                    {/* Grid lines */}
+                    {[0,40,80,120,160].map((y, i) => (
+                      <g key={y}>
+                        <line x1="40" y1={y + 4} x2="310" y2={y + 4} stroke="var(--line)" strokeDasharray="4 4" strokeWidth="1" />
+                        <text x="36" y={y + 8} fontSize="9" fill="var(--ink-4)" textAnchor="end">{['1a','0.75a','0.5a','0.25a','0a'][i]}</text>
+                      </g>
+                    ))}
+                    {/* X labels */}
+                    <text x="50" y="155" fontSize="9" fill="var(--ink-4)">02/07/2026</text>
+                    <text x="240" y="155" fontSize="9" fill="var(--ink-4)">02/07/2026</text>
+                    {/* Lines — Ling. Expressiva (azul escuro): 0.54a → 0.96a */}
+                    <line x1="50" y1={164 - 0.54*160} x2="300" y2={164 - 0.96*160} stroke="#4c7ef3" strokeWidth="2" />
+                    <circle cx="50" cy={164 - 0.54*160} r="4" fill="#4c7ef3" />
+                    <circle cx="300" cy={164 - 0.96*160} r="4" fill="#4c7ef3" />
+                    {/* Lines — Ling. Receptiva (ciano): 0.24a → 0.59a */}
+                    <line x1="50" y1={164 - 0.24*160} x2="300" y2={164 - 0.59*160} stroke="#20b8a0" strokeWidth="2" />
+                    <circle cx="50" cy={164 - 0.24*160} r="4" fill="#20b8a0" />
+                    <circle cx="300" cy={164 - 0.59*160} r="4" fill="#20b8a0" />
+                    {/* Lines — demais áreas em 0 */}
+                    {['#c0392b','#e09b00','#2da44e','#7c5cbf'].map((color, i) => (
+                      <g key={color}>
+                        <line x1="50" y1="164" x2="300" y2="164" stroke={color} strokeWidth="1.5" opacity="0.5" />
+                        <circle cx="50" cy="164" r="3" fill={color} opacity="0.5" />
+                        <circle cx="300" cy="164" r="3" fill={color} opacity="0.5" />
+                      </g>
+                    ))}
+                  </svg>
+                  {/* Legenda */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px', marginTop: 8 }}>
+                    {[['#4c7ef3','Ling. Expressiva'],['#20b8a0','Ling. Receptiva'],['#c0392b','Psicomotora'],['#e09b00','Cognição'],['#2da44e','Cuidados'],['#7c5cbf','Socialização']].map(([c, l]) => (
+                      <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 9, color: 'var(--ink-3)' }}>
+                        <div style={{ width: 16, height: 2, background: c, borderRadius: 1 }} />
+                        {l}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Gráfico 2 — Média geral vs cronológica */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Evolução da idade desenvolvimental — média geral</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>2 avaliações</div>
+                  <svg viewBox="0 0 320 160" width="100%" style={{ display: 'block' }}>
+                    {[0,32,64,96,128,160].map((y, i) => (
+                      <g key={y}>
+                        <line x1="40" y1={y + 4} x2="310" y2={y + 4} stroke="var(--line)" strokeDasharray="4 4" strokeWidth="1" />
+                        <text x="36" y={y + 8} fontSize="9" fill="var(--ink-4)" textAnchor="end">{['8a','6a','4a','2a','1a','0a'][i]}</text>
+                      </g>
+                    ))}
+                    {/* X labels */}
+                    <text x="50" y="155" fontSize="9" fill="var(--ink-4)">02/07/2026</text>
+                    <text x="240" y="155" fontSize="9" fill="var(--ink-4)">02/07/2026</text>
+                    {/* Cronológica — linha tracejada cinza: 4.75a (escala 0-8a) */}
+                    <line x1="50" y1={164 - (4.75/8)*160} x2="300" y2={164 - (4.75/8)*160} stroke="var(--ink-3)" strokeWidth="1.5" strokeDasharray="5 4" opacity="0.6" />
+                    <circle cx="50" cy={164 - (4.75/8)*160} r="3" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" opacity="0.6" />
+                    <circle cx="300" cy={164 - (4.75/8)*160} r="3" fill="none" stroke="var(--ink-3)" strokeWidth="1.5" opacity="0.6" />
+                    {/* Média geral — azul: 0.2a → 0.25a */}
+                    <line x1="50" y1={164 - (0.2/8)*160} x2="300" y2={164 - (0.25/8)*160} stroke="#4c7ef3" strokeWidth="2" />
+                    <circle cx="50" cy={164 - (0.2/8)*160} r="4" fill="#4c7ef3" />
+                    <circle cx="300" cy={164 - (0.25/8)*160} r="4" fill="#4c7ef3" />
+                  </svg>
+                  <div style={{ display: 'flex', gap: 16, marginTop: 8 }}>
+                    {[['var(--ink-3)','Cronológica',true],['#4c7ef3','Média geral',false]].map(([c, l, dashed]) => (
+                      <div key={l as string} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 9, color: 'var(--ink-3)' }}>
+                        <svg width="18" height="8"><line x1="0" y1="4" x2="18" y2="4" stroke={c as string} strokeWidth="2" strokeDasharray={dashed ? '4 3' : undefined} /></svg>
+                        {l}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Tabela comparativa */}
+              <div style={{ borderTop: '1px solid var(--line)', padding: '16px 24px 20px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--ink)', marginBottom: 10 }}>Comparativo entre avaliações</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 0, fontSize: 10 }}>
+                  <div style={{ color: 'var(--ink-4)', padding: '4px 0', borderBottom: '1px solid var(--line)' }}>Área</div>
+                  <div style={{ color: 'var(--ink-4)', padding: '4px 0', borderBottom: '1px solid var(--line)', textAlign: 'center' }}>02/07/2026</div>
+                  <div style={{ color: 'var(--ink-4)', padding: '4px 0', borderBottom: '1px solid var(--line)', textAlign: 'center' }}>02/07/2026</div>
+                  <div style={{ color: 'var(--ink-4)', padding: '4px 0', borderBottom: '1px solid var(--line)', textAlign: 'right' }}>Δ total</div>
+                  {[
+                    ['Socialização',    '#7c5cbf','0.00a','0.00a','→ 0.00a','neutral'],
+                    ['Ling. Receptiva', '#20b8a0','0.24a','0.59a','↑ 0.35a','pos'],
+                    ['Ling. Expressiva','#4c7ef3','0.54a','0.96a','↑ 0.42a','pos'],
+                    ['Cuidados Próprios','#2da44e','0.00a','0.00a','→ 0.00a','neutral'],
+                    ['Cognição',        '#e09b00','0.00a','0.00a','→ 0.00a','neutral'],
+                    ['Psicomotora',     '#c0392b','0.00a','0.00a','→ 0.00a','neutral'],
+                  ].map(([area, color, v1, v2, delta, type]) => (
+                    <>
+                      <div key={area} style={{ color, fontWeight: 600, padding: '5px 0', borderBottom: '1px solid var(--line)' }}>{area}</div>
+                      <div style={{ color: 'var(--ink-3)', padding: '5px 0', borderBottom: '1px solid var(--line)', textAlign: 'center' }}>{v1}</div>
+                      <div style={{ color: type === 'pos' ? 'var(--primary)' : 'var(--ink-3)', padding: '5px 0', borderBottom: '1px solid var(--line)', textAlign: 'center' }}>{v2}</div>
+                      <div style={{ color: type === 'pos' ? '#2da44e' : 'var(--ink-4)', fontWeight: type === 'pos' ? 700 : 400, padding: '5px 0', borderBottom: '1px solid var(--line)', textAlign: 'right' }}>{delta}</div>
+                    </>
+                  ))}
+                </div>
+              </div>
+              <div style={{ padding: '10px 24px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Progressão — gráficos e comparativo entre avaliações</div>
+            </div>
+
           </div>
         </div>
       </section>
