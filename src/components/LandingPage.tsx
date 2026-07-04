@@ -834,6 +834,164 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
               <div style={{ padding: '10px 24px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Progressão — gráficos e comparativo entre avaliações</div>
             </div>
 
+            {/* Card 6 — Gráficos da aba Gráficos (largo, 3 colunas) */}
+            <div className="lp-reveal lp-reveal-d2" style={{ gridColumn: '1 / -1', border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
+              <div style={{ background: '#f8f9fb', borderBottom: '1px solid var(--line)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
+                <span style={{ marginLeft: 8, fontSize: 11, color: 'var(--ink-4)' }}>Aba: Gráficos</span>
+              </div>
+              <div style={{ padding: 24, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+
+                {/* Radar — Perfil desenvolvimental */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Perfil desenvolvimental</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>Idade desenv. (anos) vs. cronológica</div>
+                  <svg viewBox="0 0 220 210" width="100%" style={{ display: 'block' }}>
+                    {/* Radar hexagonal — 6 áreas, centro 110,105, raio max 80 */}
+                    {(() => {
+                      const cx = 110, cy = 108, R = 78
+                      const angles = [270, 330, 30, 90, 150, 210].map(d => d * Math.PI / 180)
+                      const labels = ['Socialização','Ling. Receptiva','Ling. Expressiva','Cuidados Próprios','Cognição','Psicomotora']
+                      const labelOffsets = [[0,-14],[22,0],[22,0],[0,14],[-22,0],[-22,0]]
+                      // Cronológica: raio proporcional a 4.75/8 = 0.59
+                      const rCron = R * 0.59
+                      // Desenvolvimental: [0, 0.59, 0.96, 0, 0, 0] / 8 * R
+                      const devVals = [0, 0.59/8, 0.96/8, 0, 0, 0]
+                      const rDev = devVals.map(v => v * R * 8)
+                      // Grid rings
+                      const rings = [0.25,0.5,0.75,1].map(f => angles.map(a => [cx + R*f*Math.cos(a), cy + R*f*Math.sin(a)]))
+                      return (
+                        <>
+                          {/* Grid rings */}
+                          {rings.map((pts, ri) => (
+                            <polygon key={ri} points={pts.map(p => p.join(',')).join(' ')} fill="none" stroke="var(--line)" strokeWidth="1" />
+                          ))}
+                          {/* Spokes */}
+                          {angles.map((a, i) => (
+                            <line key={i} x1={cx} y1={cy} x2={cx + R*Math.cos(a)} y2={cy + R*Math.sin(a)} stroke="var(--line)" strokeWidth="1" />
+                          ))}
+                          {/* Ring labels */}
+                          {[2,4,6].map((v, i) => (
+                            <text key={v} x={cx + 3} y={cy - R*(i+1)/4 - 1} fontSize="8" fill="var(--ink-4)">{v}</text>
+                          ))}
+                          {/* Cronológica polygon */}
+                          <polygon points={angles.map(a => [cx + rCron*Math.cos(a), cy + rCron*Math.sin(a)].join(',')).join(' ')} fill="hsl(220 15% 60% / .12)" stroke="hsl(220 15% 60% / .7)" strokeWidth="1.5" strokeDasharray="5 3" />
+                          {/* Desenvolvimental polygon */}
+                          <polygon points={angles.map((a, i) => [cx + rDev[i]*Math.cos(a), cy + rDev[i]*Math.sin(a)].join(',')).join(' ')} fill="hsl(214 56% 50% / .18)" stroke="#4c7ef3" strokeWidth="2" />
+                          {/* Area labels */}
+                          {angles.map((a, i) => (
+                            <text key={i} x={cx + (R+14)*Math.cos(a) + labelOffsets[i][0]} y={cy + (R+14)*Math.sin(a) + labelOffsets[i][1]} fontSize="9" fill="var(--ink-3)" textAnchor="middle">{labels[i]}</text>
+                          ))}
+                        </>
+                      )
+                    })()}
+                  </svg>
+                  <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginTop: 8 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 9, color: 'var(--ink-3)' }}>
+                      <svg width="18" height="8"><line x1="0" y1="4" x2="18" y2="4" stroke="hsl(220 15% 60%)" strokeWidth="1.5" strokeDasharray="4 3" /></svg>
+                      Cronológica
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 9, color: 'var(--ink-3)' }}>
+                      <div style={{ width: 14, height: 10, background: 'hsl(214 56% 50% / .25)', border: '2px solid #4c7ef3', borderRadius: 2 }} />
+                      Idade desenv.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Barras horizontais — Aquisição por área */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>Aquisição por área</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 14 }}>% de itens adquiridos (Sim)</div>
+                  <svg viewBox="0 0 260 190" width="100%" style={{ display: 'block' }}>
+                    {/* Grid lines */}
+                    {[0,25,50,75,100].map((pct, i) => {
+                      const x = 70 + (pct / 100) * 180
+                      return (
+                        <g key={pct}>
+                          <line x1={x} y1="0" x2={x} y2="165" stroke="var(--line)" strokeDasharray="4 4" strokeWidth="1" />
+                          <text x={x} y="178" fontSize="9" fill="var(--ink-4)" textAnchor="middle">{pct}%</text>
+                        </g>
+                      )
+                    })}
+                    {/* Bars */}
+                    {[
+                      ['Socialização',   0,     '#7c5cbf'],
+                      ['Ling.\nReceptiva', 18,  '#20b8a0'],
+                      ['Ling.\nExpressiva', 92, '#4c7ef3'],
+                      ['Cuidados\nPróprios', 0, '#2da44e'],
+                      ['Cognição',       0,     '#e09b00'],
+                      ['Psicomotora',    0,     '#c0392b'],
+                    ].map(([label, pct, color], i) => {
+                      const y = i * 27 + 4
+                      const bw = (Number(pct) / 100) * 180
+                      return (
+                        <g key={String(label)}>
+                          <text x="65" y={y + 14} fontSize="9" fill="var(--ink-3)" textAnchor="end">{String(label).split('\n').map((t, j) => <tspan key={j} x="65" dy={j === 0 ? 0 : 10}>{t}</tspan>)}</text>
+                          {bw > 0 && <rect x="70" y={y + 2} width={bw} height="16" rx="3" fill={String(color)} opacity="0.85" />}
+                          {bw === 0 && <line x1="70" y1={y+10} x2="73" y2={y+10} stroke={String(color)} strokeWidth="2" />}
+                          {bw > 2 && <text x={70 + bw + 4} y={y + 13} fontSize="9" fill="var(--ink-3)">{Number(pct) > 0 ? pct : ''}</text>}
+                        </g>
+                      )
+                    })}
+                  </svg>
+                </div>
+
+                {/* Linha — % de aquisição por faixa etária */}
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', marginBottom: 2 }}>% de aquisição por faixa etária</div>
+                  <div style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>Uma linha por área de desenvolvimento</div>
+                  <svg viewBox="0 0 260 170" width="100%" style={{ display: 'block' }}>
+                    {/* Y grid */}
+                    {[0,25,50,75,100].map((pct, i) => {
+                      const y = 4 + (1 - pct/100) * 130
+                      return (
+                        <g key={pct}>
+                          <line x1="30" y1={y} x2="255" y2={y} stroke="var(--line)" strokeDasharray="4 4" strokeWidth="1" />
+                          <text x="26" y={y + 4} fontSize="8" fill="var(--ink-4)" textAnchor="end">{pct}%</text>
+                        </g>
+                      )
+                    })}
+                    {/* X labels */}
+                    {['0–1a','1–2a','2–3a','3–4a','4–5a','5–6a'].map((l, i) => (
+                      <text key={l} x={30 + i * 45} y="152" fontSize="8" fill="var(--ink-4)" textAnchor="middle">{l}</text>
+                    ))}
+                    {/* Ling. Expressiva: 92% at 0-1a, 0% rest */}
+                    {(() => {
+                      const xs = [30, 75, 120, 165, 210, 255]
+                      const expY = [4 + (1 - 0.92)*130, ...Array(5).fill(4 + 130)]
+                      const recY = [4 + (1 - 0.18)*130, ...Array(5).fill(4 + 130)]
+                      return (
+                        <>
+                          <polyline points={xs.map((x, i) => `${x},${expY[i]}`).join(' ')} fill="none" stroke="#4c7ef3" strokeWidth="2" />
+                          {xs.map((x, i) => <circle key={i} cx={x} cy={expY[i]} r="3" fill="#4c7ef3" />)}
+                          <polyline points={xs.map((x, i) => `${x},${recY[i]}`).join(' ')} fill="none" stroke="#20b8a0" strokeWidth="2" />
+                          {xs.map((x, i) => <circle key={i} cx={x} cy={recY[i]} r="3" fill="#20b8a0" />)}
+                          {/* demais em 0 */}
+                          {['#c0392b','#e09b00','#2da44e','#7c5cbf'].map(color => (
+                            <g key={color}>
+                              <polyline points={xs.map(x => `${x},${4+130}`).join(' ')} fill="none" stroke={color} strokeWidth="1.5" opacity="0.5" />
+                              {xs.map((x, i) => <circle key={i} cx={x} cy={4+130} r="2.5" fill={color} opacity="0.5" />)}
+                            </g>
+                          ))}
+                        </>
+                      )
+                    })()}
+                  </svg>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 10px', marginTop: 4, justifyContent: 'center' }}>
+                    {[['#e09b00','Cognição'],['#2da44e','Cuidados'],['#4c7ef3','Ling. Expressiva'],['#20b8a0','Ling. Receptiva'],['#c0392b','Psicomotora'],['#7c5cbf','Socialização']].map(([c,l]) => (
+                      <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 8, color: 'var(--ink-3)' }}>
+                        <div style={{ width: 14, height: 2, background: c, borderRadius: 1 }} />{l}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+              <div style={{ padding: '10px 24px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Gráficos — radar, barras e % de aquisição por faixa etária</div>
+            </div>
+
           </div>
         </div>
       </section>
