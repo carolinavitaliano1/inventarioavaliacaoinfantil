@@ -8,6 +8,8 @@ import { formatQuestion } from '../utils/formatQuestion'
 import { areaVars } from '../utils/areaDesign'
 import TopBar from './TopBar'
 import { exportPEI } from '../utils/exportPEI'
+import { exportPEIHtml } from '../utils/exportPEI_html'
+import { exportPEIPdf } from '../utils/exportPEI_pdf'
 import type { PortageItem } from '../types'
 
 type AuthHook = ReturnType<typeof useAuth>
@@ -56,6 +58,8 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   const { current } = hook
   const [tab, setTab] = useState<'plano' | 'selecionar'>('selecionar')
   const [exportingWord, setExportingWord] = useState(false)
+  const [exportingPdf, setExportingPdf] = useState(false)
+  const [exportingHtml, setExportingHtml] = useState(false)
   const [editingEst, setEditingEst] = useState<string | null>(null)
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving'>('saved')
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -119,6 +123,14 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
     setExportingWord(true)
     try { await exportPEI(current, plan) } finally { setExportingWord(false) }
   }
+  const handleExportPdf = async () => {
+    setExportingPdf(true)
+    try { await exportPEIPdf(current, plan) } finally { setExportingPdf(false) }
+  }
+  const handleExportHtml = () => {
+    setExportingHtml(true)
+    try { exportPEIHtml(current, plan) } finally { setExportingHtml(false) }
+  }
 
   return (
     <div className="shell">
@@ -133,8 +145,14 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
           <button className="btn btn-subtle btn-sm" onClick={handleSaveNow}>
             <Save size={14} /> Salvar plano
           </button>
+          <button className="btn btn-ghost btn-sm" onClick={handleExportPdf} disabled={exportingPdf} title="Baixar PDF">
+            {exportingPdf ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} PDF
+          </button>
+          <button className="btn btn-ghost btn-sm" onClick={handleExportHtml} disabled={exportingHtml} title="Baixar HTML (abre no navegador)">
+            {exportingHtml ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} HTML
+          </button>
           <button className="btn btn-primary btn-sm" onClick={handleExportWord} disabled={exportingWord}>
-            {exportingWord ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Exportar Word
+            {exportingWord ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Word
           </button>
         </div>
       } />}
@@ -256,9 +274,17 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
               )
             })}
             {plan.length > 0 && (
-              <button className="btn btn-primary" style={{ padding: 13 }} onClick={handleExportWord} disabled={exportingWord}>
-                {exportingWord ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />} Exportar PEI em Word
-              </button>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <button className="btn btn-ghost" style={{ padding: 13, flex: 1 }} onClick={handleExportPdf} disabled={exportingPdf}>
+                  {exportingPdf ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />} Baixar PDF
+                </button>
+                <button className="btn btn-ghost" style={{ padding: 13, flex: 1 }} onClick={handleExportHtml} disabled={exportingHtml}>
+                  {exportingHtml ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />} Baixar HTML
+                </button>
+                <button className="btn btn-primary" style={{ padding: 13, flex: 1 }} onClick={handleExportWord} disabled={exportingWord}>
+                  {exportingWord ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />} Baixar Word
+                </button>
+              </div>
             )}
           </div>
         )}
