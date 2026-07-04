@@ -81,13 +81,13 @@ export function usePatients(userId?: string | null) {
     if (data.responsibleName !== undefined) update.responsible_name = data.responsibleName
     if (data.photoBase64 !== undefined) update.photo_base64 = data.photoBase64
 
-    const { error } = await supabase.from('patients').update(update).eq('id', id)
+    const { error } = await supabase.from('patients').update(update).eq('id', id).eq('user_id', userId!)
     if (error) throw error
     setPatients(prev => prev.map(p => p.id === id ? { ...p, ...data } : p))
-  }, [])
+  }, [userId])
 
   const deletePatient = useCallback(async (id: string) => {
-    await supabase.from('patients').delete().eq('id', id)
+    await supabase.from('patients').delete().eq('id', id).eq('user_id', userId!)
     setPatients(prev => prev.filter(p => p.id !== id))
   }, [])
 

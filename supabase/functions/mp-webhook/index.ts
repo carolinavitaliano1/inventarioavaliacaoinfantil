@@ -1,9 +1,42 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
+// Valida a assinatura HMAC-SHA256 enviada pelo Mercado Pago no header x-signature
+async function validateMpSignature(req: Request, rawBody: string): Promise<boolean> {
+  const secret = Deno.env.get('MP_WEBHOOK_SECRET')
+  if (!secret) return true // sem segredo configurado, aceita (modo dev)
+
+  const sigHeader = req.headers.get('x-signature')
+  const reqId = req.headers.get('x-request-id') ?? ''
+  if (!sigHeader) return false
+
+  // Formato: "ts=...,v1=..."
+  const parts = Object.fromEntries(sigHeader.split(',').map(p => p.split('=')))
+  const ts = parts['ts']
+  const v1 = parts['v1']
+  if (!ts || !v1) return false
+
+  const manifest = `id:${new URL(req.url).searchParams.get('data.id') ?? ''};request-id:${reqId};ts:${ts};`
+  const key = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'],
+  )
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(manifest))
+  const hex = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('')
+  return hex === v1
+}
+
 serve(async (req) => {
   try {
-    const body = await req.json()
+    const rawBody = await req.text()
+
+    // Validar assinatura do MP (ignora se MP_WEBHOOK_SECRET não estiver setado)
+    const valid = await validateMpSignature(req, rawBody)
+    if (!valid) {
+      console.warn('mp-webhook: assinatura inválida')
+      return new Response('forbidden', { status: 403 })
+    }
+
+    const body = JSON.parse(rawBody)
     const { type, data } = body
 
     if (type !== 'preapproval') {
@@ -14,9 +47,11 @@ serve(async (req) => {
     const preapprovalId = data?.id
     if (!preapprovalId) return new Response('ok', { status: 200 })
 
+    // Nunca confia no body direto — busca os dados no MP para verificar
     const mpRes = await fetch(`https://api.mercadopago.com/preapproval/${preapprovalId}`, {
       headers: { 'Authorization': `Bearer ${mpToken}` },
     })
+    if (!mpRes.ok) return new Response('ok', { status: 200 })
     const sub = await mpRes.json()
 
     if (!sub.external_reference) return new Response('ok', { status: 200 })
