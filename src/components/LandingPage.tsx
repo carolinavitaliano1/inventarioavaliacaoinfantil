@@ -589,6 +589,26 @@ function ReportCarousel() {
           </div>
           <div style={{ textAlign: 'center', marginTop: 8, fontSize: 12, color: 'var(--ink-4)' }}>{idx + 1} de {total}</div>
         </div>
+
+        {/* vídeo demonstrativo */}
+        <div style={{
+          position: 'relative',
+          maxWidth: 800,
+          margin: '48px auto 0',
+          borderRadius: 16,
+          overflow: 'hidden',
+          boxShadow: '0 24px 64px rgba(0,0,0,0.18)',
+          background: '#000',
+          aspectRatio: '16/9',
+        }}>
+          <iframe
+            src="https://www.youtube.com/embed/G-jktO4vQNY?rel=0&modestbranding=1&color=white"
+            title="IADI — documentos gerados"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+          />
+        </div>
       </div>
     </section>
   )
@@ -937,7 +957,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             aspectRatio: '16/9',
           }}>
             <iframe
-              src="https://www.youtube.com/embed/U33kPc2UX4o?rel=0&modestbranding=1&color=white"
+              src="https://www.youtube.com/embed/G-jktO4vQNY?rel=0&modestbranding=1&color=white"
               title="IADI — Inventário de Avaliação do Desenvolvimento Infantil"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
