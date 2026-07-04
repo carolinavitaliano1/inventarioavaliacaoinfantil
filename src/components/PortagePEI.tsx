@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ArrowLeft, BarChart3, Plus, Trash2, FileDown, Loader2, BookOpen, Layers, Flag, Save, Check } from 'lucide-react'
+import { ArrowLeft, BarChart3, Plus, Trash2, Loader2, BookOpen, Layers, Flag, Save } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { View } from '../App'
@@ -7,6 +7,7 @@ import type { useAuth } from '../hooks/useAuth'
 import { formatQuestion } from '../utils/formatQuestion'
 import { areaVars } from '../utils/areaDesign'
 import TopBar from './TopBar'
+import ExportButtons from './ExportButtons'
 import { exportPEI } from '../utils/exportPEI'
 import { exportPEIHtml } from '../utils/exportPEI_html'
 import { exportPEIPdf } from '../utils/exportPEI_pdf'
@@ -135,25 +136,18 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   return (
     <div className="shell">
       {auth && <TopBar auth={auth} onLogoClick={onBack} right={
-        <div className="topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button className="btn btn-ghost btn-sm" onClick={() => setView('results')}><BarChart3 size={14} /> Resultados</button>
-          <button className="btn btn-ghost btn-sm" onClick={handleSaveNow} title="Salvar plano">
+          <button className="btn btn-subtle btn-sm" onClick={handleSaveNow}>
             {saveStatus === 'saving'
               ? <><Loader2 size={14} className="animate-spin" /> Salvando…</>
-              : <><Check size={14} style={{ color: 'var(--pos)' }} /> Salvo</>}
+              : <><Save size={14} /> Salvar</>}
           </button>
-          <button className="btn btn-subtle btn-sm" onClick={handleSaveNow}>
-            <Save size={14} /> Salvar plano
-          </button>
-          <button className="btn btn-ghost btn-sm" onClick={handleExportPdf} disabled={exportingPdf} title="Baixar PDF">
-            {exportingPdf ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} PDF
-          </button>
-          <button className="btn btn-ghost btn-sm" onClick={handleExportHtml} disabled={exportingHtml} title="Baixar HTML (abre no navegador)">
-            {exportingHtml ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} HTML
-          </button>
-          <button className="btn btn-primary btn-sm" onClick={handleExportWord} disabled={exportingWord}>
-            {exportingWord ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Word
-          </button>
+          <ExportButtons variant="topbar" actions={[
+            { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
+            { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
+            { label: 'Exportar Word', onClick: handleExportWord, loading: exportingWord, primary: true },
+          ]} />
         </div>
       } />}
 
@@ -274,17 +268,11 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
               )
             })}
             {plan.length > 0 && (
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                <button className="btn btn-ghost" style={{ padding: 13, flex: 1 }} onClick={handleExportPdf} disabled={exportingPdf}>
-                  {exportingPdf ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />} Baixar PDF
-                </button>
-                <button className="btn btn-ghost" style={{ padding: 13, flex: 1 }} onClick={handleExportHtml} disabled={exportingHtml}>
-                  {exportingHtml ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />} Baixar HTML
-                </button>
-                <button className="btn btn-primary" style={{ padding: 13, flex: 1 }} onClick={handleExportWord} disabled={exportingWord}>
-                  {exportingWord ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />} Baixar Word
-                </button>
-              </div>
+              <ExportButtons actions={[
+                { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
+                { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
+                { label: 'Exportar Word', onClick: handleExportWord, loading: exportingWord, primary: true },
+              ]} />
             )}
           </div>
         )}

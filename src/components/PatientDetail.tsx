@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowLeft, Plus, Eye, BarChart3, BookOpen, RefreshCw, Trash2, FileDown, Loader2, TrendingUp, TrendingDown, Minus, Camera, Edit2, Save, X } from 'lucide-react'
+import { ArrowLeft, Plus, Eye, BarChart3, BookOpen, RefreshCw, Trash2, TrendingUp, TrendingDown, Minus, Camera, Edit2, Save, X } from 'lucide-react'
 import { portageItems } from '../hooks/usePortageAssessment'
 import type { AssessmentHook } from '../hooks/usePortageAssessment'
 import type { PatientsHook } from '../hooks/usePatients'
@@ -10,6 +10,7 @@ import type { useAuth } from '../hooks/useAuth'
 import { calcAge, calcAreaDevResult, calcAgeMonths } from '../utils/ageCalc'
 import { exportProgressReport } from '../utils/exportProgressReport'
 import { exportProgressHtml, exportProgressPdf } from '../utils/exportProgressReport_html'
+import ExportButtons from './ExportButtons'
 import TopBar from './TopBar'
 
 type AuthHook = ReturnType<typeof useAuth>
@@ -117,17 +118,11 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
   return (
     <div className="shell">
       {auth && <TopBar auth={auth} onLogoClick={onBack} right={
-        <div style={{ display: 'flex', gap: 6 }}>
-          <button className="btn btn-subtle btn-sm" onClick={handleExportPdf} disabled={exportingPdf || patientAssessments.length === 0}>
-            {exportingPdf ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} PDF
-          </button>
-          <button className="btn btn-subtle btn-sm" onClick={handleExportHtml} disabled={exportingHtml || patientAssessments.length === 0}>
-            {exportingHtml ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} HTML
-          </button>
-          <button className="btn btn-subtle btn-sm" onClick={handleExport} disabled={exporting || patientAssessments.length === 0}>
-            {exporting ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Word
-          </button>
-        </div>
+        <ExportButtons variant="topbar" disabled={patientAssessments.length === 0} actions={[
+          { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
+          { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
+          { label: 'Exportar Word', onClick: handleExport, loading: exporting, primary: true },
+        ]} />
       } />}
 
       <div className="app-frame screen" style={{ padding: '22px 24px 64px' }}>
@@ -324,20 +319,11 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
                     </table>
                   </div>
                 </div>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  <button className="btn btn-ghost" style={{ padding: 12, flex: 1 }} onClick={handleExportPdf} disabled={exportingPdf}>
-                    {exportingPdf ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />}
-                    Baixar PDF
-                  </button>
-                  <button className="btn btn-ghost" style={{ padding: 12, flex: 1 }} onClick={handleExportHtml} disabled={exportingHtml}>
-                    {exportingHtml ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />}
-                    Baixar HTML
-                  </button>
-                  <button className="btn btn-primary" style={{ padding: 12, flex: 1 }} onClick={handleExport} disabled={exporting}>
-                    {exporting ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />}
-                    Exportar Word
-                  </button>
-                </div>
+                <ExportButtons actions={[
+                  { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
+                  { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
+                  { label: 'Exportar Word', onClick: handleExport, loading: exporting, primary: true },
+                ]} />
               </div>
             )}
           </div>

@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react'
-import { ArrowLeft, ClipboardList, BookOpen, Flag, FileText, Loader2, BarChart2, TrendingUp, Download } from 'lucide-react'
+import { ArrowLeft, ClipboardList, BookOpen, Flag, FileText, BarChart2, TrendingUp, Download } from 'lucide-react'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
@@ -14,6 +14,7 @@ import type { useAuth } from '../hooks/useAuth'
 import { calcAreaDevResult, calcAgeMonths } from '../utils/ageCalc'
 import { exportWord } from '../utils/exportWord'
 import { exportWordHtml, exportWordPdf } from '../utils/exportWord_html'
+import ExportButtons from './ExportButtons'
 import { formatQuestion } from '../utils/formatQuestion'
 import { areaVars, areaHue } from '../utils/areaDesign'
 import TopBar from './TopBar'
@@ -527,20 +528,11 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
               <p style={{ fontSize: 13, color: 'var(--ink-3)', margin: '0 0 16px' }}>
                 Gera documento Word com síntese, detalhamento por área, análise interpretativa, habilidades não adquiridas e seção de assinatura.
               </p>
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                <button className="btn btn-ghost" style={{ padding: '11px 20px' }} onClick={handleExportPdf} disabled={exportingPdf}>
-                  {exportingPdf ? <Loader2 size={15} className="animate-spin" /> : <FileText size={15} />}
-                  Baixar PDF
-                </button>
-                <button className="btn btn-ghost" style={{ padding: '11px 20px' }} onClick={handleExportHtml} disabled={exportingHtml}>
-                  {exportingHtml ? <Loader2 size={15} className="animate-spin" /> : <FileText size={15} />}
-                  Baixar HTML
-                </button>
-                <button className="btn btn-primary" style={{ padding: '11px 20px' }} onClick={handleExportWord} disabled={exportingWord}>
-                  {exportingWord ? <Loader2 size={15} className="animate-spin" /> : <FileText size={15} />}
-                  Exportar Word
-                </button>
-              </div>
+              <ExportButtons actions={[
+                { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
+                { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
+                { label: 'Exportar Word', onClick: handleExportWord, loading: exportingWord, primary: true },
+              ]} />
             </div>
           </div>
         )}
