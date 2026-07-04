@@ -912,6 +912,41 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
         </div>
       </section>
 
+      {/* ── VÍDEO DEMO ─────────────────────────────────────────────────── */}
+      <section style={{ padding: '88px 0', borderTop: '1px solid var(--line)' }}>
+        <div style={w}>
+          <div className="lp-reveal" style={{ textAlign: 'center', maxWidth: 560, margin: '0 auto 40px' }}>
+            <span style={eyebrow}>Veja em ação</span>
+            <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>
+              Como o IADI funciona na prática
+            </h2>
+            <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>
+              Assista e veja como é simples aplicar, gerar relatórios e acompanhar a evolução dos seus pacientes.
+            </p>
+          </div>
+
+          {/* wrapper 16:9 com sombra e borda arredondada */}
+          <div style={{
+            position: 'relative',
+            maxWidth: 800,
+            margin: '0 auto',
+            borderRadius: 16,
+            overflow: 'hidden',
+            boxShadow: '0 24px 64px rgba(0,0,0,0.18)',
+            background: '#000',
+            aspectRatio: '16/9',
+          }}>
+            <iframe
+              src="https://www.youtube.com/embed/U33kPc2UX4o?rel=0&modestbranding=1&color=white"
+              title="IADI — Inventário de Avaliação do Desenvolvimento Infantil"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* CTA entre seções */}
       <div style={{ textAlign: 'center', padding: '32px 24px', borderTop: '1px solid var(--line)' }}>
         <a href="#planos" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--primary)', color: '#fff', fontWeight: 600, fontSize: 15, padding: '13px 28px', borderRadius: 99, textDecoration: 'none', boxShadow: '0 4px 16px hsl(220 80% 50% / .22)', transition: 'opacity .15s' }} onMouseOver={e => (e.currentTarget.style.opacity='.88')} onMouseOut={e => (e.currentTarget.style.opacity='1')}>
