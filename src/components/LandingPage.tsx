@@ -281,6 +281,26 @@ const ANIM_CSS = `
   }
   .lp-carousel-dot.active { background: var(--primary); width: 22px; }
 
+  /* ── App carousel (mobile only) ─────────────────────────────────── */
+  .lp-app-arrow { display: none }
+  @media (max-width: 860px) {
+    .lp-app-arrow { display: grid !important; }
+    .lp-app-grid {
+      display: flex !important;
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory !important;
+      gap: 16px !important;
+      scrollbar-width: none !important;
+      padding-bottom: 4px;
+    }
+    .lp-app-grid::-webkit-scrollbar { display: none }
+    .lp-app-grid > * {
+      flex: 0 0 88vw !important;
+      scroll-snap-align: start !important;
+      grid-column: unset !important;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .lp-reveal, .lp-feat-card, .lp-profile-card, .lp-price-card { transition: none }
     .lp-float-1, .lp-float-2, .lp-btn-primary { animation: none }
@@ -571,6 +591,33 @@ function ReportCarousel() {
         </div>
       </div>
     </section>
+  )
+}
+
+/* ── AppCarouselWrapper ───────────────────────────────────────────────── */
+// Desktop: grid normal. Mobile: scroll horizontal com setas (CSS controla via className).
+function AppCarouselWrapper({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const scroll = (dir: 1 | -1) => {
+    if (!ref.current) return
+    ref.current.scrollBy({ left: dir * ref.current.offsetWidth * 0.88, behavior: 'smooth' })
+  }
+  return (
+    <div style={{ position: 'relative' }}>
+      {/* setas — só visíveis no mobile via CSS */}
+      <button className="lp-carousel-btn lp-app-arrow" onClick={() => scroll(-1)} aria-label="Anterior"
+        style={{ position: 'absolute', left: -22, top: '45%', transform: 'translateY(-50%)', zIndex: 2 }}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button className="lp-carousel-btn lp-app-arrow" onClick={() => scroll(1)} aria-label="Próximo"
+        style={{ position: 'absolute', right: -22, top: '45%', transform: 'translateY(-50%)', zIndex: 2 }}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      {/* grid (desktop) */}
+      <div ref={ref} className="lp-app-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+        {children}
+      </div>
+    </div>
   )
 }
 
@@ -891,8 +938,8 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>Cada tela foi pensada para economizar tempo e entregar clareza clínica.</p>
           </div>
 
-          {/* Grade de cards — mockups SVG fiéis ao app */}
-          <div className="lp-app-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+          {/* Grade de cards — desktop: grid, mobile: scroll horizontal com setas */}
+          <AppCarouselWrapper>
 
             {/* Card 1 — Painel clínico */}
             <div className="lp-reveal" style={{ border: '1px solid var(--line)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px hsl(220 25% 20% / .07)', background: 'var(--bg)' }}>
@@ -1293,7 +1340,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
               <div style={{ padding: '10px 24px 14px', fontSize: 12, fontWeight: 600, color: 'var(--primary)' }}>Gráficos — radar, barras e % de aquisição por faixa etária</div>
             </div>
 
-          </div>
+          </AppCarouselWrapper>
         </div>
       </section>
 
