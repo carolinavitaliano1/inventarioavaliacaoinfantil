@@ -33,13 +33,11 @@ const STATUS_COLOR: Record<string, string> = {
 
 const PRINT_STYLE = `
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:210mm;background:#fff;font-family:'Segoe UI',Arial,sans-serif;font-size:11px;color:#1A202C;line-height:1.55}
-body{padding:18mm 16mm 20mm}
 .doc-header{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:3px solid ${BRAND};padding-bottom:10px;margin-bottom:6px}
 .doc-title{font-size:15px;font-weight:700;color:${BRAND_DARK};letter-spacing:.03em;text-transform:uppercase}
 .doc-sub{font-size:10px;color:#718096;margin-top:3px}
 .doc-date{font-size:10px;color:#718096;text-align:right;white-space:nowrap;margin-left:16px}
-h2{font-size:10px;font-weight:700;color:${BRAND_DARK};background:${BRAND_LIGHT};padding:5px 10px;margin:16px 0 8px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em;page-break-after:avoid}
+h2{font-size:10px;font-weight:700;color:${BRAND_DARK};background:${BRAND_LIGHT};padding:5px 10px;margin:16px 0 8px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em}
 table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:10.5px}
 thead tr{background:${BRAND};color:#fff}
 th{padding:6px 9px;text-align:left;font-weight:600;font-size:10px}
@@ -50,15 +48,8 @@ tr:nth-child(even) td{background:#F7FAFF}
 .chip{display:inline-block;padding:2px 8px;border-radius:12px;font-size:9.5px;font-weight:700}
 .strat{font-size:10px;color:#4A5568;background:#FAFAFA;padding:4px 9px 7px;border-bottom:1px solid #E2E8F0}
 .summary td{text-align:center;font-size:16px;font-weight:700;padding:10px 9px}
-.sig-row{display:flex;gap:32px;margin-top:36px;page-break-inside:avoid}
+.sig-row{display:flex;gap:32px;margin-top:36px}
 .sig{flex:1;border-top:1.5px solid #4A5568;padding-top:8px;font-size:10px;color:#4A5568}
-@media print{
-  html,body{width:100%;padding:0}
-  h2{page-break-after:avoid}
-  table{page-break-inside:auto}
-  tr{page-break-inside:avoid}
-  .sig-row{page-break-inside:avoid}
-}
 `
 
 function buildHtml(assessment: Assessment, plan: PEIItem[]): string {

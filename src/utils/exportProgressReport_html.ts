@@ -20,13 +20,11 @@ function short(a: string) { return AREA_SHORT[a] ?? a }
 
 const PRINT_STYLE = `
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:210mm;background:#fff;font-family:'Segoe UI',Arial,sans-serif;font-size:11px;color:#1A202C;line-height:1.55}
-body{padding:18mm 16mm 20mm}
 .doc-header{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:3px solid ${BRAND};padding-bottom:10px;margin-bottom:6px}
 .doc-title{font-size:15px;font-weight:700;color:${BRAND_DARK};letter-spacing:.03em;text-transform:uppercase}
 .doc-sub{font-size:10px;color:#718096;margin-top:3px}
 .doc-date{font-size:10px;color:#718096;text-align:right;white-space:nowrap;margin-left:16px}
-h2{font-size:10px;font-weight:700;color:${BRAND_DARK};background:${BRAND_LIGHT};padding:5px 10px;margin:16px 0 8px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em;page-break-after:avoid}
+h2{font-size:10px;font-weight:700;color:${BRAND_DARK};background:${BRAND_LIGHT};padding:5px 10px;margin:16px 0 8px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em}
 table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:10.5px}
 thead tr{background:${BRAND};color:#fff}
 th{padding:6px 9px;text-align:left;font-weight:600;font-size:10px}
@@ -36,12 +34,6 @@ tr:nth-child(even) td{background:#F7FAFF}
 .num{text-align:center;font-size:12px;font-weight:700}
 .total td{background:${BRAND_LIGHT};font-weight:700;color:${BRAND_DARK};text-align:center}
 .box{background:#F0F7FF;border-left:3px solid ${BRAND};padding:9px 13px;margin-bottom:9px;font-size:10.5px;line-height:1.7;border-radius:0 4px 4px 0}
-@media print{
-  html,body{width:100%;padding:0}
-  h2{page-break-after:avoid}
-  table{page-break-inside:auto}
-  tr{page-break-inside:avoid}
-}
 `
 
 function buildHtml(patient: Patient, assessments: Assessment[]): string {
