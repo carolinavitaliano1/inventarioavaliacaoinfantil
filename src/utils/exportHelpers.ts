@@ -23,9 +23,11 @@ export async function downloadPdf(html: string, filename: string) {
     'box-sizing:border-box',
   ].join(';')
 
-  // injeta só o body do HTML (sem html/head)
+  // extrai estilos do <head> e conteúdo do <body> para injetar juntos
+  const styleMatches = html.match(/<style[^>]*>[\s\S]*?<\/style>/gi) ?? []
   const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)
-  container.innerHTML = bodyMatch ? bodyMatch[1] : html
+  const bodyContent = bodyMatch ? bodyMatch[1] : html
+  container.innerHTML = styleMatches.join('') + bodyContent
 
   document.body.appendChild(container)
 
