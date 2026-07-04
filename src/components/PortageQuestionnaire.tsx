@@ -7,6 +7,7 @@ import type { ResponseType } from '../types'
 import type { View } from '../App'
 import type { useAuth } from '../hooks/useAuth'
 import { formatQuestion } from '../utils/formatQuestion'
+import { ageRangeOrder } from '../utils/ageCalc'
 import { getEvaluationTip } from '../utils/getEvaluationTip'
 import { areaVars, AREA_NUM } from '../utils/areaDesign'
 import TopBar from './TopBar'
@@ -99,7 +100,7 @@ export default function PortageQuestionnaire({ hook, setView, auth, onBack }: Pr
             const aItems = portageItems.filter(i => i.area === area)
             const ans = aItems.filter(i => responses[i.id]).length
             const isOpen = openAreas.has(area)
-            const bands = [...new Set(aItems.map(i => i.age_range))].sort()
+            const bands = [...new Set(aItems.map(i => i.age_range))].sort((a, b) => ageRangeOrder(a) - ageRangeOrder(b))
             return (
               <div key={area} className="card" style={{ ...(av as React.CSSProperties), overflow: 'hidden', borderColor: 'var(--a-line)' }}>
                 <button
