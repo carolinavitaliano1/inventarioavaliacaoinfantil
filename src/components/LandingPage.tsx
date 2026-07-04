@@ -255,6 +255,32 @@ const ANIM_CSS = `
     white-space: nowrap;
   }
   .lp-nav-link:hover { color: var(--ink) }
+  /* ── Carrossel de relatórios ─────────────────────────────────────── */
+  .lp-carousel-track {
+    display: flex;
+    transition: transform .45s cubic-bezier(.22,1,.36,1);
+  }
+  .lp-carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+  .lp-carousel-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid var(--line-2); background: var(--surface);
+    color: var(--ink-2); cursor: pointer;
+    display: grid; place-items: center;
+    transition: border-color .15s, background .15s, color .15s;
+    flex-shrink: 0;
+  }
+  .lp-carousel-btn:hover { border-color: var(--primary-line); background: var(--primary-bg); color: var(--primary-ink); }
+  .lp-carousel-dot {
+    width: 8px; height: 8px; border-radius: 99px;
+    border: none; cursor: pointer; padding: 0;
+    background: var(--line-2);
+    transition: background .2s, width .2s;
+  }
+  .lp-carousel-dot.active { background: var(--primary); width: 22px; }
+
   @media (prefers-reduced-motion: reduce) {
     .lp-reveal, .lp-feat-card, .lp-profile-card, .lp-price-card { transition: none }
     .lp-float-1, .lp-float-2, .lp-btn-primary { animation: none }
@@ -289,6 +315,230 @@ const CHEV = (
     <path d="M6 9l6 6 6-6"/>
   </svg>
 )
+
+/* ── ReportCarousel ──────────────────────────────────────────────────── */
+const REPORTS = [
+  {
+    type: 'Relatório de Avaliação',
+    icon: '📋',
+    patient: 'Lucas · 4 anos e 8 meses · TEA',
+    date: '02/07/2026',
+    color: 'hsl(214 56% 45%)',
+    colorBg: 'hsl(214 56% 96%)',
+    sections: [
+      {
+        title: 'SÍNTESE DO RESULTADO',
+        rows: [
+          ['Idade desenvolvimental (média)', '3 meses'],
+          ['Idade cronológica', '4 anos e 9 meses'],
+          ['Defasagem', '-4,49 anos'],
+        ],
+      },
+      {
+        title: 'RESULTADOS POR ÁREA',
+        rows: [
+          ['I – Sociabilização', '0%', '0 meses'],
+          ['IIa – Ling. Receptiva', '5%', '7 meses'],
+          ['IIb – Ling. Expressiva', '11%', '1 ano'],
+          ['III – Cuidados Próprios', '0%', '0 meses'],
+          ['IV – Cognitiva', '0%', '0 meses'],
+          ['V – Psicomotora', '0%', '0 meses'],
+        ],
+        headers: ['Área', '% Acertos', 'Idade Desenv.'],
+      },
+    ],
+  },
+  {
+    type: 'PEI — Plano de Ensino Individualizado',
+    icon: '📝',
+    patient: 'Lucas · 4 anos e 8 meses · TEA',
+    date: '02/07/2026',
+    color: 'hsl(150 48% 37%)',
+    colorBg: 'hsl(150 45% 95%)',
+    sections: [
+      {
+        title: 'SÍNTESE DO PLANO',
+        rows: [
+          ['Total de habilidades', '2'],
+          ['Concluídas', '0'],
+          ['Em andamento', '1'],
+          ['Progresso geral', '0%'],
+        ],
+      },
+      {
+        title: 'HABILIDADES — MÉDIO PRAZO (até 6 meses)',
+        items: [
+          { hab: 'A criança arrulha e sussurra quando contente?', area: 'IIa – Ling. Receptiva', status: 'Em andamento', strat: 'Estimule a compreensão através de instruções simples, apontamento e rotinas previsíveis.' },
+          { hab: 'A criança repete os próprios sons?', area: 'IIa – Ling. Receptiva', status: 'Pendente', strat: 'Use imitação de sons e turnos comunicativos para estimular a produção vocal.' },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'Relatório de Acompanhamento Contínuo',
+    icon: '📈',
+    patient: 'Lucas · TEA',
+    date: '03/07/2026',
+    color: 'hsl(36 78% 44%)',
+    colorBg: 'hsl(40 85% 94%)',
+    sections: [
+      {
+        title: 'PROGRESSÃO ENTRE AVALIAÇÕES',
+        rows: [
+          ['Ling. Receptiva', '3 meses → 7 meses', '↑ +0,35a'],
+          ['Ling. Expressiva', '6 meses → 12 meses', '↑ +0,42a'],
+          ['Socialização', '0 meses → 0 meses', '→ estável'],
+          ['Cuidados Próprios', '0 meses → 0 meses', '→ estável'],
+          ['Cognitiva', '0 meses → 0 meses', '→ estável'],
+          ['Psicomotora', '0 meses → 0 meses', '→ estável'],
+        ],
+        headers: ['Área', 'Av.1 → Av.2', 'Variação'],
+      },
+      {
+        title: 'LEGENDA',
+        rows: [
+          ['↑', 'Evolução — novas habilidades desenvolvidas'],
+          ['→', 'Estabilidade — resultado semelhante à avaliação anterior'],
+          ['↓', 'Regressão — possível perda ou maior rigor'],
+        ],
+      },
+    ],
+  },
+  {
+    type: 'PEI — Plano de Ensino Individualizado',
+    icon: '📝',
+    patient: 'Liz · 15 anos e 8 meses · TEA',
+    date: '03/07/2026',
+    color: 'hsl(280 45% 45%)',
+    colorBg: 'hsl(280 45% 95%)',
+    sections: [
+      {
+        title: 'SÍNTESE DO PLANO',
+        rows: [
+          ['Total de habilidades', '14'],
+          ['Concluídas', '0'],
+          ['Em andamento', '1'],
+          ['Progresso geral', '0%'],
+        ],
+      },
+      {
+        title: 'HABILIDADES — CURTO PRAZO (até 3 meses)',
+        items: [
+          { hab: 'A criança segura e examina o objeto oferecido pela mãe por um minuto?', area: 'I – Sociabilização', status: 'Pendente', strat: 'Utilize situações naturais de brincadeira e rotina para estimular as habilidades sociais.' },
+        ],
+      },
+    ],
+  },
+]
+
+function ReportCarousel() {
+  const [idx, setIdx] = useState(0)
+  const total = REPORTS.length
+  const prev = () => setIdx(i => (i - 1 + total) % total)
+  const next = () => setIdx(i => (i + 1) % total)
+
+  return (
+    <section style={{ padding: '88px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+      <div style={{ ...{ maxWidth: 1100, margin: '0 auto', padding: '0 24px' } }}>
+        <div className="lp-reveal" style={{ textAlign: 'center', maxWidth: 560, margin: '0 auto 48px' }}>
+          <span style={{ display: 'inline-block', fontSize: 12, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '.1em', color: 'var(--primary-ink)', background: 'var(--primary-bg)', border: '1px solid var(--primary-line)', borderRadius: 99, padding: '4px 12px', marginBottom: 16 }}>Relatórios reais</span>
+          <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Veja os documentos gerados</h2>
+          <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>O IADI gera relatórios profissionais com um clique — prontos para compartilhar com a família ou equipe.</p>
+        </div>
+
+        {/* carrossel */}
+        <div style={{ position: 'relative' }}>
+          {/* slide container */}
+          <div style={{ overflow: 'hidden', borderRadius: 18 }}>
+            <div className="lp-carousel-track" style={{ transform: `translateX(-${idx * 100}%)` }}>
+              {REPORTS.map((rep, i) => (
+                <div key={i} className="lp-carousel-slide">
+                  <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 18, overflow: 'hidden', boxShadow: '0 8px 32px hsl(220 25% 20% / .08)' }}>
+                    {/* header do documento */}
+                    <div style={{ background: rep.colorBg, borderBottom: `1px solid ${rep.color}22`, padding: '20px 28px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' as const }}>
+                      <div style={{ fontSize: 28 }}>{rep.icon}</div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '.08em', color: rep.color, marginBottom: 3 }}>{rep.type}</div>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--ink)' }}>Inventário de Avaliação do Desenvolvimento Infantil — IADI</div>
+                      </div>
+                      <div style={{ textAlign: 'right' as const }}>
+                        <div style={{ fontSize: 11, color: 'var(--ink-4)', marginBottom: 2 }}>Paciente</div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-2)' }}>{rep.patient}</div>
+                        <div style={{ fontSize: 11, color: 'var(--ink-4)', marginTop: 2 }}>{rep.date}</div>
+                      </div>
+                    </div>
+
+                    {/* conteúdo em 2 colunas */}
+                    <div style={{ padding: '24px 28px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+                      {rep.sections.map((sec, si) => (
+                        <div key={si}>
+                          <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '.1em', color: rep.color, marginBottom: 12, paddingBottom: 6, borderBottom: `1px solid ${rep.color}33` }}>{sec.title}</div>
+                          {'items' in sec && sec.items ? (
+                            <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 12 }}>
+                              {sec.items.map((item, ii) => (
+                                <div key={ii} style={{ background: 'var(--surface-2)', borderRadius: 8, padding: '12px 14px', border: '1px solid var(--line)' }}>
+                                  <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--ink)', marginBottom: 4, lineHeight: 1.4 }}>{item.hab}</div>
+                                  <div style={{ display: 'flex', gap: 8, marginBottom: 6, flexWrap: 'wrap' as const }}>
+                                    <span style={{ fontSize: 10, fontWeight: 600, color: rep.color, background: rep.colorBg, padding: '2px 8px', borderRadius: 99 }}>{item.area}</span>
+                                    <span style={{ fontSize: 10, color: 'var(--ink-4)', background: 'var(--surface)', border: '1px solid var(--line)', padding: '2px 8px', borderRadius: 99 }}>{item.status}</span>
+                                  </div>
+                                  <div style={{ fontSize: 11, color: 'var(--ink-3)', lineHeight: 1.5 }}>💡 {item.strat}</div>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div>
+                              {'headers' in sec && sec.headers ? (
+                                <div style={{ display: 'grid', gridTemplateColumns: sec.headers.length === 3 ? '2fr 1fr 1fr' : '1fr 1fr', gap: 0, marginBottom: 4 }}>
+                                  {sec.headers.map((h: string) => (
+                                    <div key={h} style={{ fontSize: 9, fontWeight: 700, color: 'var(--ink-4)', textTransform: 'uppercase' as const, letterSpacing: '.06em', padding: '0 0 6px' }}>{h}</div>
+                                  ))}
+                                </div>
+                              ) : null}
+                              {(sec.rows || []).map((row, ri) => (
+                                <div key={ri} style={{ display: 'grid', gridTemplateColumns: 'headers' in sec && sec.headers?.length === 3 ? '2fr 1fr 1fr' : '1fr 1fr', gap: 0, padding: '7px 0', borderBottom: '1px solid var(--line)', alignItems: 'center' }}>
+                                  <div style={{ fontSize: 12, color: 'var(--ink-2)', fontWeight: 500 }}>{row[0]}</div>
+                                  <div style={{ fontSize: 12, color: 'var(--ink)', fontWeight: 600 }}>{row[1]}</div>
+                                  {row[2] && <div style={{ fontSize: 12, color: row[2].startsWith('↑') ? 'var(--pos)' : row[2].startsWith('↓') ? 'var(--neg)' : 'var(--ink-3)', fontWeight: 600 }}>{row[2]}</div>}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* rodapé */}
+                    <div style={{ padding: '12px 28px', borderTop: '1px solid var(--line)', background: 'var(--surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' as const, gap: 8 }}>
+                      <span style={{ fontSize: 11, color: 'var(--ink-4)' }}>Gerado automaticamente pelo IADI · inventarioavaliacaoinfantil.vercel.app</span>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: rep.color }}>{rep.type}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* controles */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 28 }}>
+            <button className="lp-carousel-btn" onClick={prev} aria-label="Anterior">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              {REPORTS.map((_, i) => (
+                <button key={i} className={`lp-carousel-dot${i === idx ? ' active' : ''}`} onClick={() => setIdx(i)} aria-label={`Slide ${i + 1}`} />
+              ))}
+            </div>
+            <button className="lp-carousel-btn" onClick={next} aria-label="Próximo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 8, fontSize: 12, color: 'var(--ink-4)' }}>{idx + 1} de {total}</div>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 /* ── component ───────────────────────────────────────────────────────── */
 export default function LandingPage({ onGetStarted, onLogin }: Props) {
@@ -580,6 +830,9 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
           </div>
         </div>
       </section>
+
+      {/* ── CARROSSEL DE RELATÓRIOS ───────────────────────────────────── */}
+      <ReportCarousel />
 
       {/* ── GALERIA / SCREENSHOTS ─────────────────────────────────────── */}
       <section style={{ padding: '88px 0', background: 'var(--surface)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
