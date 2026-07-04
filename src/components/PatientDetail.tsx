@@ -9,6 +9,7 @@ import type { View } from '../App'
 import type { useAuth } from '../hooks/useAuth'
 import { calcAge, calcAreaDevResult, calcAgeMonths } from '../utils/ageCalc'
 import { exportProgressReport } from '../utils/exportProgressReport'
+import { exportProgressHtml, exportProgressPdf } from '../utils/exportProgressReport_html'
 import TopBar from './TopBar'
 
 type AuthHook = ReturnType<typeof useAuth>
@@ -48,6 +49,8 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
   const { assessments, createAssessment, reAssess, deleteAssessment, setCurrentId } = assessmentHook
   const [tab, setTab] = useState<'assessments' | 'progress'>('assessments')
   const [exporting, setExporting] = useState(false)
+  const [exportingPdf, setExportingPdf] = useState(false)
+  const [exportingHtml, setExportingHtml] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [editForm, setEditForm] = useState<Partial<Patient>>({})
   const [photoInput, setPhotoInput] = useState<HTMLInputElement | null>(null)
@@ -84,6 +87,14 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
     setExporting(true)
     try { await exportProgressReport(patient, patientAssessments) } finally { setExporting(false) }
   }
+  const handleExportPdf = async () => {
+    setExportingPdf(true)
+    try { await exportProgressPdf(patient, patientAssessments) } finally { setExportingPdf(false) }
+  }
+  const handleExportHtml = async () => {
+    setExportingHtml(true)
+    try { exportProgressHtml(patient, patientAssessments) } finally { setExportingHtml(false) }
+  }
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]; if (!file) return
@@ -106,9 +117,17 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
   return (
     <div className="shell">
       {auth && <TopBar auth={auth} onLogoClick={onBack} right={
-        <button className="btn btn-subtle btn-sm" onClick={handleExport} disabled={exporting || patientAssessments.length === 0}>
-          {exporting ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Relatório Word
-        </button>
+        <div style={{ display: 'flex', gap: 6 }}>
+          <button className="btn btn-subtle btn-sm" onClick={handleExportPdf} disabled={exportingPdf || patientAssessments.length === 0}>
+            {exportingPdf ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} PDF
+          </button>
+          <button className="btn btn-subtle btn-sm" onClick={handleExportHtml} disabled={exportingHtml || patientAssessments.length === 0}>
+            {exportingHtml ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} HTML
+          </button>
+          <button className="btn btn-subtle btn-sm" onClick={handleExport} disabled={exporting || patientAssessments.length === 0}>
+            {exporting ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />} Word
+          </button>
+        </div>
       } />}
 
       <div className="app-frame screen" style={{ padding: '22px 24px 64px' }}>
@@ -305,10 +324,20 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
                     </table>
                   </div>
                 </div>
-                <button className="btn btn-primary" style={{ padding: 12 }} onClick={handleExport} disabled={exporting}>
-                  {exporting ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />}
-                  Exportar Relatório de Acompanhamento em Word
-                </button>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  <button className="btn btn-ghost" style={{ padding: 12, flex: 1 }} onClick={handleExportPdf} disabled={exportingPdf}>
+                    {exportingPdf ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />}
+                    Baixar PDF
+                  </button>
+                  <button className="btn btn-ghost" style={{ padding: 12, flex: 1 }} onClick={handleExportHtml} disabled={exportingHtml}>
+                    {exportingHtml ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />}
+                    Baixar HTML
+                  </button>
+                  <button className="btn btn-primary" style={{ padding: 12, flex: 1 }} onClick={handleExport} disabled={exporting}>
+                    {exporting ? <Loader2 size={16} className="animate-spin" /> : <FileDown size={16} />}
+                    Exportar Word
+                  </button>
+                </div>
               </div>
             )}
           </div>

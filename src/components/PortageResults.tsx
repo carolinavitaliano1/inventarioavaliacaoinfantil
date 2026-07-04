@@ -13,6 +13,7 @@ import type { View } from '../App'
 import type { useAuth } from '../hooks/useAuth'
 import { calcAreaDevResult, calcAgeMonths } from '../utils/ageCalc'
 import { exportWord } from '../utils/exportWord'
+import { exportWordHtml, exportWordPdf } from '../utils/exportWord_html'
 import { formatQuestion } from '../utils/formatQuestion'
 import { areaVars, areaHue } from '../utils/areaDesign'
 import TopBar from './TopBar'
@@ -66,6 +67,8 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
   const { current, getSiblingAssessments } = hook
   const [tab, setTab] = useState<'sintese' | 'graficos' | 'progressao' | 'prioridades' | 'relatorio'>('sintese')
   const [exportingWord, setExportingWord] = useState(false)
+  const [exportingPdf, setExportingPdf] = useState(false)
+  const [exportingHtml, setExportingHtml] = useState(false)
   const refLine = useRef<HTMLDivElement>(null)
   const refRadar = useRef<HTMLDivElement>(null)
   const refBar = useRef<HTMLDivElement>(null)
@@ -93,6 +96,14 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
   const handleExportWord = async () => {
     setExportingWord(true)
     try { await exportWord(current, results, media) } finally { setExportingWord(false) }
+  }
+  const handleExportPdf = async () => {
+    setExportingPdf(true)
+    try { await exportWordPdf(current, results, media) } finally { setExportingPdf(false) }
+  }
+  const handleExportHtml = async () => {
+    setExportingHtml(true)
+    try { await exportWordHtml(current, results, media) } finally { setExportingHtml(false) }
   }
 
   // ── dados para gráfico de linha (% aquisição por faixa × área) ──
@@ -516,10 +527,20 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
               <p style={{ fontSize: 13, color: 'var(--ink-3)', margin: '0 0 16px' }}>
                 Gera documento Word com síntese, detalhamento por área, análise interpretativa, habilidades não adquiridas e seção de assinatura.
               </p>
-              <button className="btn btn-primary" style={{ padding: '11px 20px' }} onClick={handleExportWord} disabled={exportingWord}>
-                {exportingWord ? <Loader2 size={15} className="animate-spin" /> : <FileText size={15} />}
-                Exportar Relatório em Word
-              </button>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <button className="btn btn-ghost" style={{ padding: '11px 20px' }} onClick={handleExportPdf} disabled={exportingPdf}>
+                  {exportingPdf ? <Loader2 size={15} className="animate-spin" /> : <FileText size={15} />}
+                  Baixar PDF
+                </button>
+                <button className="btn btn-ghost" style={{ padding: '11px 20px' }} onClick={handleExportHtml} disabled={exportingHtml}>
+                  {exportingHtml ? <Loader2 size={15} className="animate-spin" /> : <FileText size={15} />}
+                  Baixar HTML
+                </button>
+                <button className="btn btn-primary" style={{ padding: '11px 20px' }} onClick={handleExportWord} disabled={exportingWord}>
+                  {exportingWord ? <Loader2 size={15} className="animate-spin" /> : <FileText size={15} />}
+                  Exportar Word
+                </button>
+              </div>
             </div>
           </div>
         )}
