@@ -9,7 +9,6 @@ import { areaVars } from '../utils/areaDesign'
 import TopBar from './TopBar'
 import ExportButtons from './ExportButtons'
 import { exportPEI } from '../utils/exportPEI'
-import { exportPEIHtml } from '../utils/exportPEI_html'
 import { exportPEIPdf } from '../utils/exportPEI_pdf'
 import type { PortageItem } from '../types'
 
@@ -60,7 +59,6 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
   const [tab, setTab] = useState<'plano' | 'selecionar'>('selecionar')
   const [exportingWord, setExportingWord] = useState(false)
   const [exportingPdf, setExportingPdf] = useState(false)
-  const [exportingHtml, setExportingHtml] = useState(false)
   const [editingEst, setEditingEst] = useState<string | null>(null)
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving'>('saved')
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -128,10 +126,6 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
     setExportingPdf(true)
     try { await exportPEIPdf(current, plan) } finally { setExportingPdf(false) }
   }
-  const handleExportHtml = () => {
-    setExportingHtml(true)
-    try { exportPEIHtml(current, plan) } finally { setExportingHtml(false) }
-  }
 
   return (
     <div className="shell">
@@ -145,7 +139,6 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
           </button>
           <ExportButtons variant="topbar" actions={[
             { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
-            { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
             { label: 'Exportar Word', onClick: handleExportWord, loading: exportingWord, primary: true },
           ]} />
         </div>
@@ -270,7 +263,6 @@ export default function PortagePEI({ hook, setView, auth, onBack }: Props) {
             {plan.length > 0 && (
               <ExportButtons actions={[
                 { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
-                { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
                 { label: 'Exportar Word', onClick: handleExportWord, loading: exportingWord, primary: true },
               ]} />
             )}

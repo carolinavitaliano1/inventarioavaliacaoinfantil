@@ -9,7 +9,7 @@ import type { View } from '../App'
 import type { useAuth } from '../hooks/useAuth'
 import { calcAge, calcAreaDevResult, calcAgeMonths } from '../utils/ageCalc'
 import { exportProgressReport } from '../utils/exportProgressReport'
-import { exportProgressHtml, exportProgressPdf } from '../utils/exportProgressReport_html'
+import { exportProgressPdf } from '../utils/exportProgressReport_html'
 import ExportButtons from './ExportButtons'
 import TopBar from './TopBar'
 
@@ -51,7 +51,6 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
   const [tab, setTab] = useState<'assessments' | 'progress'>('assessments')
   const [exporting, setExporting] = useState(false)
   const [exportingPdf, setExportingPdf] = useState(false)
-  const [exportingHtml, setExportingHtml] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [editForm, setEditForm] = useState<Partial<Patient>>({})
   const [photoInput, setPhotoInput] = useState<HTMLInputElement | null>(null)
@@ -88,13 +87,9 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
     setExporting(true)
     try { await exportProgressReport(patient, patientAssessments) } finally { setExporting(false) }
   }
-  const handleExportPdf = async () => {
+  const handleExportPdf = () => {
     setExportingPdf(true)
-    try { await exportProgressPdf(patient, patientAssessments) } finally { setExportingPdf(false) }
-  }
-  const handleExportHtml = async () => {
-    setExportingHtml(true)
-    try { exportProgressHtml(patient, patientAssessments) } finally { setExportingHtml(false) }
+    try { exportProgressPdf(patient, patientAssessments) } finally { setExportingPdf(false) }
   }
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,7 +115,6 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
       {auth && <TopBar auth={auth} onLogoClick={onBack} right={
         <ExportButtons variant="topbar" disabled={patientAssessments.length === 0} actions={[
           { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
-          { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
           { label: 'Exportar Word', onClick: handleExport, loading: exporting, primary: true },
         ]} />
       } />}
@@ -321,7 +315,6 @@ export default function PatientDetail({ patientId, patientsHook, assessmentHook,
                 </div>
                 <ExportButtons actions={[
                   { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
-                  { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
                   { label: 'Exportar Word', onClick: handleExport, loading: exporting, primary: true },
                 ]} />
               </div>

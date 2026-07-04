@@ -13,7 +13,7 @@ import type { View } from '../App'
 import type { useAuth } from '../hooks/useAuth'
 import { calcAreaDevResult, calcAgeMonths } from '../utils/ageCalc'
 import { exportWord } from '../utils/exportWord'
-import { exportWordHtml, exportWordPdf } from '../utils/exportWord_html'
+import { exportWordPdf } from '../utils/exportWord_html'
 import ExportButtons from './ExportButtons'
 import { formatQuestion } from '../utils/formatQuestion'
 import { areaVars, areaHue } from '../utils/areaDesign'
@@ -69,7 +69,6 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
   const [tab, setTab] = useState<'sintese' | 'graficos' | 'progressao' | 'prioridades' | 'relatorio'>('sintese')
   const [exportingWord, setExportingWord] = useState(false)
   const [exportingPdf, setExportingPdf] = useState(false)
-  const [exportingHtml, setExportingHtml] = useState(false)
   const refLine = useRef<HTMLDivElement>(null)
   const refRadar = useRef<HTMLDivElement>(null)
   const refBar = useRef<HTMLDivElement>(null)
@@ -101,10 +100,6 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
   const handleExportPdf = async () => {
     setExportingPdf(true)
     try { await exportWordPdf(current, results, media) } finally { setExportingPdf(false) }
-  }
-  const handleExportHtml = async () => {
-    setExportingHtml(true)
-    try { await exportWordHtml(current, results, media) } finally { setExportingHtml(false) }
   }
 
   // ── dados para gráfico de linha (% aquisição por faixa × área) ──
@@ -530,7 +525,6 @@ export default function PortageResults({ hook, setView, auth, onBack }: Props) {
               </p>
               <ExportButtons actions={[
                 { label: 'Baixar PDF', onClick: handleExportPdf, loading: exportingPdf },
-                { label: 'Baixar HTML', onClick: handleExportHtml, loading: exportingHtml },
                 { label: 'Exportar Word', onClick: handleExportWord, loading: exportingWord, primary: true },
               ]} />
             </div>
