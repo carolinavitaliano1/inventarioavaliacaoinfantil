@@ -46,7 +46,18 @@ export function useSubscription(user: User | null) {
 
   const ADMIN_EMAILS = ['carolinavitaliano1@gmail.com']
   const isAdmin = !!user?.email && ADMIN_EMAILS.includes(user.email)
-  const isActive = isAdmin || subscription?.status === 'active' || subscription?.status === 'trialing'
+
+  // Trial gratuito de 3 dias a partir da criação da conta — sem barreira de pagamento
+  const TRIAL_DAYS = 3
+  const createdMs = user?.created_at ? new Date(user.created_at).getTime() : null
+  const trialEndsMs = createdMs !== null ? createdMs + TRIAL_DAYS * 24 * 60 * 60 * 1000 : null
+  const inTrial = trialEndsMs !== null && Date.now() < trialEndsMs
+  const trialDaysLeft = trialEndsMs !== null
+    ? Math.max(0, Math.ceil((trialEndsMs - Date.now()) / (24 * 60 * 60 * 1000)))
+    : 0
+
+  const hasPaid = subscription?.status === 'active' || subscription?.status === 'trialing'
+  const isActive = isAdmin || hasPaid || inTrial
 
   const createCheckout = async (plan: string): Promise<string | null> => {
     const { data: { session } } = await supabase.auth.getSession()
@@ -58,5 +69,5 @@ export function useSubscription(user: User | null) {
     return res.data?.url ?? null
   }
 
-  return { subscription, loadingSub, isActive, createCheckout }
+  return { subscription, loadingSub, isActive, createCheckout, inTrial, trialDaysLeft, hasPaid }
 }

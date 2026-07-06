@@ -164,9 +164,24 @@ export default function App() {
     )
   }
 
+  const showTrialBanner = subHook.inTrial && !subHook.hasPaid && !(auth.user?.email && auth.user.email === 'carolinavitaliano1@gmail.com')
+
   return (
     <ErrorBoundary>
       <div>
+        {showTrialBanner && (
+          <div style={{ background: 'var(--primary)', color: '#fff', padding: '9px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, flexWrap: 'wrap', fontSize: 14, fontWeight: 500 }}>
+            <span>
+              🎁 Você está no período gratuito — {subHook.trialDaysLeft} {subHook.trialDaysLeft === 1 ? 'dia restante' : 'dias restantes'}.
+            </span>
+            <button
+              onClick={() => setView('subscription')}
+              style={{ background: '#fff', color: 'var(--primary)', border: 'none', borderRadius: 99, padding: '5px 16px', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
+            >
+              Assinar agora
+            </button>
+          </div>
+        )}
         {view === 'dashboard' && (
           <Dashboard
             hook={hook}
