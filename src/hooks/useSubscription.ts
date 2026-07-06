@@ -47,10 +47,14 @@ export function useSubscription(user: User | null) {
   const ADMIN_EMAILS = ['carolinavitaliano1@gmail.com']
   const isAdmin = !!user?.email && ADMIN_EMAILS.includes(user.email)
 
-  // Trial gratuito de 3 dias a partir da criação da conta — sem barreira de pagamento
+  // Trial gratuito de 3 dias — sem barreira de pagamento.
+  // Conta a partir da criação da conta OU da data-base abaixo (o que for mais recente),
+  // para que contas antigas também ganhem 3 dias a partir do lançamento do trial.
   const TRIAL_DAYS = 3
+  const TRIAL_FLOOR_MS = new Date('2026-07-06T00:00:00Z').getTime()
   const createdMs = user?.created_at ? new Date(user.created_at).getTime() : null
-  const trialEndsMs = createdMs !== null ? createdMs + TRIAL_DAYS * 24 * 60 * 60 * 1000 : null
+  const trialStartMs = createdMs !== null ? Math.max(createdMs, TRIAL_FLOOR_MS) : null
+  const trialEndsMs = trialStartMs !== null ? trialStartMs + TRIAL_DAYS * 24 * 60 * 60 * 1000 : null
   const inTrial = trialEndsMs !== null && Date.now() < trialEndsMs
   const trialDaysLeft = trialEndsMs !== null
     ? Math.max(0, Math.ceil((trialEndsMs - Date.now()) / (24 * 60 * 60 * 1000)))
