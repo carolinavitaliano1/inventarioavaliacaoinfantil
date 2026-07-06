@@ -17,6 +17,7 @@ import ProfilePage from './components/ProfilePage'
 import SubscriptionPage from './components/SubscriptionPage'
 import LandingPage from './components/LandingPage'
 import ResetPasswordPage from './components/ResetPasswordPage'
+import WhatsAppButton from './components/WhatsAppButton'
 import { Loader2 } from 'lucide-react'
 
 export type View = 'dashboard' | 'home' | 'patient' | 'questionnaire' | 'results' | 'pei' | 'community' | 'profile' | 'subscription'
@@ -121,6 +122,7 @@ export default function App() {
     return (
       <ErrorBoundary>
         {loginMode ? <LoginPage auth={auth} defaultMode={loginMode} /> : <LandingPage onGetStarted={() => setLoginMode('signup')} onLogin={() => setLoginMode('login')} />}
+        <WhatsAppButton />
       </ErrorBoundary>
     )
   }
@@ -148,6 +150,7 @@ export default function App() {
             </button>
           </div>
         </div>
+        <WhatsAppButton />
       </ErrorBoundary>
     )
   }
@@ -156,6 +159,7 @@ export default function App() {
     return (
       <ErrorBoundary>
         <PricingPage subHook={subHook} auth={auth} />
+        <WhatsAppButton />
       </ErrorBoundary>
     )
   }
@@ -190,6 +194,7 @@ export default function App() {
         {view === 'questionnaire' && <PortageQuestionnaire hook={hook} setView={safeSetView} auth={auth} onBack={() => setView('patient')} />}
         {view === 'results' && <PortageResults hook={hook} setView={safeSetView} auth={auth} onBack={() => setView('patient')} />}
         {view === 'pei' && <PortagePEI hook={hook} setView={safeSetView} auth={auth} onBack={() => setView('patient')} />}
+        <WhatsAppButton />
       </div>
     </ErrorBoundary>
   )
