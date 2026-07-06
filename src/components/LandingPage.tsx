@@ -1440,7 +1440,7 @@ export default function LandingPage({ onGetStarted, onLogin }: Props) {
             <span style={eyebrow}>Planos</span>
             <h2 style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px', textWrap: 'balance' as never }}>Conheça nossos planos</h2>
             <p style={{ fontSize: 17, color: 'var(--ink-2)', margin: 0 }}>
-              Crie sua conta, cadastre sua forma de pagamento e explore o IADI completo por 3 dias. Você só é cobrado se decidir continuar — cancele antes e não paga nada.
+              Crie sua conta e explore o IADI completo por 3 dias — <strong>sem cartão de crédito</strong>. Só depois do período gratuito você escolhe um plano para continuar.
             </p>
           </div>
 

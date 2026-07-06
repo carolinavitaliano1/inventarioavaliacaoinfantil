@@ -93,13 +93,13 @@ export default function PricingPage({ subHook, auth }: Props) {
       {/* Hero */}
       <div style={{ textAlign: 'center', padding: '52px 20px 16px' }}>
         <div style={{ display: 'inline-block', background: '#ede9fe', color: '#6d28d9', fontSize: 11.5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', padding: '5px 14px', borderRadius: 99, marginBottom: 18 }}>
-          Acesso completo
+          Continue com o IADI
         </div>
         <h1 style={{ fontSize: 32, fontWeight: 800, color: '#111', margin: '0 0 14px', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
-          3 dias grátis para experimentar
+          Seu período gratuito terminou
         </h1>
         <p style={{ color: '#6b7280', fontSize: 15, maxWidth: 440, margin: '0 auto 10px', lineHeight: 1.6 }}>
-          Cadastre sua forma de pagamento e explore o IADI completo por 3 dias. <strong style={{ color: '#111' }}>A cobrança só começa no 4º dia</strong> — se cancelar antes, não paga absolutamente nada.
+          Você aproveitou <strong style={{ color: '#111' }}>3 dias grátis</strong> do IADI. Para continuar avaliando e gerando relatórios, escolha um plano abaixo. Sem fidelidade — cancele quando quiser.
         </p>
       </div>
 
@@ -108,9 +108,9 @@ export default function PricingPage({ subHook, auth }: Props) {
         <div style={{ background: '#f0fdf4', border: '1.5px solid #bbf7d0', borderRadius: 14, padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
           <ShieldCheck size={28} color="#16a34a" style={{ flexShrink: 0 }} />
           <div>
-            <div style={{ fontWeight: 700, color: '#15803d', fontSize: 14 }}>Garantia de 3 dias grátis</div>
+            <div style={{ fontWeight: 700, color: '#15803d', fontSize: 14 }}>Sem fidelidade, cancele quando quiser</div>
             <div style={{ fontSize: 13, color: '#166534', marginTop: 2 }}>
-              Sua cobrança só começa no 4º dia. Se cancelar antes, não há qualquer débito. Você escolhe o plano agora e paga só depois que decidir continuar.
+              Pagamento seguro via Mercado Pago. Não há taxa de cancelamento — você cancela pela própria plataforma a qualquer momento.
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function PricingPage({ subHook, auth }: Props) {
               <span style={{ fontSize: 36, fontWeight: 800, color: '#111' }}>R$&nbsp;37</span>
               <span style={{ color: '#9ca3af', fontSize: 14 }}>/3 meses</span>
             </div>
-            <p style={{ fontSize: 12.5, color: '#6b7280', marginTop: 4 }}>3 dias grátis · depois R$ 12,33/mês</p>
+            <p style={{ fontSize: 12.5, color: '#6b7280', marginTop: 4 }}>Equivale a R$ 12,33/mês</p>
           </div>
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
             {FEATURES.map(f => (
@@ -139,7 +139,7 @@ export default function PricingPage({ subHook, auth }: Props) {
           <button type="button" onClick={() => checkout('trimestral')} disabled={!!loading}
             style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, border: '2px solid #7c3aed', color: '#6d28d9', background: '#fff', padding: '13px 0', borderRadius: 12, fontWeight: 700, fontSize: 14.5, cursor: 'pointer', transition: 'background .15s' }}>
             {loading === 'trimestral' ? <Loader2 size={16} className="animate-spin" /> : null}
-            Começar grátis · trimestral
+            Assinar · trimestral
           </button>
         </div>
 
@@ -154,7 +154,7 @@ export default function PricingPage({ subHook, auth }: Props) {
               <span style={{ fontSize: 36, fontWeight: 800, color: '#fff' }}>R$&nbsp;87</span>
               <span style={{ color: '#c4b5fd', fontSize: 14 }}>/ano</span>
             </div>
-            <p style={{ fontSize: 12.5, color: '#c4b5fd', marginTop: 4 }}>3 dias grátis · depois R$ 7,25/mês · economize 35%</p>
+            <p style={{ fontSize: 12.5, color: '#c4b5fd', marginTop: 4 }}>Equivale a R$ 7,25/mês · economize 35%</p>
           </div>
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
             {FEATURES.map(f => (
@@ -166,7 +166,7 @@ export default function PricingPage({ subHook, auth }: Props) {
           <button type="button" onClick={() => checkout('anual')} disabled={!!loading}
             style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: '#fff', color: '#6d28d9', border: 'none', padding: '13px 0', borderRadius: 12, fontWeight: 800, fontSize: 14.5, cursor: 'pointer', boxShadow: '0 2px 12px rgba(0,0,0,.12)' }}>
             {loading === 'anual' ? <Loader2 size={16} className="animate-spin" /> : null}
-            Começar grátis · anual
+            Assinar · anual
           </button>
         </div>
       </div>
@@ -184,7 +184,7 @@ export default function PricingPage({ subHook, auth }: Props) {
           ))}
         </div>
         <p style={{ textAlign: 'center', fontSize: 12, color: '#9ca3af', marginTop: 14 }}>
-          Cobrança apenas após os 3 dias de teste · Cancele a qualquer momento pela plataforma
+          Pagamento seguro via Mercado Pago · Cancele a qualquer momento pela plataforma
         </p>
       </div>
 
