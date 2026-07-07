@@ -53,13 +53,20 @@ export default function ProfilePage({ auth, subHook, onBack, onGoSubscription }:
   // Admin users list
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([])
   const [loadingUsers, setLoadingUsers] = useState(false)
+  const [usersError, setUsersError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
 
   const fetchUsers = async () => {
     setLoadingUsers(true)
+    setUsersError(null)
     const { data, error } = await supabase.rpc('get_all_users_for_admin')
     setLoadingUsers(false)
-    if (!error && data) setAdminUsers(data as AdminUser[])
+    if (error) {
+      setUsersError(error.message || 'Erro ao carregar usuários.')
+      setAdminUsers([])
+    } else {
+      setAdminUsers((data ?? []) as AdminUser[])
+    }
   }
 
   useEffect(() => {
@@ -249,11 +256,17 @@ export default function ProfilePage({ auth, subHook, onBack, onGoSubscription }:
               </div>
             </div>
 
+            {usersError && (
+              <div style={{ background: 'color-mix(in srgb, var(--neg) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--neg) 35%, transparent)', color: 'var(--neg)', borderRadius: 'var(--r-sm)', padding: '12px 14px', fontSize: 13, marginBottom: 12 }}>
+                <strong>Erro ao carregar usuários:</strong> {usersError}
+                <div style={{ fontSize: 12, marginTop: 6, opacity: .85 }}>Verifique se a função <code>get_all_users_for_admin</code> foi criada no Supabase.</div>
+              </div>
+            )}
             {loadingUsers ? (
               <div style={{ textAlign: 'center', padding: 40 }}><Loader2 size={22} className="animate-spin" style={{ color: 'var(--primary)' }} /></div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {filtered.length === 0 && <p style={{ fontSize: 13, color: 'var(--ink-4)', textAlign: 'center', padding: 24 }}>Nenhum usuário encontrado.</p>}
+                {!usersError && filtered.length === 0 && <p style={{ fontSize: 13, color: 'var(--ink-4)', textAlign: 'center', padding: 24 }}>Nenhum usuário encontrado.</p>}
                 {filtered.map(u => {
                   const st = STATUS_LABEL[u.subscription_status ?? 'inactive'] ?? STATUS_LABEL['inactive']
                   return (
